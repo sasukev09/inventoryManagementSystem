@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="450.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wguclass.software1.ModifyPartController">
+   <children>
+      <Label layoutX="30.0" layoutY="30.0" text="Modify Part" />
+      <RadioButton fx:id="ModPInHouseRadio" layoutX="113.0" layoutY="30.0" mnemonicParsing="false" onAction="#PressModPInHouseRadio" text="In-House">
+         <toggleGroup>
+            <ToggleGroup fx:id="ModifyPartMenu" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="ModPOutRadio" layoutX="222.0" layoutY="30.0" mnemonicParsing="false" onAction="#PressModPOutRadio" text="Outsourced" toggleGroup="$ModifyPartMenu" />
+      <TextField fx:id="ModPIDTxtField" disable="true" layoutX="125.0" layoutY="81.0" />
+      <TextField fx:id="ModPNameTxtField" layoutX="125.0" layoutY="126.0" />
+      <TextField fx:id="ModPartInvTextField" layoutX="125.0" layoutY="165.0" prefHeight="25.0" prefWidth="149.0" />
+      <TextField fx:id="ModPartPCTxtField" layoutX="125.0" layoutY="200.0" prefHeight="17.0" prefWidth="149.0" />
+      <TextField fx:id="ModPartMaxTxtField" layoutX="125.0" layoutY="240.0" prefHeight="25.0" prefWidth="80.0" />
+      <TextField fx:id="ModPartMachineIDTxtField" layoutX="125.0" layoutY="279.0" />
+      <TextField fx:id="ModPartMinTxtField" layoutX="265.0" layoutY="240.0" prefHeight="25.0" prefWidth="80.0" />
+      <Button fx:id="ModPartSaveButton" layoutX="196.0" layoutY="332.0" mnemonicParsing="false" onAction="#PressModPartSaveButton" text="Save" />
+      <Button fx:id="ModPartCancelButton" layoutX="279.0" layoutY="332.0" mnemonicParsing="false" onAction="#PressModPartCancelButton" text="Cancel" />
+      <Text layoutX="55.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID" wrappingWidth="20.47265625" />
+      <Text layoutX="55.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
+      <Text layoutX="55.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inv" wrappingWidth="20.47265625" />
+      <Text layoutX="54.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price/Cost" />
+      <Text layoutX="55.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Max" wrappingWidth="31.693359375" />
+      <Text layoutX="216.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min" />
+      <Text layoutX="52.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Machine ID" />
+   </children>
+</AnchorPane>
