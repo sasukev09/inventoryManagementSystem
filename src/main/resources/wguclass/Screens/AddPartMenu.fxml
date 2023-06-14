@@ -20,8 +20,8 @@
       <TextField fx:id="NameTextField" layoutX="125.0" layoutY="126.0" />
       <TextField fx:id="InventoryTextFIeld" layoutX="125.0" layoutY="165.0" prefHeight="25.0" prefWidth="149.0" />
       <TextField fx:id="PriceCostTxtField" layoutX="125.0" layoutY="200.0" prefHeight="17.0" prefWidth="149.0" />
-      <TextField fx:id="MaxTxtField" layoutX="125.0" layoutY="247.0" prefHeight="25.0" prefWidth="80.0" />
-      <TextField fx:id="MachIDTxtField" layoutX="125.0" layoutY="279.0" />
+      <TextField fx:id="MaxTxtField" layoutX="125.0" layoutY="240.0" prefHeight="25.0" prefWidth="80.0" />
+      <TextField fx:id="MachIDTxtField" layoutX="151.0" layoutY="279.0" />
       <TextField fx:id="MinTxtField" layoutX="265.0" layoutY="240.0" prefHeight="25.0" prefWidth="80.0" />
       <Button fx:id="APMSaveButton" layoutX="196.0" layoutY="332.0" mnemonicParsing="false" onAction="#PressAPMSaveButton" text="Save" />
       <Button fx:id="APMCancelButton" layoutX="279.0" layoutY="332.0" mnemonicParsing="false" onAction="#PressAPMCancelButton" text="Cancel" />
@@ -31,6 +31,6 @@
       <Text layoutX="54.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price/Cost" />
       <Text layoutX="55.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Max" wrappingWidth="31.693359375" />
       <Text layoutX="216.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min" />
-      <Text layoutX="52.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Machine ID" />
+      <Text fx:id="APMLabelTxtMachID" layoutX="52.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Machine ID" />
    </children>
 </AnchorPane>

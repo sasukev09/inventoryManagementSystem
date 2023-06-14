@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -18,6 +19,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddPartController implements Initializable {
+    public Text APMLabelTxtMachID;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -64,7 +66,8 @@ public class AddPartController implements Initializable {
 
     @FXML
     void APMOutSourcedRadioButton(ActionEvent event) {
-
+        System.out.println("[AddPartMenu::APMOutSourcedRadioButton] Outsourced part radio button selected, updating label");
+        APMLabelTxtMachID.setText("Company Name");
     }
 
     @FXML
@@ -78,12 +81,19 @@ public class AddPartController implements Initializable {
 
     @FXML
     void PressAPMInHouseRadioButton(ActionEvent event) {
-
+        System.out.println("[AddModifyPartMenu::APMInHouseRadioButton] In-House part radio button selected, updating label");
+        APMLabelTxtMachID.setText("Machine ID");
     }
 
     @FXML
-    void PressAPMSaveButton(ActionEvent event) {
+    void PressAPMSaveButton(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     }
 
-}
+

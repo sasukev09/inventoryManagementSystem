@@ -11,6 +11,7 @@ package wguclass.software1;
         import javafx.scene.control.RadioButton;
         import javafx.scene.control.TextField;
         import javafx.scene.control.ToggleGroup;
+        import javafx.scene.text.Text;
         import javafx.stage.Stage;
 
         import java.io.IOException;
@@ -18,6 +19,7 @@ package wguclass.software1;
         import java.util.ResourceBundle;
 
 public class ModifyPartController implements Initializable {
+    public Text ModPMLabelTxtMachID;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -60,12 +62,16 @@ public class ModifyPartController implements Initializable {
     private ToggleGroup ModifyPartMenu;
 
     @FXML
-    void PressModPInHouseRadio(ActionEvent event) {
+    void PressModPInHouseRadio(ActionEvent event)  {
+        System.out.println("[ModifyPartMenu::ModPMLabelTxtMachID] In-house part radio button selected, updating label");
+        ModPMLabelTxtMachID.setText("Machine ID");
 
     }
 
     @FXML
     void PressModPOutRadio(ActionEvent event) {
+        System.out.println("[ModifyPartMenu::ModPMLabelTxtMachID] Outsourced part radio button selected, updating label");
+        ModPMLabelTxtMachID.setText("Company Name");
 
     }
 
@@ -81,9 +87,15 @@ public class ModifyPartController implements Initializable {
     }
 
     @FXML
-    void PressModPartSaveButton(ActionEvent event) {
-
+    void PressModPartSaveButton(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
