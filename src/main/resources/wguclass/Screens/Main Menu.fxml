@@ -25,7 +25,7 @@
             <Button fx:id="OnModifyPMM" layoutX="64.0" layoutY="247.0" mnemonicParsing="false" onAction="#PressModifyPMM" text="Modify" />
             <Button fx:id="OnAddPMM" layoutX="18.0" layoutY="247.0" mnemonicParsing="false" onAction="#PressAddPMM" text="Add" />
             <Button fx:id="OnDeletePMM" layoutX="266.0" layoutY="247.0" mnemonicParsing="false" onAction="#PressDeletePMM" text="Delete" />
-            <TextField fx:id="SearchbyPartOrIDMM" layoutX="140.0" layoutY="10.0" prefHeight="25.0" prefWidth="179.0" promptText="Search by Part ID or Name" />
+            <TextField fx:id="SearchbyPartOrIDMM" layoutX="140.0" layoutY="10.0" onAction="#PressSearchPartIDName" prefHeight="25.0" prefWidth="179.0" promptText="Search by Part ID or Name" />
          </children></Pane>
       <Pane layoutX="382.0" layoutY="89.0" prefHeight="286.0" prefWidth="340.0">
          <children>
@@ -41,7 +41,7 @@
             <Button fx:id="OnAddPRMM" layoutX="20.0" layoutY="246.0" mnemonicParsing="false" onAction="#PressAddPRMM" text="Add" />
             <Button fx:id="OnModifyPRMM" layoutX="66.0" layoutY="246.0" mnemonicParsing="false" onAction="#PressModifyPRMM" text="Modify" />
             <Button fx:id="OnDeletePRMM" layoutX="268.0" layoutY="246.0" mnemonicParsing="false" onAction="#PressDeletePRMM" text="Delete" />
-            <TextField fx:id="SearchbyProductOrIDMM" layoutX="140.0" layoutY="10.0" prefHeight="25.0" prefWidth="179.0" promptText="Search by Product ID or Name" />
+            <TextField fx:id="SearchbyProductOrIDMM" layoutX="140.0" layoutY="10.0" onAction="#PressSearchProductIDName" prefHeight="25.0" prefWidth="179.0" promptText="Search by Product ID or Name" />
          </children>
       </Pane>
       <Button fx:id="OnExit" layoutX="355.0" layoutY="375.0" mnemonicParsing="false" onAction="#PressExitMM" text="Exit" />

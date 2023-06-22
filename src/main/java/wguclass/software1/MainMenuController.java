@@ -19,6 +19,8 @@ import java.util.ResourceBundle;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 
+import static wguclass.software1.Inventory.lookupPart;
+
 public class MainMenuController implements Initializable {
     private Stage stage;
     private Scene scene;
@@ -70,7 +72,24 @@ public class MainMenuController implements Initializable {
     @FXML
     private Button OnExit;
 
-    //ON ACTION FOR BUTTONS
+    //ON ACTION FOR BUTTONS AND TXT FIELDS
+    @FXML
+    void PressSearchPartIDName(ActionEvent event) {
+    String SPart = SearchbyPartOrIDMM.getText();
+
+    ObservableList<Part> PartSearched = Inventory.lookupPart(SPart);
+
+        PartsTableMM.setItems(PartSearched);
+
+    SearchbyPartOrIDMM.setText("");
+        System.out.println("All parts list"  + Inventory.getAllParts());
+    }
+
+    @FXML
+    void PressSearchProductIDName(ActionEvent event) {
+
+    }
+
     @FXML
     void PressAddPMM(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/AddPartMenu.fxml"));
@@ -148,16 +167,19 @@ public class MainMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        //PARTS GET ADDED
+        allParts.add(new InHousePart(1, "Wheel",29.99,1,1,10));
+
+        allParts.add(new OutSourcedPart(2, "Cart",29.99,1,0,10));
 //PART TABLE GETS INITIALIZED
       PartsTableMM.setItems(allParts);
       PartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
       PartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
       InvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
       PCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-//PARTS GET ADDED
-        allParts.add(new InHousePart(1, "Wheel",29.99,1,1,10));
 
-        allParts.add(new OutSourcedPart(2, "Cart",29.99,1,0,10));
+
+
 //PRODUCT TABLE GETS INITIALIZED
       ProductsTableMM.setItems(allProducts);
       ProIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -172,7 +194,6 @@ public class MainMenuController implements Initializable {
 
 
     }
-
 
 
 
