@@ -1,6 +1,5 @@
 package wguclass.software1;
 //IMPORTS FOR THE CLASS
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,8 +17,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
-
-import static wguclass.software1.Inventory.lookupPart;
 
 public class MainMenuController implements Initializable {
     private Stage stage;
@@ -87,7 +84,25 @@ public class MainMenuController implements Initializable {
 
     @FXML
     void PressSearchProductIDName(ActionEvent event) {
+        String SProduct = SearchbyProductOrIDMM.getText();
 
+        ObservableList<Product> ProductSearched = Inventory.lookupProduct(SProduct);
+        try {
+            if (ProductSearched.size() == 0) {
+                int productId = Integer.parseInt(SProduct);
+                Product product = Inventory.getAllProducts().get(productId);
+                if (product != null) ;
+                ProductSearched.add(product);
+            }
+        }
+        catch(NumberFormatException e)
+        {
+            //ignore
+        }
+
+            ProductsTableMM.setItems(ProductSearched);
+            SearchbyProductOrIDMM.setText("");
+            System.out.println("All products list" + Inventory.getAllProducts());
     }
 
     @FXML
@@ -159,40 +174,37 @@ public class MainMenuController implements Initializable {
 
     }
     //PARTS AND PRODUCTS OBSERVABLE LISTS
-    public static ObservableList<Part> allParts = FXCollections.observableArrayList();
 
-    public static ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
     //INITIALIZE
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //PARTS GET ADDED
-        allParts.add(new InHousePart(1, "Wheel",29.99,1,1,10));
-
-        allParts.add(new OutSourcedPart(2, "Cart",29.99,1,0,10));
 //PART TABLE GETS INITIALIZED
-      PartsTableMM.setItems(allParts);
+      PartsTableMM.setItems(Inventory.getAllParts());
       PartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
       PartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
       InvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
       PCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+//PARTS GET ADDED
+        Inventory.getAllParts().add(new InHouse(1, "Wheel",29.99,1,1,10));
 
+        Inventory.getAllParts().add(new Outsourced(2, "Cart",29.99,1,0,10));
 
 
 //PRODUCT TABLE GETS INITIALIZED
-      ProductsTableMM.setItems(allProducts);
+      ProductsTableMM.setItems(Inventory.getAllProducts());
       ProIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
       ProNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
       InvProCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
       ProPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
  //PRODUCT GETS ADDED
-            allProducts.add(new Product(1, "Bicycle",150.99,1,1,10));
+            Inventory.getAllProducts().add(new Product(1, "Bicycle",150.99,1,1,10));
 
-        allProducts.add(new Product(2, "Train",125.99,1,0,10));
+        Inventory.getAllProducts().add(new Product(2, "Train",125.99,1,0,10));
 
-
+        Inventory.getAllProducts().add(new Product(3, "Plane",99.99,1,0,5));
     }
 
 

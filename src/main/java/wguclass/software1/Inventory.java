@@ -4,60 +4,80 @@ import javafx.collections.ObservableList;
 
 public class Inventory {
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
-    public static void addPart(Part part){
+
+    public static void addPart(Part part) {
         allParts.add(part);
     }
-/*
-    public static ObservableList<Part> lookupPart(int partId) {
-        ObservableList<Part> namedPart = FXCollections.observableArrayList();
-        ObservableList<Part> allParts = Inventory.getAllParts();
 
-        for(Part part: allParts) {
-            if(part.getId().contains(partId)){
-
-            }
-
+    public static Part lookupPart(int partId) {
+        //enhanced for loop automatically doesn't need a counter
+        for(Part temp : allParts) {
+            if (temp.getId() == partId) ;
+            return temp;
         }
+        return null;
+    }
 
-        return namedPart;
-    }*/
 
-
-    public static  ObservableList<Part> lookupPart(String partName) {
+    public static ObservableList<Part> lookupPart(String partName) {
         ObservableList<Part> namedPart = FXCollections.observableArrayList();
 
-        ObservableList<Part> allParts = Inventory.getAllParts();
-
-        for(Part part: allParts) {
-            if(part.getName().contains(partName)){
+        for (Part part : allParts) {
+            if (part.getName().toLowerCase().contains(partName.toLowerCase())) {
                 namedPart.add(part);
             }
         }
-
         return namedPart;
     }
 
 
     public static void updatePart(int index, Part part) {
+        allParts.set(index, part);
     }
+
     public static void deletePart(Part part) {
     }
 
-    public static ObservableList<Part> getAllParts(){
+    public static ObservableList<Part> getAllParts() {
         return allParts;
     }
 
+
     private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
-    public static void addProduct(Product product){
+
+    public static void addProduct(Product product) {
         allProducts.add(product);
     }
-    public static void lookupProduct(int productId) {
+
+    public static Product lookupProduct(int productId) {
+    //enhanced for loop automatically doesnt need a counter
+        for(Product temp : allProducts) {
+            if (temp.getId() == productId) ;
+            return temp;
+        }
+        return null;
+         }
+
+    public static  ObservableList<Product> lookupProduct(String productName) {
+        ObservableList<Product> namedProduct = FXCollections.observableArrayList();
+//toLowercase method, toUppercase, either or, they take the name and change it to upper/lower
+        for (Product product : allProducts) {
+            if (product.getName().toLowerCase().contains(productName.toLowerCase())) {
+                namedProduct.add(product);
+            }
+        }
+        return namedProduct;
     }
+
+
     public static void updateProduct(int index, Product product) {
+        allProducts.set(index, product);
     }
+
     public static void deleteProduct(Product product) {
     }
 
-    private static ObservableList<Product> getAllProducts = FXCollections.observableArrayList();
+    public static ObservableList<Product> getAllProducts() {
+        return allProducts;
     }
-
+}
