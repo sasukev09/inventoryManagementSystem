@@ -11,7 +11,7 @@ public class Inventory {
 
     public static Part lookupPart(int partId) {
         //enhanced for loop automatically doesn't need a counter
-        for(Part temp : allParts) {
+        for (Part temp : allParts) {
             if (temp.getId() == partId) ;
             return temp;
         }
@@ -34,8 +34,15 @@ public class Inventory {
     public static void updatePart(int index, Part part) {
         allParts.set(index, part);
     }
-
-    public static void deletePart(Part part) {
+//check with CI
+    public static boolean deletePart (Part selectedPart) {
+        if (selectedPart != null) {
+            allParts.add(selectedPart);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public static ObservableList<Part> getAllParts() {
@@ -50,15 +57,15 @@ public class Inventory {
     }
 
     public static Product lookupProduct(int productId) {
-    //enhanced for loop automatically doesnt need a counter
-        for(Product temp : allProducts) {
+        //enhanced for loop automatically doesnt need a counter
+        for (Product temp : allProducts) {
             if (temp.getId() == productId) ;
             return temp;
         }
         return null;
-         }
+    }
 
-    public static  ObservableList<Product> lookupProduct(String productName) {
+    public static ObservableList<Product> lookupProduct(String productName) {
         ObservableList<Product> namedProduct = FXCollections.observableArrayList();
 //toLowercase method, toUppercase, either or, they take the name and change it to upper/lower
         for (Product product : allProducts) {
@@ -74,10 +81,20 @@ public class Inventory {
         allProducts.set(index, product);
     }
 
-    public static void deleteProduct(Product product) {
+    //check with CI boolean as UML with return statements for values true/false
+    public static boolean deleteProduct(Product selectedProduct) {
+        if (selectedProduct != null) {
+            allProducts.add(selectedProduct);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
-    public static ObservableList<Product> getAllProducts() {
-        return allProducts;
+
+        public static ObservableList<Product> getAllProducts () {
+            return allProducts;
+        }
     }
-}
+

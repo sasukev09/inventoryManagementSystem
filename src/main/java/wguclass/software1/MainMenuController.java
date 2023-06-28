@@ -85,24 +85,44 @@ public class MainMenuController implements Initializable {
     @FXML
     void PressSearchProductIDName(ActionEvent event) {
         String SProduct = SearchbyProductOrIDMM.getText();
+                try {
+                    System.out.println("SProduct =" + SProduct);
+                    int productId = Integer.parseInt(SProduct);
+                    Product product = Inventory.lookupProduct(productId);
+                    if (product != null) {
+                        System.out.println("S2Product =" + SProduct);
+                        ProductsTableMM.getSelectionModel().select(product);
+                        return;
+                    }
+                    else {
+                        //POP UP AN ALERT, PRODUCT NOT FOUND
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Product not Found");
+                        alert.setContentText("Product not found.");
+                        Optional<ButtonType> OK = alert.showAndWait();
+                        System.out.println("Product not found");
+                    }
+                } catch (NumberFormatException e) {
+                    ObservableList<Product> ProductSearched = Inventory.lookupProduct(SProduct);
+                    if(ProductSearched.size() != 0)
+                        ProductsTableMM.setItems(ProductSearched);
+                    else {
+                        ProductsTableMM.setItems(Inventory.getAllProducts());
+                        //ALERT PRODUCT NOT FOUND
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Product not Found");
+                        alert.setContentText("Product not found.");
+                        Optional<ButtonType> OK = alert.showAndWait();
+                        System.out.println("Product not found");
+                    }
+                }
 
-        ObservableList<Product> ProductSearched = Inventory.lookupProduct(SProduct);
-        try {
-            if (ProductSearched.size() == 0) {
-                int productId = Integer.parseInt(SProduct);
-                Product product = Inventory.getAllProducts().get(productId);
-                if (product != null) ;
-                ProductSearched.add(product);
-            }
-        }
-        catch(NumberFormatException e)
-        {
-            //ignore
-        }
+          //  else {
+               // ProductsTableMM.setItems(ProductSearched);
+          //  }
 
-            ProductsTableMM.setItems(ProductSearched);
-            SearchbyProductOrIDMM.setText("");
-            System.out.println("All products list" + Inventory.getAllProducts());
+            //SearchbyProductOrIDMM.setText("");
+            //System.out.println("All products list" + Inventory.getAllProducts());
     }
 
     @FXML
@@ -134,6 +154,8 @@ public class MainMenuController implements Initializable {
     //NEEDS MORE WORK
     @FXML
     void PressDeletePRMM(ActionEvent event) {
+
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete Product");
         alert.setContentText("Are you sure you want to delete Product?");
@@ -187,9 +209,9 @@ public class MainMenuController implements Initializable {
       InvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
       PCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 //PARTS GET ADDED
-        Inventory.getAllParts().add(new InHouse(1, "Wheel",29.99,1,1,10));
+        Inventory.getAllParts().add(new InHouse(1, "Wheel",29.99,1,1,10, 1));
 
-        Inventory.getAllParts().add(new Outsourced(2, "Cart",29.99,1,0,10));
+        Inventory.getAllParts().add(new Outsourced(2, "Cart",29.99,1,0,10, "Ford"));
 
 
 //PRODUCT TABLE GETS INITIALIZED

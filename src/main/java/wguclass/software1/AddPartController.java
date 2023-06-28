@@ -33,22 +33,22 @@ public class AddPartController implements Initializable {
 
     @FXML
     private RadioButton APMInHouseRadioButton;
-
+    //if button is selected, then an inhouse part is created
     @FXML
     private RadioButton APMOutSourcedRadioButton;
-
+    //if button is selected, then an inhouse part is created
     @FXML
     private Button APMSaveButton;
-
+    //after button is selected all changes get saved
     @FXML
     private ToggleGroup APMToggleGroup;
 
     @FXML
     private TextField IDTextField;
-
+    //auto generated
     @FXML
     private TextField InventoryTextFIeld;
-
+    //
     @FXML
     private TextField MachIDTxtField;
 
@@ -60,6 +60,7 @@ public class AddPartController implements Initializable {
 
     @FXML
     private TextField NameTextField;
+
 
     @FXML
     private TextField PriceCostTxtField;
@@ -87,11 +88,16 @@ public class AddPartController implements Initializable {
 
     @FXML
     void PressAPMSaveButton(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
+        //save changes from the input on the textfields
+        NameTextField.getText();
+        InventoryTextFIeld.getText();
+
+
+       /* Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
-        stage.show();
+        stage.show();*/
     }
 
     }

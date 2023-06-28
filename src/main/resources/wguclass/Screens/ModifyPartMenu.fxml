@@ -16,7 +16,7 @@
             <ToggleGroup fx:id="ModifyPartMenu" />
          </toggleGroup></RadioButton>
       <RadioButton fx:id="ModPOutRadio" layoutX="222.0" layoutY="30.0" mnemonicParsing="false" onAction="#PressModPOutRadio" text="Outsourced" toggleGroup="$ModifyPartMenu" />
-      <TextField fx:id="ModPIDTxtField" disable="true" layoutX="125.0" layoutY="81.0" />
+      <TextField fx:id="ModPIDTxtField" disable="true" layoutX="125.0" layoutY="81.0" promptText="Auto Gen - Disabled" />
       <TextField fx:id="ModPNameTxtField" layoutX="125.0" layoutY="126.0" />
       <TextField fx:id="ModPartInvTextField" layoutX="125.0" layoutY="165.0" prefHeight="25.0" prefWidth="149.0" />
       <TextField fx:id="ModPartPCTxtField" layoutX="125.0" layoutY="200.0" prefHeight="17.0" prefWidth="149.0" />

@@ -4,7 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Product {
-    public static ObservableList<Part> associatedParts = FXCollections.observableArrayList();
+    public ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
     private int id;
     private String name;
@@ -108,18 +108,18 @@ public class Product {
     /**
      * @return AddAssociatedPart deletes associated part
      */
-    public static void AddAssociatedPart(Part part) {
+    public void AddAssociatedPart(Part part) {
 
     }
     /**
      * @return DeleteAssociatedPart deletes associated part
      */
-    public static void DeleteAssociatedPart(Part part) {
+    public void DeleteAssociatedPart(Part part) {
 
     }
     /**
      * @return DeleteAssociatedPart deletes associated part
      */
-    public static ObservableList<Part> getAllAssociatedParts = FXCollections.observableArrayList();
+    public  ObservableList<Part> getAllAssociatedParts = FXCollections.observableArrayList();
 
 }
