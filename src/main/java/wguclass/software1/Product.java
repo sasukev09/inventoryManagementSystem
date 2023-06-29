@@ -114,9 +114,9 @@ public class Product {
     /**
      * @return DeleteAssociatedPart deletes associated part
      */
-    public void DeleteAssociatedPart(Part part) {
-
-    }
+   /*public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
+        //
+    }*/
     /**
      * @return DeleteAssociatedPart deletes associated part
      */

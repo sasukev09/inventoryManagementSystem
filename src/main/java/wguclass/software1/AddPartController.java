@@ -23,10 +23,7 @@ public class AddPartController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
 
-    }
 
     @FXML
     private Button APMCancelButton;
@@ -91,13 +88,29 @@ public class AddPartController implements Initializable {
         //save changes from the input on the textfields
         NameTextField.getText();
         InventoryTextFIeld.getText();
+        PriceCostTxtField.getText();
+        MaxTxtField.getText();
+        MinTxtField.getText();
+        MachIDTxtField.getText();
+        Inventory.partId += 1;
 
+       if (APMInHouseRadioButton.isSelected()) {
+           System.out.println("INHOUSE SELECTED");
+       }
+       else {
+           System.out.println("OUTSOURCED SELECTED");
+       }
 
        /* Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();*/
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        IDTextField.setText(String.valueOf(Inventory.partId));
     }
 
     }

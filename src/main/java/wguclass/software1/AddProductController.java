@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddProductController implements Initializable {
+
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -80,12 +82,17 @@ public class AddProductController implements Initializable {
     }
 
     @FXML
-    void PressAddPRMSaveButton(ActionEvent event) {
-
-    }
+    void PressAddPRMSaveButton(ActionEvent event) throws IOException {
+        //save changes from the input on the textfields
+        NameTextField.getText();
+        InvTextField.getText();
+        PriceTextField.getText();
+        MaxTextField.getText();
+        MinTextField.getText();
+        Inventory.partId += 1; }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        IDTextField.setText(String.valueOf(Inventory.productId));
     }
 }

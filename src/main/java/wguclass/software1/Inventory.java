@@ -5,8 +5,10 @@ import javafx.collections.ObservableList;
 public class Inventory {
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
 
-    public static void addPart(Part part) {
-        allParts.add(part);
+    public static int partId = 3;
+
+    public static void addPart(Part newPart) {
+        allParts.add(newPart);
     }
 
     public static Part lookupPart(int partId) {
@@ -31,18 +33,13 @@ public class Inventory {
     }
 
 
-    public static void updatePart(int index, Part part) {
-        allParts.set(index, part);
+    public static void updatePart(int index, Part selectedPart) {
+        allParts.set(index, selectedPart);
     }
 //check with CI
     public static boolean deletePart (Part selectedPart) {
-        if (selectedPart != null) {
-            allParts.add(selectedPart);
-            return true;
-        }
-        else {
-            return false;
-        }
+        return allParts.remove(selectedPart);
+
     }
 
     public static ObservableList<Part> getAllParts() {
@@ -50,17 +47,22 @@ public class Inventory {
     }
 
 
+
+
     private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
-    public static void addProduct(Product product) {
-        allProducts.add(product);
+    public static int productId = 4;
+
+    public static void addProduct(Product newProduct) {
+        allProducts.add(newProduct);
     }
 
     public static Product lookupProduct(int productId) {
         //enhanced for loop automatically doesnt need a counter
+        // semicolon on if statement is wrong, basically cuts
         for (Product temp : allProducts) {
-            if (temp.getId() == productId) ;
-            return temp;
+            if (temp.getId() == productId) {
+            return temp;}
         }
         return null;
     }
@@ -77,8 +79,8 @@ public class Inventory {
     }
 
 
-    public static void updateProduct(int index, Product product) {
-        allProducts.set(index, product);
+    public static void updateProduct(int index, Product newProduct) {
+        allProducts.set(index, newProduct);
     }
 
     //check with CI boolean as UML with return statements for values true/false
