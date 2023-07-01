@@ -86,27 +86,34 @@ public class AddPartController implements Initializable {
     @FXML
     void PressAPMSaveButton(ActionEvent event) throws IOException {
         //save changes from the input on the textfields
-        NameTextField.getText();
-        InventoryTextFIeld.getText();
-        PriceCostTxtField.getText();
-        MaxTxtField.getText();
-        MinTxtField.getText();
-        MachIDTxtField.getText();
-        Inventory.partId += 1;
+        String name = NameTextField.getText();
+        //parseint/parsedouble converts data type from string, string goes inside parenthesis
+        int inv = Integer.parseInt(InventoryTextFIeld.getText());
+        double price = Double.parseDouble(PriceCostTxtField.getText());
+        int max = Integer.parseInt(MaxTxtField.getText());
+        int min = Integer.parseInt(MinTxtField.getText());
+        int id = Inventory.generatePartId();
+    //saved in variables ^
 
        if (APMInHouseRadioButton.isSelected()) {
            System.out.println("INHOUSE SELECTED");
+           int machId = Integer.parseInt(MachIDTxtField.getText());
+           Inventory.addPart(new InHouse(id, name,price,inv,min,max,machId));
        }
        else {
            System.out.println("OUTSOURCED SELECTED");
+           String companyName = MachIDTxtField.getText();
+           //no need to convert because machid is already a String
+           Inventory.addPart(new Outsourced(id, name,price,inv,min,max,companyName));
        }
-
-       /* Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
+//to comment multiple lines ctrl and "/"
+        Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
-        stage.show();*/
+        stage.show();
     }
+    //REMEMBER TO PUT TEXT ALERTS AND VALIDATIONS BEFORE THE IF STATEMENTS, PRIOR CREATING OBJECT
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

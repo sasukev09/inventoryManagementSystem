@@ -209,9 +209,9 @@ public class MainMenuController implements Initializable {
       InvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
       PCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 //PARTS GET ADDED
-        Inventory.getAllParts().add(new InHouse(1, "Wheel",29.99,1,1,10, 1));
+        Inventory.getAllParts().add(new InHouse(Inventory.generatePartId(), "Wheel",29.99,1,1,10, 1));
 
-        Inventory.getAllParts().add(new Outsourced(2, "Cart",29.99,1,0,10, "Ford"));
+        Inventory.getAllParts().add(new Outsourced(Inventory.generatePartId(), "Cart",29.99,1,0,10, "Ford"));
 
 
 //PRODUCT TABLE GETS INITIALIZED
@@ -222,11 +222,11 @@ public class MainMenuController implements Initializable {
       ProPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
  //PRODUCT GETS ADDED
-            Inventory.getAllProducts().add(new Product(1, "Bicycle",150.99,1,1,10));
+            Inventory.getAllProducts().add(new Product(Inventory.generateProductId(), "Bicycle",150.99,1,1,10));
 
-        Inventory.getAllProducts().add(new Product(2, "Train",125.99,1,0,10));
+        Inventory.getAllProducts().add(new Product(Inventory.generateProductId(), "Train",125.99,1,0,10));
 
-        Inventory.getAllProducts().add(new Product(3, "Plane",99.99,1,0,5));
+        Inventory.getAllProducts().add(new Product(Inventory.generateProductId(), "Plane",99.99,1,0,5));
     }
 
 

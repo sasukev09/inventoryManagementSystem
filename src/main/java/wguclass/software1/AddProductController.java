@@ -84,12 +84,13 @@ public class AddProductController implements Initializable {
     @FXML
     void PressAddPRMSaveButton(ActionEvent event) throws IOException {
         //save changes from the input on the textfields
-        NameTextField.getText();
-        InvTextField.getText();
-        PriceTextField.getText();
-        MaxTextField.getText();
-        MinTextField.getText();
-        Inventory.partId += 1; }
+        String name = NameTextField.getText();
+        int inv =  Integer.parseInt(InvTextField.getText());
+        int price = Integer.parseInt(PriceTextField.getText());
+        int max = Integer.parseInt(MaxTextField.getText());
+        int min = Integer.parseInt(MinTextField.getText());
+       int productId = Inventory.generateProductId();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

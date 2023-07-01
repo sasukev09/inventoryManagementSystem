@@ -5,7 +5,11 @@ import javafx.collections.ObservableList;
 public class Inventory {
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
 
-    public static int partId = 3;
+    public static int partId = 1;
+    public static int generatePartId(){
+        //gives whatever partid and increments, whenever used, used everywhere you use partid
+        return partId ++;
+    }
 
     public static void addPart(Part newPart) {
         allParts.add(newPart);
@@ -51,7 +55,11 @@ public class Inventory {
 
     private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
-    public static int productId = 4;
+    public static int productId = 1;
+    public static int generateProductId() {
+        //gives whatever partid and increments, whenever used, used everywhere you use partid
+        return productId++ ;
+    }
 
     public static void addProduct(Product newProduct) {
         allProducts.add(newProduct);
