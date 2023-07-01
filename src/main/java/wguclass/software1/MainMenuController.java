@@ -195,41 +195,34 @@ public class MainMenuController implements Initializable {
         stage.show();
 
     }
-    //PARTS AND PRODUCTS OBSERVABLE LISTS
 
+    //created a boolean variable called firstTimeAdded, and used it in an "if" statement inside the
+    //myInitialData method in Inventory, this way, to avoid duplicates every time initialized
+    public static boolean firstTimeAdded = true;
 
     //INITIALIZE
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //calling myInitialData method from Inventory class, where the first parts and products
+        //where created
+        Inventory.myInitialData();
+
+
+        System.out.println("main menu has been initialized");
 
 //PART TABLE GETS INITIALIZED
-      PartsTableMM.setItems(Inventory.getAllParts());
-      PartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-      PartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-      InvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-      PCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-//PARTS GET ADDED
-        Inventory.getAllParts().add(new InHouse(Inventory.generatePartId(), "Wheel",29.99,1,1,10, 1));
-
-        Inventory.getAllParts().add(new Outsourced(Inventory.generatePartId(), "Cart",29.99,1,0,10, "Ford"));
-
+        PartsTableMM.setItems(Inventory.getAllParts());
+        PartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        PartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        InvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        PCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
 //PRODUCT TABLE GETS INITIALIZED
-      ProductsTableMM.setItems(Inventory.getAllProducts());
-      ProIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-      ProNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-      InvProCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-      ProPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-
- //PRODUCT GETS ADDED
-            Inventory.getAllProducts().add(new Product(Inventory.generateProductId(), "Bicycle",150.99,1,1,10));
-
-        Inventory.getAllProducts().add(new Product(Inventory.generateProductId(), "Train",125.99,1,0,10));
-
-        Inventory.getAllProducts().add(new Product(Inventory.generateProductId(), "Plane",99.99,1,0,5));
+        ProductsTableMM.setItems(Inventory.getAllProducts());
+        ProIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        ProNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        InvProCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        ProPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
-
-
-
 }
 

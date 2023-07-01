@@ -2,9 +2,15 @@ package wguclass.software1;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import static wguclass.software1.MainMenuController.firstTimeAdded;
+
 public class Inventory {
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
-
+//    private static boolean firstTimeAdded = true;
+//          if(!firstTimeAdded){
+//        return;
+//    }
+//    firstTimeAdded = false;
     public static int partId = 1;
     public static int generatePartId(){
         //gives whatever partid and increments, whenever used, used everywhere you use partid
@@ -23,6 +29,8 @@ public class Inventory {
         }
         return null;
     }
+
+
 
 
     public static ObservableList<Part> lookupPart(String partName) {
@@ -49,8 +57,6 @@ public class Inventory {
     public static ObservableList<Part> getAllParts() {
         return allParts;
     }
-
-
 
 
     private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
@@ -91,7 +97,6 @@ public class Inventory {
         allProducts.set(index, newProduct);
     }
 
-    //check with CI boolean as UML with return statements for values true/false
     public static boolean deleteProduct(Product selectedProduct) {
         if (selectedProduct != null) {
             allProducts.add(selectedProduct);
@@ -102,9 +107,29 @@ public class Inventory {
         }
     }
 
-
         public static ObservableList<Product> getAllProducts () {
             return allProducts;
         }
+
+//myInitialData method created to add the first parts and products that will appear in main menu
+    //made it public so it could be called inside the main menu controller
+    public static void myInitialData(){
+        if(!firstTimeAdded){
+            return;
+        }
+        firstTimeAdded = false;
+        //PART GETS ADDED
+        Inventory.getAllParts().add(new InHouse(Inventory.generatePartId(), "Wheel",29.99,1,1,10, 1));
+
+        Inventory.getAllParts().add(new Outsourced(Inventory.generatePartId(), "Cart",29.99,1,0,10, "Ford"));
+
+        //PRODUCT GETS ADDED
+        Inventory.getAllProducts().add(new Product(Inventory.generateProductId(), "Bicycle",150.99,1,1,10));
+
+        Inventory.getAllProducts().add(new Product(Inventory.generateProductId(), "Train",125.99,1,0,10));
+
+        Inventory.getAllProducts().add(new Product(Inventory.generateProductId(), "Plane",99.99,1,0,5));
+                                       }
+
     }
 
