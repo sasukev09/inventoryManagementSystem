@@ -12,7 +12,7 @@
       <Text layoutX="41.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Product" />
       <TextField fx:id="IDTextField" disable="true" layoutX="84.0" layoutY="85.0" promptText="Auto Gen - Disabled" />
       <TextField fx:id="NameTextField" layoutX="84.0" layoutY="121.0" />
-      <TextField fx:id="InvTextField" layoutX="84.0" layoutY="161.0" />
+      <TextField fx:id="InvTextField" layoutX="93.0" layoutY="160.0" />
       <TextField fx:id="MaxTextField" layoutX="84.0" layoutY="237.0" prefHeight="25.0" prefWidth="67.0" />
       <TextField fx:id="MinTextField" layoutX="211.0" layoutY="237.0" prefHeight="25.0" prefWidth="67.0" />
       <Text layoutX="41.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID" />
@@ -22,12 +22,12 @@
       <TextField fx:id="PriceTextField" layoutX="84.0" layoutY="200.0" />
       <Text layoutX="168.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min" />
       <Text layoutX="34.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price" />
-      <TableView fx:id="PartsTable" layoutX="299.0" layoutY="72.0" prefHeight="124.0" prefWidth="361.0">
+      <TableView fx:id="PartsTableAPRM" layoutX="299.0" layoutY="72.0" prefHeight="124.0" prefWidth="361.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Part ID" />
-          <TableColumn prefWidth="75.0" text="Part Name" />
-            <TableColumn prefWidth="92.66659545898438" text="Inventory Level" />
-            <TableColumn prefWidth="116.66670735677081" text="Price/Cost per Unit" />
+          <TableColumn fx:id="APRPartIDCol" prefWidth="75.0" text="Part ID" />
+          <TableColumn fx:id="APRPartNameCol" prefWidth="75.0" text="Part Name" />
+            <TableColumn fx:id="APRInvCol" prefWidth="92.66659545898438" text="Inventory Level" />
+            <TableColumn fx:id="APRPCCol" prefWidth="116.66670735677081" text="Price/Cost per Unit" />
         </columns>
       </TableView>
       <TableView fx:id="AssociatedPartsTable" layoutX="299.0" layoutY="249.0" prefHeight="124.0" prefWidth="361.0">

@@ -8,7 +8,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -51,6 +54,20 @@ public class ModifyProductController implements Initializable {
     private TextField ModifyPRSearchByPartIDorNameTxtField;
 
     @FXML
+    private TableView PartsTableMPRM;
+    @FXML
+    private TableColumn MPRInvCol;
+
+    @FXML
+    private TableColumn MPRPCCol;
+
+    @FXML
+    private TableColumn MPRPartIDCol;
+
+    @FXML
+    private TableColumn MPRPartNameCol;
+
+    @FXML
     void PressModifyPRAddButton(ActionEvent event) {
 
     }
@@ -77,6 +94,13 @@ public class ModifyProductController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        PartsTableMPRM.setItems(Inventory.getAllParts());
+        MPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        MPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        MPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        MPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
 
     }
 }

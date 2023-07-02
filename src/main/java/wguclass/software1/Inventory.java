@@ -112,7 +112,7 @@ public class Inventory {
         }
 
 //myInitialData method created to add the first parts and products that will appear in main menu
-    //made it public so it could be called inside the main menu controller
+    //made it public, so it could be called inside the main menu controller
     public static void myInitialData(){
         if(!firstTimeAdded){
             return;
