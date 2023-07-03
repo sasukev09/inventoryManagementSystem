@@ -72,16 +72,42 @@ public class MainMenuController implements Initializable {
     //ON ACTION FOR BUTTONS AND TXT FIELDS
     @FXML
     void PressSearchPartIDName(ActionEvent event) {
-    String SPart = SearchbyPartOrIDMM.getText();
-
-    ObservableList<Part> PartSearched = Inventory.lookupPart(SPart);
-
-        PartsTableMM.setItems(PartSearched);
-
-    SearchbyPartOrIDMM.setText("");
-        System.out.println("All parts list"  + Inventory.getAllParts());
+        String SPart = SearchbyPartOrIDMM.getText();
+        try {
+            System.out.println("SPart =" + SPart);
+            int partId = Integer.parseInt(SPart);
+            Part part = Inventory.lookupPart(partId);
+            if (part != null) {
+                System.out.println("S2Part =" + SPart);
+                PartsTableMM.getSelectionModel().select(part);
+                return;
+            }
+            else {
+                //POP UP AN ALERT, PRODUCT NOT FOUND
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Part not Found");
+                alert.setContentText("Part not found.");
+                Optional<ButtonType> OK = alert.showAndWait();
+                System.out.println("Part not found");
+            }
+        } catch (NumberFormatException e) {
+            ObservableList<Part> PartSearched = Inventory.lookupPart(SPart);
+            if(PartSearched.size() != 0)
+                PartsTableMM.setItems(PartSearched);
+            else {
+                PartsTableMM.setItems(Inventory.getAllParts());
+                //ALERT PRODUCT NOT FOUND
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Part not Found");
+                alert.setContentText("Part not found.");
+                Optional<ButtonType> OK = alert.showAndWait();
+                System.out.println("Part not found");
+            }
+        }
     }
 
+
+    //OG CORRECT CODE TO SEARCH BY ID OR NAME
     @FXML
     void PressSearchProductIDName(ActionEvent event) {
         String SProduct = SearchbyProductOrIDMM.getText();
@@ -116,13 +142,6 @@ public class MainMenuController implements Initializable {
                         System.out.println("Product not found");
                     }
                 }
-
-          //  else {
-               // ProductsTableMM.setItems(ProductSearched);
-          //  }
-
-            //SearchbyProductOrIDMM.setText("");
-            //System.out.println("All products list" + Inventory.getAllProducts());
     }
 
     @FXML

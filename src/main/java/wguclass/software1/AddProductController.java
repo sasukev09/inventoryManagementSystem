@@ -1,5 +1,6 @@
 package wguclass.software1;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,16 +8,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddProductController implements Initializable {
@@ -74,7 +73,7 @@ public class AddProductController implements Initializable {
     private TextField PriceTextField;
 
     @FXML
-    private TextField SearchbyPartOrID;
+    private TextField SearchbyPartOrIDAPRM;
 
     @FXML
     void PressAddPRMAddButton(ActionEvent event) {
@@ -93,6 +92,42 @@ public class AddProductController implements Initializable {
     @FXML
     void PressAddPRMRemoveAPartButton(ActionEvent event) {
 
+    }
+
+    @FXML
+    void APRMPressSearchPartIDName(ActionEvent event) {
+        String SPart = SearchbyPartOrIDAPRM.getText();
+        try {
+            System.out.println("SPart =" + SPart);
+            int partId = Integer.parseInt(SPart);
+            Part part = Inventory.lookupPart(partId);
+            if (part != null) {
+                System.out.println("S2Part =" + SPart);
+                PartsTableAPRM.getSelectionModel().select(part);
+                return;
+            }
+            else {
+                //POP UP AN ALERT, PRODUCT NOT FOUND
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Part not Found");
+                alert.setContentText("Part not found.");
+                Optional<ButtonType> OK = alert.showAndWait();
+                System.out.println("Part not found");
+            }
+        } catch (NumberFormatException e) {
+            ObservableList<Part> PartSearched = Inventory.lookupPart(SPart);
+            if(PartSearched.size() != 0)
+                PartsTableAPRM.setItems(PartSearched);
+            else {
+                PartsTableAPRM.setItems(Inventory.getAllParts());
+                //ALERT PRODUCT NOT FOUND
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Part not Found");
+                alert.setContentText("Part not found.");
+                Optional<ButtonType> OK = alert.showAndWait();
+                System.out.println("Part not found");
+            }
+        }
     }
 
     @FXML

@@ -24,7 +24,7 @@ public class Inventory {
     public static Part lookupPart(int partId) {
         //enhanced for loop automatically doesn't need a counter
         for (Part temp : allParts) {
-            if (temp.getId() == partId) ;
+            if (temp.getId() == partId)
             return temp;
         }
         return null;

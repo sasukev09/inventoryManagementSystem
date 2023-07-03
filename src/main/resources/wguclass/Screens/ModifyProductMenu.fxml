@@ -30,7 +30,7 @@
             <TableColumn fx:id="MPRPCCol" prefWidth="116.66670735677081" text="Price/Cost per Unit" />
         </columns>
       </TableView>
-      <TableView layoutX="299.0" layoutY="249.0" prefHeight="124.0" prefWidth="361.0">
+      <TableView fx:id="AssociatedPartsTableMPR" layoutX="299.0" layoutY="249.0" prefHeight="124.0" prefWidth="361.0">
          <columns>
             <TableColumn prefWidth="75.0" text="Part ID" />
             <TableColumn prefWidth="75.0" text="Part Name" />
@@ -38,7 +38,7 @@
             <TableColumn prefWidth="117.33331298828125" text="Price/ Cost per Unit" />
          </columns>
       </TableView>
-      <TextField fx:id="ModifyPRSearchByPartIDorNameTxtField" layoutX="462.0" layoutY="27.0" prefHeight="25.0" prefWidth="161.0" promptText="Search by Part ID or Name" />
+      <TextField fx:id="ModifyPRSearchByPartIDorNameTxtField" layoutX="462.0" layoutY="27.0" onAction="#MPRMPressSearchPartIDName" prefHeight="25.0" prefWidth="161.0" promptText="Search by Part ID or Name" />
       <Button fx:id="ModifyPRRemAsPartButton" layoutX="462.0" layoutY="392.0" mnemonicParsing="false" onAction="#PressModifyPRRemAsPartButton" text="Remove Associated Part" />
       <Button fx:id="ModifyPRSaveButton" layoutX="462.0" layoutY="429.0" mnemonicParsing="false" onAction="#PressModifyPRSaveButton" text="Save" />
       <Button fx:id="ModifyPRCancelButton" layoutX="553.0" layoutY="429.0" mnemonicParsing="false" onAction="#PressModifyPRCancelButton" text="Cancel" />
