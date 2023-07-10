@@ -36,8 +36,24 @@ public class AddProductController implements Initializable {
     @FXML
     private Button AddPRMSaveButton;
 
+    //ASSOCIATED PARTS TABLE APR
     @FXML
-    private TableView<?> AssociatedPartsTable;
+    private TableView <Part> AssociatedPartsTableAPR;
+
+    @FXML
+    private TableColumn <Part, Integer> APAPRInvCol;
+
+    @FXML
+    private TableColumn <Part, Double> APAPRPCCol;
+
+    @FXML
+    private TableColumn <Part, Integer> APAPRPartIDCol;
+
+    @FXML
+    private TableColumn<?, ?> APAPRPartNameCol;
+
+
+
 
     @FXML
     private TextField IDTextField;
@@ -54,6 +70,7 @@ public class AddProductController implements Initializable {
     @FXML
     private TextField NameTextField;
 
+    //PARTS TABLE APR
     @FXML
     private TableView PartsTableAPRM;
 
@@ -154,11 +171,19 @@ public class AddProductController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         IDTextField.setText(String.valueOf(Inventory.productId));
-
+        //initializing part table
         PartsTableAPRM.setItems(Inventory.getAllParts());
         APRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         APRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         APRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         APRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+
+        //initiaizing Associated part table
+        APAPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        APAPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        APAPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        APAPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        System.out.println("associated part table has been intialized");
     }
 }

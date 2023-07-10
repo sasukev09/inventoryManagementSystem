@@ -25,15 +25,15 @@ public class MainMenuController implements Initializable {
 
     //PARTS TABLE AND BUTTONS
     @FXML
-    private TableView PartsTableMM;
+    private TableView <Part> PartsTableMM;
     @FXML
-    private TableColumn PartIDCol;
+    private TableColumn <Part,Integer> PartIDCol;
     @FXML
-    private TableColumn PartNameCol;
+    private TableColumn <Part,String> PartNameCol;
     @FXML
-    private TableColumn InvCol;
+    private TableColumn <Part, Integer> InvCol;
     @FXML
-    private TableColumn PCCol;
+    private TableColumn <Part, Double> PCCol;
 
     @FXML
     private Button OnAddPMM;
@@ -46,15 +46,15 @@ public class MainMenuController implements Initializable {
 
     //PRODUCTS TABLE AND BUTTONS
     @FXML
-    private TableView ProductsTableMM;
+    private TableView <Product> ProductsTableMM;
     @FXML
-    private TableColumn ProIDCol;
+    private TableColumn <Product, Integer> ProIDCol;
     @FXML
-    private TableColumn ProNameCol;
+    private TableColumn <Product, String> ProNameCol;
     @FXML
-    private TableColumn InvProCol;
+    private TableColumn <Product, Integer> InvProCol;
     @FXML
-    private TableColumn ProPCCol;
+    private TableColumn <Product, Double> ProPCCol;
 
     @FXML
     private Button OnAddPRMM;
@@ -164,22 +164,56 @@ public class MainMenuController implements Initializable {
     //NEEDS MOERE WORK
     @FXML
     void PressDeletePMM(ActionEvent event) {
+        Part selectedPart = PartsTableMM.getSelectionModel().getSelectedItem();
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete Part");
         alert.setContentText("Are you sure you want to delete Part?");
         Optional<ButtonType> result = alert.showAndWait();
 
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            Inventory.deletePart(selectedPart);
+        }
     }
+
+
     //NEEDS MORE WORK
     @FXML
-    void PressDeletePRMM(ActionEvent event) {
-
+    void PressDeletePRMM(ActionEvent event) throws IOException {
+        Product selectedProduct = ProductsTableMM.getSelectionModel().getSelectedItem();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete Product");
-        alert.setContentText("Are you sure you want to delete Product?");
+        alert.setTitle("Delete Part");
+        alert.setContentText("Are you sure you want to delete Part?");
         Optional<ButtonType> result = alert.showAndWait();
+
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            Inventory.deleteProduct(selectedProduct);
+        }
     }
+
+//        Product selectedProduct = ProductsTableMM.getSelectionModel().getSelectedItem();
+//        if (SearchbyPartOrIDMM.getSelectedText() == null) {
+//            Alert nullalert = new Alert(Alert.AlertType.CONFIRMATION);
+//            nullalert.setTitle("Delete Product");
+//            nullalert.setContentText("Are you sure you want to delete Product?");
+//         }
+//
+//        Optional<ButtonType> result = nullAlert.showAndWait();
+//        if(result.isPresent() && result.get() == ButtonType.OK) {
+//            Inventory.deleteProduct(selectedProduct);
+//        }
+//        else {
+//            ProductsTableMM.setItems(Inventory.getAllProducts());
+//            //ALERT PRODUCT NOT FOUND
+//            Alert deletealert = new Alert(Alert.AlertType.ERROR);
+//            deletealert.setTitle("Product not Found");
+//            deletealert.setContentText("Product not found.");
+//            Optional<ButtonType> OK = deletealert.showAndWait();
+//            System.out.println("Product not found");
+//        }
+//    }
+
     //EXIT BUTTON FOR THE MAIN MENU, INCLUDING THE "ARE YOU SURE?" DIALOG BOX
     @FXML
     void PressExitMM(ActionEvent event) throws IOException {

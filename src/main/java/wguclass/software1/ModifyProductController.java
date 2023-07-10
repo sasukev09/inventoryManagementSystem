@@ -22,6 +22,7 @@ public class ModifyProductController implements Initializable {
     private Scene scene;
     private Parent root;
 
+
     @FXML
     private Button ModifyPRAddButton;
 
@@ -52,19 +53,36 @@ public class ModifyProductController implements Initializable {
     @FXML
     private TextField ModifyPRSearchByPartIDorNameTxtField;
 
+    //PARTS TABLE MPRM
     @FXML
-    private TableView PartsTableMPRM;
+    private TableView <Part> PartsTableMPRM;
     @FXML
-    private TableColumn MPRInvCol;
+    private TableColumn <Part, Integer> MPRInvCol;
 
     @FXML
-    private TableColumn MPRPCCol;
+    private TableColumn <Part, Double> MPRPCCol;
 
     @FXML
-    private TableColumn MPRPartIDCol;
+    private TableColumn <Part, Integer> MPRPartIDCol;
 
     @FXML
-    private TableColumn MPRPartNameCol;
+    private TableColumn <Part, String> MPRPartNameCol;
+
+    //ASSOCIATED PART TABLE MPR
+    @FXML
+    private TableView<Part> AssociatedPartsTableMPR;
+
+    @FXML
+    private TableColumn<Part, Integer> APMPRInvCol;
+
+    @FXML
+    private TableColumn<Part,Double> APMPRPCCol;
+
+    @FXML
+    private TableColumn<Part,Integer> APMPRPartIDCol;
+
+    @FXML
+    private TableColumn<Part,String> APMPRPartNameCol;
 
     @FXML
     void PressModifyPRAddButton(ActionEvent event) {
@@ -135,6 +153,11 @@ public class ModifyProductController implements Initializable {
         MPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         MPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-
+        //initiaizing Associated part table
+        APMPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        APMPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        APMPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        APMPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        System.out.println("associated part table has been intialized");
     }
 }

@@ -48,7 +48,8 @@ public class Inventory {
     public static void updatePart(int index, Part selectedPart) {
         allParts.set(index, selectedPart);
     }
-//check with CI
+
+    //ask CI about where to implement if statement and how to implement it to the txt alert
     public static boolean deletePart (Part selectedPart) {
         return allParts.remove(selectedPart);
 
@@ -97,17 +98,14 @@ public class Inventory {
         allProducts.set(index, newProduct);
     }
 
+//ask CI about where to implement if statement and how to implement it to the txt alert
     public static boolean deleteProduct(Product selectedProduct) {
-        if (selectedProduct != null) {
-            allProducts.add(selectedProduct);
-            return true;
-        }
-        else {
-            return false;
-        }
+        return allProducts.remove(selectedProduct);
+
     }
 
-        public static ObservableList<Product> getAllProducts () {
+
+    public static ObservableList<Product> getAllProducts () {
             return allProducts;
         }
 
