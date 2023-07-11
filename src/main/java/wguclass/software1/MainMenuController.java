@@ -166,12 +166,16 @@ public class MainMenuController implements Initializable {
     void PressDeletePMM(ActionEvent event) {
         Part selectedPart = PartsTableMM.getSelectionModel().getSelectedItem();
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete Part");
-        alert.setContentText("Are you sure you want to delete Part?");
-        Optional<ButtonType> result = alert.showAndWait();
-
-        if(result.isPresent() && result.get() == ButtonType.OK) {
+        if (selectedPart == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setContentText("Part not selected, please select a part");
+            alert.showAndWait();
+          } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete Part");
+            alert.setContentText("Are you sure you want to delete Part?");
+            Optional<ButtonType> result = alert.showAndWait();
             Inventory.deletePart(selectedPart);
         }
     }
@@ -182,37 +186,19 @@ public class MainMenuController implements Initializable {
     void PressDeletePRMM(ActionEvent event) throws IOException {
         Product selectedProduct = ProductsTableMM.getSelectionModel().getSelectedItem();
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete Part");
-        alert.setContentText("Are you sure you want to delete Part?");
-        Optional<ButtonType> result = alert.showAndWait();
-
-        if(result.isPresent() && result.get() == ButtonType.OK) {
+        if (selectedProduct == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setContentText("Product not selected, please select a product");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete Product");
+            alert.setContentText("Are you sure you want to delete Product?");
+            Optional<ButtonType> result = alert.showAndWait();
             Inventory.deleteProduct(selectedProduct);
         }
     }
-
-//        Product selectedProduct = ProductsTableMM.getSelectionModel().getSelectedItem();
-//        if (SearchbyPartOrIDMM.getSelectedText() == null) {
-//            Alert nullalert = new Alert(Alert.AlertType.CONFIRMATION);
-//            nullalert.setTitle("Delete Product");
-//            nullalert.setContentText("Are you sure you want to delete Product?");
-//         }
-//
-//        Optional<ButtonType> result = nullAlert.showAndWait();
-//        if(result.isPresent() && result.get() == ButtonType.OK) {
-//            Inventory.deleteProduct(selectedProduct);
-//        }
-//        else {
-//            ProductsTableMM.setItems(Inventory.getAllProducts());
-//            //ALERT PRODUCT NOT FOUND
-//            Alert deletealert = new Alert(Alert.AlertType.ERROR);
-//            deletealert.setTitle("Product not Found");
-//            deletealert.setContentText("Product not found.");
-//            Optional<ButtonType> OK = deletealert.showAndWait();
-//            System.out.println("Product not found");
-//        }
-//    }
 
     //EXIT BUTTON FOR THE MAIN MENU, INCLUDING THE "ARE YOU SURE?" DIALOG BOX
     @FXML
