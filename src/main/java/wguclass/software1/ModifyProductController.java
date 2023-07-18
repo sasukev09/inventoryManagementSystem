@@ -1,5 +1,6 @@
 package wguclass.software1;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,6 +23,7 @@ public class ModifyProductController implements Initializable {
     private Scene scene;
     private Parent root;
 
+    public ObservableList<Part> tempAssociatedParts = FXCollections.observableArrayList();
 
     @FXML
     private Button ModifyPRAddButton;
@@ -86,7 +88,21 @@ public class ModifyProductController implements Initializable {
 
     @FXML
     void PressModifyPRAddButton(ActionEvent event) {
+        Part selectedPart = PartsTableMPRM.getSelectionModel().getSelectedItem();
 
+        if (selectedPart == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Part not selected");
+            alert.setContentText("Part not selected, please select a part");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Associating part with product");
+            alert.setContentText("Are you sure you want to associate this part?");
+            Optional<ButtonType> result = alert.showAndWait();
+            Part copiedPart = PartsTableMPRM.getSelectionModel().getSelectedItem();
+            AssociatedPartsTableMPR.getItems().add(copiedPart);
+        }
     }
 
     @FXML
@@ -154,6 +170,9 @@ public class ModifyProductController implements Initializable {
         MPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         //initiaizing Associated part table
+        //making a temporary list and then when ready you copy it over to the permanent
+        //
+        AssociatedPartsTableMPR.setItems(tempAssociatedParts);
         APMPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         APMPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         APMPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
@@ -161,3 +180,18 @@ public class ModifyProductController implements Initializable {
         System.out.println("associated part table has been intialized");
     }
 }
+//        Part selectedPart = PartsTableMPRM.getSelectionModel().getSelectedItem();
+//
+//        if (selectedPart == null) {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Part not selected");
+//            alert.setContentText("Part not selected, please select a part");
+//            alert.showAndWait();
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//            alert.setTitle("Associating part with product");
+//            alert.setContentText("Are you sure you want to associate this part?");
+//            Optional<ButtonType> result = alert.showAndWait();
+//            Part copiedPart = PartsTableMPRM.getSelectionModel().getSelectedItem();
+//            AssociatedPartsTableMPR.getItems().add(copiedPart);
+//        }

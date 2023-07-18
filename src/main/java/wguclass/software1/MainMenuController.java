@@ -168,7 +168,7 @@ public class MainMenuController implements Initializable {
 
         if (selectedPart == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error Dialog");
+            alert.setTitle("Part not selected");
             alert.setContentText("Part not selected, please select a part");
             alert.showAndWait();
           } else {
@@ -186,9 +186,11 @@ public class MainMenuController implements Initializable {
     void PressDeletePRMM(ActionEvent event) throws IOException {
         Product selectedProduct = ProductsTableMM.getSelectionModel().getSelectedItem();
 
+//if its a string you use .equals
+
         if (selectedProduct == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error Dialog");
+            alert.setTitle("Product not selected");
             alert.setContentText("Product not selected, please select a product");
             alert.showAndWait();
         } else {
@@ -219,19 +221,47 @@ public class MainMenuController implements Initializable {
     }
     @FXML
     void PressModifyPMM(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/ModifyPartMenu.fxml"));
+       //Select a part from the table, store it in a part variable,
+        //would call a static method from the modify part, created in the modify part controller
+//        ModifyPartController.setData();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/wguclass/Screens/ModifyPartMenu.fxml"));
+        loader.load();
+
+        //NOW the getController method, allows you to reference another controller so that you can access that controller public members
+        //getting access to the instance of the receiveSetData method located in the ModifyPart menu
+        //once we do this we will be able to use the receiveSetData method
+
+        //Creating a reference variable for the ModifyPartController
+        ModifyPartController ModPartController = loader.getController();
+        // we created the fxmlloader object and let it know which fxmlview to use
+        // and now we let it know which controller is associated to this fxmlview
+
+        ModPartController.receiveSetData(PartsTableMM.getSelectionModel().getSelectedItem());
+        //by using getselectionmodel & getselecteditem, now we have our selected part sent
+        //to the receiveSetData method,to pass info from MainMenu to ModifyPart
+
+
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
+        //we need a reference to the container of this fxml doc
+        Parent scene = loader.getRoot();
+        stage.setScene(scene.getScene());
         stage.show();
+
+
+
+//        Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/ModifyPartMenu.fxml"));
+//        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
     }
+
+
+
     @FXML
     void PressModifyPRMM(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/ModifyProductMenu.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+
 
     }
 

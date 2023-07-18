@@ -106,9 +106,9 @@ public class Product {
     }
 
     /**
-     * @return AddAssociatedPart deletes associated part
+     * @return addAssociatedPart deletes associated part
      */
-    public void AddAssociatedPart(Part part) {
+    public void addAssociatedPart(Part part) {
 
     }
     /**

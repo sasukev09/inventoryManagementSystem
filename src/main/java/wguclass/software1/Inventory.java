@@ -117,7 +117,8 @@ public class Inventory {
         }
         firstTimeAdded = false;
         //PART GETS ADDED
-        Inventory.getAllParts().add(new InHouse(Inventory.generatePartId(), "Wheel",29.99,1,1,10, 1));
+        Part p1 = new InHouse(Inventory.generatePartId(), "Wheel",29.99,1,1,10, 1);
+        Inventory.getAllParts().add(p1);
 
         Inventory.getAllParts().add(new Outsourced(Inventory.generatePartId(), "Cart",29.99,1,0,10, "Ford"));
 
@@ -125,9 +126,12 @@ public class Inventory {
         Inventory.getAllProducts().add(new Product(Inventory.generateProductId(), "Bicycle",150.99,1,1,10));
 
         Inventory.getAllProducts().add(new Product(Inventory.generateProductId(), "Train",125.99,1,0,10));
-
-        Inventory.getAllProducts().add(new Product(Inventory.generateProductId(), "Plane",99.99,1,0,5));
-                                       }
+        //needed a reference variable "p" for plane
+        Product p = new Product(Inventory.generateProductId(), "Plane",99.99,1,0,5);
+        Inventory.getAllProducts().add(p);
+        //added part "p1"
+        p.addAssociatedPart(p1);
+        }
 
     }
-
+//GET MODIFY, ADD, VERIFICATIONS OF TXT FIELDS, DELETE, ADD AND FINALLY MOVE OVER TO PRODUCT

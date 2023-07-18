@@ -19,6 +19,7 @@ package wguclass.software1;
         import java.util.ResourceBundle;
 
 public class ModifyPartController implements Initializable {
+
     public Text ModPMLabelTxtMachID;
     private Stage stage;
     private Scene scene;
@@ -40,6 +41,7 @@ public class ModifyPartController implements Initializable {
     @FXML
     private Button ModPartCancelButton;
 
+//PASS THE FOOTBALL WEBINAR BY MARK TO SET UP PRESET
     @FXML
     private TextField ModPartInvTextField;
 
@@ -95,10 +97,46 @@ public class ModifyPartController implements Initializable {
         stage.show();
     }
 
+    public void receiveSetData (Part part) {
+        //String.valueOf retrieved the id of the p1 and converted that int into string to assign to the label
+        ModPIDTxtField.setText(String.valueOf(part.getId()));
 
+//        if (part instanceof InHouse) {
+//
+//            InHouse part1 = (InHouse) part;
+//            InveninHouseRadio.setSelected(true);
+//            companyLabel.setText("Machine ID");
+//            this.name.setText(part1.getName());
+//            this.id.setText((Integer.toString(part1.getId())));
+//            this.count.setText((Integer.toString(part1.getStock())));
+//            this.price.setText((Double.toString(part1.getPrice())));
+//            this.min.setText((Integer.toString(part1.getMin())));
+//            this.max.setText((Integer.toString(part1.getMax())));
+//            this.company.setText((Integer.toString(part1.getMachineID())));
+//
+//        }
+//
+//        if (part instanceof OutSourced) {
+//
+//            OutSourced part2 = (OutSourced) part;
+//            outSourcedRadio.setSelected(true);
+//            companyLabel.setText("Company Name");
+//            this.name.setText(part2.getName());
+//            this.id.setText((Integer.toString(part2.getId())));
+//            this.count.setText((Integer.toString(part2.getStock())));
+//            this.price.setText((Double.toString(part2.getPrice())));
+//            this.min.setText((Integer.toString(part2.getMin())));
+//            this.max.setText((Integer.toString(part2.getMax())));
+//            this.company.setText(part2.getCompanyName());
+//        }
+//    }
+         }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+
     }
+
+
 }
