@@ -220,34 +220,44 @@ public class MainMenuController implements Initializable {
         }
     }
     @FXML
-    void PressModifyPMM(ActionEvent event) throws IOException {
+    void PressModifyPMM(ActionEvent event) {
+        Part part = PartsTableMM.getSelectionModel().getSelectedItem();
+        if (part == null) {
+            //todo add alert to user that part was not selected
+            System.out.println("...part was null");
+            return;
+        }
        //Select a part from the table, store it in a part variable,
         //would call a static method from the modify part, created in the modify part controller
 //        ModifyPartController.setData();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/wguclass/Screens/ModifyPartMenu.fxml"));
-        loader.load();
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/wguclass/Screens/ModifyPartMenu.fxml"));
+            Parent scene= loader.load();
 
-        //NOW the getController method, allows you to reference another controller so that you can access that controller public members
-        //getting access to the instance of the receiveSetData method located in the ModifyPart menu
-        //once we do this we will be able to use the receiveSetData method
+            //NOW the getController method, allows you to reference another controller so that you can access that controller public members
+            //getting access to the instance of the receiveSetData method located in the ModifyPart menu
+            //once we do this we will be able to use the receiveSetData method
+            System.out.println("...after loader.load");
+            //Creating a reference variable for the ModifyPartController
+            ModifyPartController ModPartController = loader.getController();
+            // we created the fxmlloader object and let it know which fxmlview to use
+            // and now we let it know which controller is associated to this fxmlview
+            System.out.println("...after load gets controller");
+            ModPartController.receiveSetData(PartsTableMM.getSelectionModel().getSelectedItem());
+            //by using getselectionmodel & getselecteditem, now we have our selected part sent
+            //to the receiveSetData method,to pass info from MainMenu to ModifyPart
+            System.out.println("...after receive set part");
 
-        //Creating a reference variable for the ModifyPartController
-        ModifyPartController ModPartController = loader.getController();
-        // we created the fxmlloader object and let it know which fxmlview to use
-        // and now we let it know which controller is associated to this fxmlview
-
-        ModPartController.receiveSetData(PartsTableMM.getSelectionModel().getSelectedItem());
-        //by using getselectionmodel & getselecteditem, now we have our selected part sent
-        //to the receiveSetData method,to pass info from MainMenu to ModifyPart
-
-
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        //we need a reference to the container of this fxml doc
-        Parent scene = loader.getRoot();
-        stage.setScene(scene.getScene());
-        stage.show();
-
+            //stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage = (Stage) PartsTableMM.getScene().getWindow();
+            //we need a reference to the container of this fxml doc
+       //     Parent scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
 //        Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/ModifyPartMenu.fxml"));
