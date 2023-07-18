@@ -10,7 +10,7 @@
 <AnchorPane prefHeight="480.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wguclass.software1.ModifyProductController">
    <children>
       <Text layoutX="41.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modify Product" />
-      <TextField disable="true" layoutX="84.0" layoutY="85.0" promptText="Auto Gen - Disabled" />
+      <TextField fx:id="ModifyPRIdTxtField" disable="true" layoutX="84.0" layoutY="85.0" promptText="Auto Gen - Disabled" />
       <TextField fx:id="ModifyPRNameTxtField" layoutX="84.0" layoutY="121.0" />
       <TextField fx:id="ModifyPRInvTxtField" layoutX="84.0" layoutY="161.0" />
       <TextField fx:id="ModifyPRMaxTxtField" layoutX="84.0" layoutY="237.0" prefHeight="25.0" prefWidth="67.0" />

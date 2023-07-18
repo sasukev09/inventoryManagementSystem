@@ -32,6 +32,9 @@ public class ModifyProductController implements Initializable {
     private Button ModifyPRCancelButton;
 
     @FXML
+    private TextField ModifyPRIdTxtField;
+
+    @FXML
     private TextField ModifyPRInvTxtField;
 
     @FXML
@@ -160,6 +163,19 @@ public class ModifyProductController implements Initializable {
             }
         }
     }
+
+    public void receiveProductsSetData (Product product) {
+        //String.valueOf retrieved the id of the p1 and converted that int into string to assign to the label
+
+        ModifyPRIdTxtField.setText(String.valueOf(product.getId()));
+        ModifyPRNameTxtField.setText(product.getName());
+        ModifyPRInvTxtField.setText(String.valueOf(product.getStock()));
+        ModifyPRPriceTxtField.setText(String.valueOf(product.getPrice()));
+        ModifyPRMaxTxtField.setText(String.valueOf(product.getMax()));
+        ModifyPRMinTxtField.setText((String.valueOf(product.getMin())));
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -180,18 +196,3 @@ public class ModifyProductController implements Initializable {
         System.out.println("associated part table has been intialized");
     }
 }
-//        Part selectedPart = PartsTableMPRM.getSelectionModel().getSelectedItem();
-//
-//        if (selectedPart == null) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Part not selected");
-//            alert.setContentText("Part not selected, please select a part");
-//            alert.showAndWait();
-//        } else {
-//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//            alert.setTitle("Associating part with product");
-//            alert.setContentText("Are you sure you want to associate this part?");
-//            Optional<ButtonType> result = alert.showAndWait();
-//            Part copiedPart = PartsTableMPRM.getSelectionModel().getSelectedItem();
-//            AssociatedPartsTableMPR.getItems().add(copiedPart);
-//        }

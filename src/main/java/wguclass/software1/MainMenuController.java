@@ -223,7 +223,10 @@ public class MainMenuController implements Initializable {
     void PressModifyPMM(ActionEvent event) {
         Part part = PartsTableMM.getSelectionModel().getSelectedItem();
         if (part == null) {
-            //todo add alert to user that part was not selected
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Part not selected");
+            alert.setContentText("Part not selected, please select a part");
+            alert.showAndWait();
             System.out.println("...part was null");
             return;
         }
@@ -244,7 +247,7 @@ public class MainMenuController implements Initializable {
             // we created the fxmlloader object and let it know which fxmlview to use
             // and now we let it know which controller is associated to this fxmlview
             System.out.println("...after load gets controller");
-            ModPartController.receiveSetData(PartsTableMM.getSelectionModel().getSelectedItem());
+            ModPartController.receivePartsSetData(PartsTableMM.getSelectionModel().getSelectedItem());
             //by using getselectionmodel & getselecteditem, now we have our selected part sent
             //to the receiveSetData method,to pass info from MainMenu to ModifyPart
             System.out.println("...after receive set part");
@@ -257,23 +260,45 @@ public class MainMenuController implements Initializable {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
-
-//        Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/ModifyPartMenu.fxml"));
-//        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
+            }
     }
 
 
 
     @FXML
     void PressModifyPRMM(ActionEvent event) throws IOException {
+        //todo change everything to product related
+        //todo create the static method in the modify product controller
+        Product product = ProductsTableMM.getSelectionModel().getSelectedItem();
+        if (product == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Product not selected");
+            alert.setContentText("Product not selected, please select a product");
+            alert.showAndWait();
+            System.out.println("...product was null");
+            return;
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/wguclass/Screens/ModifyProductMenu.fxml"));
+            Parent scene= loader.load();
+            System.out.println("...after loader.load");
+            ModifyProductController ModProductController = loader.getController();
 
+            System.out.println("...after load gets controller");
+            ModProductController.receiveProductsSetData(ProductsTableMM.getSelectionModel().getSelectedItem());
 
+            System.out.println("...after receive set part");
+            stage = (Stage) ProductsTableMM.getScene().getWindow();
+
+            stage.setScene(new Scene(scene));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+
 
     //created a boolean variable called firstTimeAdded, and used it in an "if" statement inside the
     //myInitialData method in Inventory, this way, to avoid duplicates every time initialized

@@ -101,7 +101,7 @@ public class ModifyPartController implements Initializable {
         stage.show();
     }
 
-    public void receiveSetData (Part part) {
+    public void receivePartsSetData (Part part) {
         //String.valueOf retrieved the id of the p1 and converted that int into string to assign to the label
         if (part instanceof InHouse) {
 
