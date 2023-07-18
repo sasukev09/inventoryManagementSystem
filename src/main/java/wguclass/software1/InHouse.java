@@ -2,7 +2,7 @@ package wguclass.software1;
 
 public class InHouse extends Part {
 
-    private int machineId;
+    private static int machineId;
     public InHouse(int id, String name, double price, int stock, int min, int max, int machineId) {
         super(id, name, price, stock, min, max);
         this.machineId = machineId;
@@ -10,7 +10,7 @@ public class InHouse extends Part {
      public void setMachineId(int machineId){
         this.machineId = machineId;
       }
-     public int getMachineId() {
+     public static int getMachineId() {
         return machineId;
      }
 

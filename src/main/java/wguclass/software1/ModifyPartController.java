@@ -103,10 +103,30 @@ public class ModifyPartController implements Initializable {
 
     public void receiveSetData (Part part) {
         //String.valueOf retrieved the id of the p1 and converted that int into string to assign to the label
-        ModPIDTxtField.setText(String.valueOf(part.getId()));
+        if (part instanceof InHouse) {
 
+            ModPMLabelTxtMachID.setText("Machine ID");
+            ModPIDTxtField.setText(String.valueOf(part.getId()));
+            ModPNameTxtField.setText(part.getName());
+            ModPartInvTextField.setText(String.valueOf(part.getStock()));
+            ModPartPCTxtField.setText(String.valueOf(part.getPrice()));
+            ModPartMaxTxtField.setText(String.valueOf(part.getMax()));
+            ModPartMinTxtField.setText((String.valueOf(part.getMin())));
+            ModPartMachineIDTxtField.setText((String.valueOf(InHouse.getMachineId())));
 
-         }
+        }
+
+        if (part instanceof Outsourced) {
+            ModPMLabelTxtMachID.setText("Company Name");
+            ModPIDTxtField.setText(String.valueOf(part.getId()));
+            ModPNameTxtField.setText(part.getName());
+            ModPartInvTextField.setText(String.valueOf(part.getStock()));
+            ModPartPCTxtField.setText(String.valueOf(part.getPrice()));
+            ModPartMaxTxtField.setText(String.valueOf(part.getMax()));
+            ModPartMinTxtField.setText((String.valueOf(part.getMin())));
+            ModPartMachineIDTxtField.setText((Outsourced.getCompanyName()));
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
