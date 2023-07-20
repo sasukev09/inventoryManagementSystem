@@ -157,6 +157,14 @@ public class AddProductController implements Initializable {
         int min = Integer.parseInt(MinTextField.getText());
        int productId = Inventory.generateProductId();
 
+        if(name.isBlank()) {
+            System.out.println("product name is blank");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Product not named");
+            alert.setContentText("Product name is blank, please name the Product");
+            alert.showAndWait();
+            return;
+        }
         Inventory.addProduct(new Product(productId, name,price,inv,min,max));
 
         System.out.println("Product had been added, returning to main menu.");

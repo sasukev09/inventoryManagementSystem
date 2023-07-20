@@ -81,10 +81,10 @@ public class ModifyProductController implements Initializable {
     private TableColumn<Part, Integer> APMPRInvCol;
 
     @FXML
-    private TableColumn<Part,Double> APMPRPCCol;
+    private TableColumn <Part,Double> APMPRPCCol;
 
     @FXML
-    private TableColumn<Part,Integer> APMPRPartIDCol;
+    private TableColumn <Part, Integer> APMPRPartIDCol;
 
     @FXML
     private TableColumn<Part,String> APMPRPartNameCol;
@@ -118,13 +118,40 @@ public class ModifyProductController implements Initializable {
 
     }
 
+
+
     @FXML
     void PressModifyPRRemAsPartButton(ActionEvent event) {
 
     }
 
     @FXML
-    void PressModifyPRSaveButton(ActionEvent event) {
+    void PressModifyPRSaveButton(ActionEvent event) throws IOException {
+//save changes from the input on the textfields
+        String name = ModifyPRNameTxtField.getText();
+        int inv =  Integer.parseInt(ModifyPRInvTxtField.getText());
+        double price = Double.parseDouble(ModifyPRPriceTxtField.getText());
+        int max = Integer.parseInt(ModifyPRMaxTxtField.getText());
+        int min = Integer.parseInt(ModifyPRMinTxtField.getText());
+        int productId = Inventory.generateProductId();
+
+        if(name.isBlank()) {
+            System.out.println("mod product name is blank");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Product not renamed");
+            alert.setContentText("Product name is blank, please rename the Product");
+            alert.showAndWait();
+            return;
+        }
+        Inventory.addProduct(new Product(productId, name,price,inv,min,max));
+
+        System.out.println("Product had been added, returning to main menu.");
+
+        Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
     }
 
@@ -176,23 +203,28 @@ public class ModifyProductController implements Initializable {
 
     }
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        PartsTableMPRM.setItems(Inventory.getAllParts());
-        MPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        MPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        MPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        MPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        try {
+            PartsTableMPRM.setItems(Inventory.getAllParts());
+            MPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+            MPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+            MPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+            MPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        //initiaizing Associated part table
-        //making a temporary list and then when ready you copy it over to the permanent
-        //
-        AssociatedPartsTableMPR.setItems(tempAssociatedParts);
-        APMPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        APMPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        APMPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        APMPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-        System.out.println("associated part table has been intialized");
+            //initiaizing Associated part table
+            //making a temporary list and then when ready you copy it over to the permanent
+            //
+//            AssociatedPartsTableMPR.setItems(Product.getAllAssociatedParts);
+//            APMPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+//            APMPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+//            APMPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+//            APMPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+//            System.out.println("associated part table has been intialized");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
-}
+    }

@@ -176,7 +176,10 @@ public class MainMenuController implements Initializable {
             alert.setTitle("Delete Part");
             alert.setContentText("Are you sure you want to delete Part?");
             Optional<ButtonType> result = alert.showAndWait();
-            Inventory.deletePart(selectedPart);
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                Inventory.deletePart(selectedPart);
+            }
         }
     }
 
@@ -198,7 +201,10 @@ public class MainMenuController implements Initializable {
             alert.setTitle("Delete Product");
             alert.setContentText("Are you sure you want to delete Product?");
             Optional<ButtonType> result = alert.showAndWait();
-            Inventory.deleteProduct(selectedProduct);
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                Inventory.deleteProduct(selectedProduct);
+            }
         }
     }
 
@@ -269,6 +275,7 @@ public class MainMenuController implements Initializable {
     void PressModifyPRMM(ActionEvent event) throws IOException {
         //todo change everything to product related
         //todo create the static method in the modify product controller
+        System.out.println("Modify Product button was pressed");
         Product product = ProductsTableMM.getSelectionModel().getSelectedItem();
         if (product == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -281,7 +288,7 @@ public class MainMenuController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/wguclass/Screens/ModifyProductMenu.fxml"));
-            Parent scene= loader.load();
+            Parent scene = loader.load();
             System.out.println("...after loader.load");
             ModifyProductController ModProductController = loader.getController();
 
@@ -303,6 +310,7 @@ public class MainMenuController implements Initializable {
     //created a boolean variable called firstTimeAdded, and used it in an "if" statement inside the
     //myInitialData method in Inventory, this way, to avoid duplicates every time initialized
     public static boolean firstTimeAdded = true;
+
 
     //INITIALIZE
     @Override

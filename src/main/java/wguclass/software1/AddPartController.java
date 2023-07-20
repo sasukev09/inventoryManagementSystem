@@ -7,10 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -87,6 +84,11 @@ public class AddPartController implements Initializable {
     void PressAPMSaveButton(ActionEvent event) throws IOException {
         //save changes from the input on the textfields
         String name = NameTextField.getText();
+        String invS = InventoryTextFIeld.getText();
+        String priceS = PriceCostTxtField.getText();
+        String maxS = MaxTxtField.getText();
+        String minS = MinTxtField.getText();
+
         //parseint/parsedouble converts data type from string, string goes inside parenthesis
         int inv = Integer.parseInt(InventoryTextFIeld.getText());
         double price = Double.parseDouble(PriceCostTxtField.getText());
@@ -94,6 +96,26 @@ public class AddPartController implements Initializable {
         int min = Integer.parseInt(MinTxtField.getText());
         int id = Inventory.generatePartId();
     //saved in variables ^
+        //todo insert validations, basically queries CHECK TASK FOR PROJECT
+        //todo TEST IT THROUGHLY
+
+    if(name.isBlank()) {
+        System.out.println("part name is blank");
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Part not named");
+        alert.setContentText("Part name is blank, please name the Part");
+        alert.showAndWait();
+        return;
+    }
+        if(invS.isBlank()) {
+            System.out.println("inventory is blank");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Inventory not set");
+            alert.setContentText("Inventory is blank, please input Inventory");
+            alert.showAndWait();
+            return;
+        }
+
 
        if (APMInHouseRadioButton.isSelected()) {
            System.out.println("INHOUSE SELECTED");
@@ -114,6 +136,8 @@ public class AddPartController implements Initializable {
         stage.show();
     }
     //REMEMBER TO PUT TEXT ALERTS AND VALIDATIONS BEFORE THE IF STATEMENTS, PRIOR CREATING OBJECT
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
