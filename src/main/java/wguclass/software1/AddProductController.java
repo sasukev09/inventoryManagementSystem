@@ -105,11 +105,35 @@ public class AddProductController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
+//TODO ASK CI ABOUT HOW TO DEAL WITH PARTS AND ASSOCIATED PARTS FOR THE PRODUCT MENUS
+    //TODO INCLUDING REMOVE BUTTON VALIDATION FOR THE PRODUCT MENUS
     @FXML
-    void PressAddPRMRemoveAPartButton(ActionEvent event) {
+    void PressAddPRMRemoveAPartButton(ActionEvent event) throws IOException {
+        /*
 
+        Part selectedPart = (Part) PartsTableAPRM.getSelectionModel().getSelectedItem();
+
+//if its a string you use .equals
+
+        if (selectedPart == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Product not selected");
+            alert.setContentText("Product not selected, please select a product");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete Product");
+            alert.setContentText("Are you sure you want to delete Product?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                Inventory.deletePart(selectedPart);
+            }
+        }
+
+         */
     }
+
 
     @FXML
     void APRMPressSearchPartIDName(ActionEvent event) {
