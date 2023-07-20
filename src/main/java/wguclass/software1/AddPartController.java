@@ -145,11 +145,31 @@ public class AddPartController implements Initializable {
 
         if (APMInHouseRadioButton.isSelected()) {
             System.out.println("INHOUSE SELECTED");
-            int machId = Integer.parseInt(MachIDTxtField.getText());
+            int machId = 0;
+            try {
+                machId = Integer.parseInt(MachIDTxtField.getText());
+            }
+            catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Invalid entry");
+                alert.setContentText("Please input the machine id for the part");
+                alert.showAndWait();
+                return;
+            }
             Inventory.addPart(new InHouse(id, name, price, inv, min, max, machId));
         } else {
             System.out.println("OUTSOURCED SELECTED");
             String companyName = MachIDTxtField.getText();
+            if (companyName.isBlank()) {
+                System.out.println("Company name is blank");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Invalid entry");
+                alert.setContentText("Please input the company name for the part.");
+                alert.showAndWait();
+                return;
+            }
             //no need to convert because machid is already a String
             Inventory.addPart(new Outsourced(id, name, price, inv, min, max, companyName));
         }
