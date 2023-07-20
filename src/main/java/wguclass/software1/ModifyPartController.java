@@ -93,12 +93,43 @@ public class ModifyPartController implements Initializable {
     void PressModPartSaveButton(ActionEvent event) throws IOException {
         String name = ModPNameTxtField.getText();
 
-        int inv = Integer.parseInt(ModPartInvTextField.getText());
-        double price = Double.parseDouble(ModPartPCTxtField.getText());
-        int max = Integer.parseInt(ModPartMaxTxtField.getText());
-        int min = Integer.parseInt(ModPartMinTxtField.getText());
-        int id = Inventory.generatePartId();
+        int inv = 0;
+        double price = 0;
+        int max = 0;
+        int min = 0;
+        int id = 0;
+        String mistakeModPart = "";
         //todo VALIDATIONS FROM TASK, ONCE VALIDATED
+        try {
+            mistakeModPart = "inv";
+            inv = Integer.parseInt(ModPartInvTextField.getText());
+            mistakeModPart = "price";
+            price = Double.parseDouble(ModPartPCTxtField.getText());
+            mistakeModPart = "max";
+            max = Integer.parseInt(ModPartMaxTxtField.getText());
+            mistakeModPart = "min";
+            min = Integer.parseInt(ModPartMinTxtField.getText());
+            mistakeModPart = "id";
+            id = Inventory.generatePartId();
+
+            if(min > inv || inv > max){
+                System.out.println("Make sure that min <= inv and inv <= max ");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Invalid min, max or inv entry.");
+                alert.setContentText("Ensure that Min >= Inv, and that Inv >= Max");
+                alert.showAndWait();
+                return;
+            }
+        } catch (NumberFormatException e ){
+            System.out.println("entry must be a number");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid entry");
+            alert.setContentText("Please enter a number for the " + mistakeModPart + ".");
+            alert.showAndWait();
+            return;
+        }
 
         if(name.isBlank()) {
             System.out.println("mod part name is blank");
@@ -110,22 +141,43 @@ public class ModifyPartController implements Initializable {
         }
 
         System.out.println("index =" + index);
-        try {
+
             if (ModPInHouseRadio.isSelected()) {
 
                 System.out.println("INHOUSE SELECTED");
-                int machId = Integer.parseInt(ModPartMachineIDTxtField.getText());
-                Part p = new InHouse(id, name, price, inv, min, max, machId);
-                Inventory.updatePart(index, p);
+                int machId = 0;
+                try {
+                    machId = Integer.parseInt(ModPartMachineIDTxtField.getText());
+                }
+                catch (NumberFormatException e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Invalid entry");
+                    alert.setContentText("Please input the machine id for the part.");
+                    alert.showAndWait();
+                    return;
+                }
+
+                Part pInhouse = new InHouse(id, name, price, inv, min, max, machId);
+                Inventory.updatePart(index, pInhouse);
 
             } else {
                 System.out.println("OUTSOURCED SELECTED");
                 String companyName = ModPartMachineIDTxtField.getText();
-                Inventory.updatePart(index, new Outsourced(id, name, price, inv, min, max, companyName));
+                if(companyName.isBlank()) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Invalid entry");
+                    alert.setContentText("Please input the company name for the part.");
+                    alert.showAndWait();
+                    return;
+                }
+                Part pOutsource = new Outsourced(id, name, price, inv, min, max, companyName);
+                Inventory.updatePart(index, pOutsource);
+
             }
-        } catch (NumberFormatException e)  {
-            System.out.println("Error" + e.getMessage());
-        }
+
+
             Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);

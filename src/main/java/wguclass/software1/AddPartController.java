@@ -129,7 +129,6 @@ public class AddPartController implements Initializable {
             return;
         }
 
-        //saved in variables ^
         //todo insert validations, basically queries CHECK TASK FOR PROJECT
         //todo TEST IT THROUGHLY
         if (name.isBlank()) {

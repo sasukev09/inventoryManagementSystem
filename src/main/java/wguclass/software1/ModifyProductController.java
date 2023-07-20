@@ -129,20 +129,54 @@ public class ModifyProductController implements Initializable {
     void PressModifyPRSaveButton(ActionEvent event) throws IOException {
 //save changes from the input on the textfields
         String name = ModifyPRNameTxtField.getText();
-        int inv =  Integer.parseInt(ModifyPRInvTxtField.getText());
-        double price = Double.parseDouble(ModifyPRPriceTxtField.getText());
-        int max = Integer.parseInt(ModifyPRMaxTxtField.getText());
-        int min = Integer.parseInt(ModifyPRMinTxtField.getText());
-        int productId = Inventory.generateProductId();
+        int inv = 0;
+        double price = 0;
+        int max = 0;
+        int min = 0 ;
+        int productId = 0;
+        String mistakeModPr = "";
 
-        if(name.isBlank()) {
-            System.out.println("mod product name is blank");
+        try {
+            mistakeModPr = "inv";
+            inv = Integer.parseInt(ModifyPRInvTxtField.getText());
+            mistakeModPr = "price";
+            price = Double.parseDouble(ModifyPRPriceTxtField.getText());
+            mistakeModPr = "max";
+            max = Integer.parseInt(ModifyPRMaxTxtField.getText());
+            mistakeModPr = "min";
+            min = Integer.parseInt(ModifyPRMinTxtField.getText());
+            mistakeModPr = "id";
+            productId = Inventory.generateProductId();
+
+            if (min > inv || inv > max) {
+                System.out.println("Make sure that min <= inv and inv <= max ");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Invalid min, max or inv entry.");
+                alert.setContentText("Ensure that Min >= Inv, and that Inv >= Max");
+                alert.showAndWait();
+                return;
+            }
+        }
+        catch(NumberFormatException e) {
+            System.out.println("entry must be a number");
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Product not renamed");
-            alert.setContentText("Product name is blank, please rename the Product");
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid entry");
+            alert.setContentText("Please enter a number for the " + mistakeModPr + ".");
             alert.showAndWait();
             return;
         }
+
+        if(name.isBlank()) {
+            System.out.println("product name is blank");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Product not named");
+            alert.setContentText("Product name is blank, please name the Product");
+            alert.showAndWait();
+            return;
+        }
+
         Inventory.addProduct(new Product(productId, name,price,inv,min,max));
 
         System.out.println("Product had been added, returning to main menu.");

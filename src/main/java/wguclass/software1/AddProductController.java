@@ -151,11 +151,44 @@ public class AddProductController implements Initializable {
     void PressAddPRMSaveButton(ActionEvent event) throws IOException {
         //save changes from the input on the textfields
         String name = NameTextField.getText();
-        int inv =  Integer.parseInt(InvTextField.getText());
-        double price = Double.parseDouble(PriceTextField.getText());
-        int max = Integer.parseInt(MaxTextField.getText());
-        int min = Integer.parseInt(MinTextField.getText());
-       int productId = Inventory.generateProductId();
+
+        int inv = 0 ;
+        double price = 0;
+        int max = 0;
+        int min = 0;
+       int productId = 0 ;
+        String mistakeAddPr = "";
+       try {
+           mistakeAddPr = "inv";
+           inv = Integer.parseInt(InvTextField.getText());
+           mistakeAddPr = "price";
+           price = Double.parseDouble(PriceTextField.getText());
+           mistakeAddPr = "max";
+           max = Integer.parseInt(MaxTextField.getText());
+           mistakeAddPr = "min";
+           min = Integer.parseInt(MinTextField.getText());
+           mistakeAddPr = "product id";
+           productId = Inventory.generateProductId();
+
+           if (min > inv || inv > max) {
+               System.out.println("Make sure that min <= inv and inv <= max ");
+               Alert alert = new Alert(Alert.AlertType.ERROR);
+               alert.setTitle("Error");
+               alert.setHeaderText("Invalid min, max or inv entry.");
+               alert.setContentText("Ensure that Min >= Inv, and that Inv >= Max");
+               alert.showAndWait();
+               return;
+           }
+       }
+       catch (NumberFormatException e) {
+           System.out.println("entry must be a number");
+           Alert alert = new Alert(Alert.AlertType.ERROR);
+           alert.setTitle("Error");
+           alert.setHeaderText("Invalid entry");
+           alert.setContentText("Please enter a number for the " + mistakeAddPr + ".");
+           alert.showAndWait();
+           return;
+       }
 
         if(name.isBlank()) {
             System.out.println("product name is blank");
@@ -165,9 +198,10 @@ public class AddProductController implements Initializable {
             alert.showAndWait();
             return;
         }
+
         Inventory.addProduct(new Product(productId, name,price,inv,min,max));
 
-        System.out.println("Product had been added, returning to main menu.");
+        System.out.println("Product has been added, returning to main menu.");
 
         Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
