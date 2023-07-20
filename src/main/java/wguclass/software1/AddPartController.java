@@ -68,7 +68,7 @@ public class AddPartController implements Initializable {
     @FXML
     void PressAPMCancelButton(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -84,57 +84,83 @@ public class AddPartController implements Initializable {
     void PressAPMSaveButton(ActionEvent event) throws IOException {
         //save changes from the input on the textfields
         String name = NameTextField.getText();
-        String invS = InventoryTextFIeld.getText();
-        String priceS = PriceCostTxtField.getText();
-        String maxS = MaxTxtField.getText();
-        String minS = MinTxtField.getText();
 
         //parseint/parsedouble converts data type from string, string goes inside parenthesis
-        int inv = Integer.parseInt(InventoryTextFIeld.getText());
-        double price = Double.parseDouble(PriceCostTxtField.getText());
-        int max = Integer.parseInt(MaxTxtField.getText());
-        int min = Integer.parseInt(MinTxtField.getText());
-        int id = Inventory.generatePartId();
-    //saved in variables ^
+
+        double price = 0;
+        int max = 0; //          min <= inv , inv <= max
+        int inv = 0; // LESS OR EQUAL TO max
+        int min = 0; // LESS OR EQUAL TO inv
+        int id = 0;
+        String mistake = "";
+
+        try {
+            mistake = "inventory";
+            inv = Integer.parseInt(InventoryTextFIeld.getText());
+            mistake = "price";
+            price = Double.parseDouble(PriceCostTxtField.getText());
+            mistake = "max";
+            max = Integer.parseInt(MaxTxtField.getText());
+            mistake = "min";
+            min = Integer.parseInt(MinTxtField.getText());
+            mistake = "id";
+            id = Inventory.generatePartId();
+
+            if(min > inv || inv > max){
+                System.out.println("Make sure that min <= inv and inv <= max ");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Invalid min, max or inv entry.");
+                alert.setContentText("Ensure that Min >= Inv, and that Inv >= Max");
+                alert.showAndWait();
+                return;
+            }
+
+
+        }
+        catch(NumberFormatException e) {
+          //todo set inv must be a number
+            System.out.println("entry must be a number");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid entry");
+            alert.setContentText("Please enter a number for the " + mistake + ".");
+            alert.showAndWait();
+            return;
+        }
+
+        //saved in variables ^
         //todo insert validations, basically queries CHECK TASK FOR PROJECT
         //todo TEST IT THROUGHLY
-
-    if(name.isBlank()) {
-        System.out.println("part name is blank");
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Part not named");
-        alert.setContentText("Part name is blank, please name the Part");
-        alert.showAndWait();
-        return;
-    }
-        if(invS.isBlank()) {
-            System.out.println("inventory is blank");
+        if (name.isBlank()) {
+            System.out.println("part name is blank");
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Inventory not set");
-            alert.setContentText("Inventory is blank, please input Inventory");
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid entry");
+            alert.setContentText("Part name is blank, please name the Part");
             alert.showAndWait();
             return;
         }
 
 
-       if (APMInHouseRadioButton.isSelected()) {
-           System.out.println("INHOUSE SELECTED");
-           int machId = Integer.parseInt(MachIDTxtField.getText());
-           Inventory.addPart(new InHouse(id, name,price,inv,min,max,machId));
-       }
-       else {
-           System.out.println("OUTSOURCED SELECTED");
-           String companyName = MachIDTxtField.getText();
-           //no need to convert because machid is already a String
-           Inventory.addPart(new Outsourced(id, name,price,inv,min,max,companyName));
-       }
+        if (APMInHouseRadioButton.isSelected()) {
+            System.out.println("INHOUSE SELECTED");
+            int machId = Integer.parseInt(MachIDTxtField.getText());
+            Inventory.addPart(new InHouse(id, name, price, inv, min, max, machId));
+        } else {
+            System.out.println("OUTSOURCED SELECTED");
+            String companyName = MachIDTxtField.getText();
+            //no need to convert because machid is already a String
+            Inventory.addPart(new Outsourced(id, name, price, inv, min, max, companyName));
+        }
+
 //to comment multiple lines ctrl and "/"
         Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
-        stage.show();
     }
+
     //REMEMBER TO PUT TEXT ALERTS AND VALIDATIONS BEFORE THE IF STATEMENTS, PRIOR CREATING OBJECT
 
 
