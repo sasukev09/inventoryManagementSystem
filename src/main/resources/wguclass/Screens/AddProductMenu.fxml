@@ -22,7 +22,7 @@
       <TextField fx:id="PriceTextField" layoutX="84.0" layoutY="200.0" />
       <Text layoutX="168.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min" />
       <Text layoutX="34.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price" />
-      <TableView fx:id="PartsTableAPRM" layoutX="299.0" layoutY="72.0" prefHeight="124.0" prefWidth="361.0">
+      <TableView fx:id="PartsTableMM" layoutX="299.0" layoutY="72.0" prefHeight="124.0" prefWidth="361.0">
         <columns>
           <TableColumn fx:id="APRPartIDCol" prefWidth="75.0" text="Part ID" />
           <TableColumn fx:id="APRPartNameCol" prefWidth="75.0" text="Part Name" />

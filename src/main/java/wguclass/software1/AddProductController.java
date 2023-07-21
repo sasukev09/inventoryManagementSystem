@@ -1,5 +1,6 @@
 package wguclass.software1;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,6 +37,24 @@ public class AddProductController implements Initializable {
     @FXML
     private Button AddPRMSaveButton;
 
+    //PARTS TABLE APR
+
+    @FXML
+    private TableView<Part> PartsTableMM;
+
+    @FXML
+    private TableColumn APRInvCol;
+
+    @FXML
+    private TableColumn APRPCCol;
+
+    @FXML
+    private TableColumn APRPartIDCol;
+
+    @FXML
+    private TableColumn APRPartNameCol;
+
+
     //ASSOCIATED PARTS TABLE APR
     @FXML
     private TableView <Part> AssociatedPartsTableAPR;
@@ -50,7 +69,7 @@ public class AddProductController implements Initializable {
     private TableColumn <Part, Integer> APAPRPartIDCol;
 
     @FXML
-    private TableColumn<?, ?> APAPRPartNameCol;
+    private TableColumn<Part, String> APAPRPartNameCol;
 
 
 
@@ -70,30 +89,54 @@ public class AddProductController implements Initializable {
     @FXML
     private TextField NameTextField;
 
-    //PARTS TABLE APR
-    @FXML
-    private TableView PartsTableAPRM;
 
-    @FXML
-    private TableColumn APRInvCol;
-
-    @FXML
-    private TableColumn APRPCCol;
-
-    @FXML
-    private TableColumn APRPartIDCol;
-
-    @FXML
-    private TableColumn APRPartNameCol;
 
     @FXML
     private TextField PriceTextField;
 
     @FXML
     private TextField SearchbyPartOrIDAPRM;
+    private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
+    //TODO ASK CI ABOUT HOW TO DEAL WITH PARTS AND ASSOCIATED PARTS FOR THE PRODUCT MENUS
+    //TODO INCLUDING REMOVE BUTTON VALIDATION FOR THE PRODUCT MENUS
+    //TODO ADD PART TO ASSOCP
     @FXML
-    void PressAddPRMAddButton(ActionEvent event) {
+    void PressAddPRMAddButton(ActionEvent event) throws IOException {
+        System.out.println("pressed add part to assoc parts");
+        Part selectedPart = PartsTableMM.getSelectionModel().getSelectedItem();
+
+        if (selectedPart == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Part not Found");
+            alert.setContentText("Please select a part to add.");
+            Optional<ButtonType> OK = alert.showAndWait();
+            System.out.println("Part not found");
+        } else {
+            associatedParts.add(selectedPart);
+            AssociatedPartsTableAPR.setItems(associatedParts);
+        }
+
+
+    }
+    //TODO REMOVE PART FROM ASSOCP
+    //todo figure out a way to set items only when saved, so do not set anything unless you save
+    @FXML
+    void PressAddPRMRemoveAPartButton(ActionEvent event) throws IOException {
+        System.out.println("pressed add part to assoc parts");
+        Part selectedPart = AssociatedPartsTableAPR.getSelectionModel().getSelectedItem();
+
+        if (selectedPart == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Part not Found");
+            alert.setContentText("Please select a part to remove.");
+            Optional<ButtonType> OK = alert.showAndWait();
+            System.out.println("Part not found");
+        } else {
+            associatedParts.remove(selectedPart);
+//            AssociatedPartsTableAPR.setItems(associatedParts);
+        }
+
 
     }
 
@@ -105,36 +148,6 @@ public class AddProductController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-//TODO ASK CI ABOUT HOW TO DEAL WITH PARTS AND ASSOCIATED PARTS FOR THE PRODUCT MENUS
-    //TODO INCLUDING REMOVE BUTTON VALIDATION FOR THE PRODUCT MENUS
-    @FXML
-    void PressAddPRMRemoveAPartButton(ActionEvent event) throws IOException {
-        /*
-
-        Part selectedPart = (Part) PartsTableAPRM.getSelectionModel().getSelectedItem();
-
-//if its a string you use .equals
-
-        if (selectedPart == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Product not selected");
-            alert.setContentText("Product not selected, please select a product");
-            alert.showAndWait();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Delete Product");
-            alert.setContentText("Are you sure you want to delete Product?");
-            Optional<ButtonType> result = alert.showAndWait();
-
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                Inventory.deletePart(selectedPart);
-            }
-        }
-
-         */
-    }
-
-
     @FXML
     void APRMPressSearchPartIDName(ActionEvent event) {
         String SPart = SearchbyPartOrIDAPRM.getText();
@@ -144,7 +157,7 @@ public class AddProductController implements Initializable {
             Part part = Inventory.lookupPart(partId);
             if (part != null) {
                 System.out.println("S2Part =" + SPart);
-                PartsTableAPRM.getSelectionModel().select(part);
+                PartsTableMM.getSelectionModel().select(part);
                 return;
             }
             else {
@@ -158,9 +171,9 @@ public class AddProductController implements Initializable {
         } catch (NumberFormatException e) {
             ObservableList<Part> PartSearched = Inventory.lookupPart(SPart);
             if(PartSearched.size() != 0)
-                PartsTableAPRM.setItems(PartSearched);
+                PartsTableMM.setItems(PartSearched);
             else {
-                PartsTableAPRM.setItems(Inventory.getAllParts());
+                PartsTableMM.setItems(Inventory.getAllParts());
                 //ALERT PRODUCT NOT FOUND
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Part not Found");
@@ -238,7 +251,7 @@ public class AddProductController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         IDTextField.setText(String.valueOf(Inventory.productId));
         //initializing part table
-        PartsTableAPRM.setItems(Inventory.getAllParts());
+        PartsTableMM.setItems(Inventory.getAllParts());
         APRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         APRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         APRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
