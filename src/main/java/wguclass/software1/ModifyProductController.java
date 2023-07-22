@@ -22,6 +22,7 @@ public class ModifyProductController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    int index = 0;
 
     public ObservableList<Part> tempAssociatedParts = FXCollections.observableArrayList();
 
@@ -60,18 +61,18 @@ public class ModifyProductController implements Initializable {
 
     //PARTS TABLE MPRM
     @FXML
-    private TableView <Part> PartsTableMPRM;
+    private TableView<Part> PartsTableMM;
     @FXML
-    private TableColumn <Part, Integer> MPRInvCol;
+    private TableColumn<Part, Integer> MPRInvCol;
 
     @FXML
-    private TableColumn <Part, Double> MPRPCCol;
+    private TableColumn<Part, Double> MPRPCCol;
 
     @FXML
-    private TableColumn <Part, Integer> MPRPartIDCol;
+    private TableColumn<Part, Integer> MPRPartIDCol;
 
     @FXML
-    private TableColumn <Part, String> MPRPartNameCol;
+    private TableColumn<Part, String> MPRPartNameCol;
 
     //ASSOCIATED PART TABLE MPR
     @FXML
@@ -81,69 +82,62 @@ public class ModifyProductController implements Initializable {
     private TableColumn<Part, Integer> APMPRInvCol;
 
     @FXML
-    private TableColumn <Part,Double> APMPRPCCol;
+    private TableColumn<Part, Double> APMPRPCCol;
 
     @FXML
-    private TableColumn <Part, Integer> APMPRPartIDCol;
+    private TableColumn<Part, Integer> APMPRPartIDCol;
 
     @FXML
-    private TableColumn<Part,String> APMPRPartNameCol;
+    private TableColumn<Part, String> APMPRPartNameCol;
+    private ObservableList<Part> associatedPartsModify = FXCollections.observableArrayList();
+    //TODO ADD ASSOC PART BUTTON
 
     @FXML
-    void PressModifyPRAddButton(ActionEvent event) {
-        Part selectedPart = PartsTableMPRM.getSelectionModel().getSelectedItem();
+    void PressModifyPRAddButton(ActionEvent event) throws IOException {
+        System.out.println("pressed add part to assoc parts");
+        Part selectedPart = PartsTableMM.getSelectionModel().getSelectedItem();
 
         if (selectedPart == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Part not selected");
-            alert.setContentText("Part not selected, please select a part");
-            alert.showAndWait();
+            alert.setTitle("Part not Found");
+            alert.setContentText("Please select a part to add.");
+            Optional<ButtonType> OK = alert.showAndWait();
+            System.out.println("Part not found");
         } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Associating part with product");
-            alert.setContentText("Are you sure you want to associate this part?");
-            Optional<ButtonType> result = alert.showAndWait();
-            Part copiedPart = PartsTableMPRM.getSelectionModel().getSelectedItem();
-            AssociatedPartsTableMPR.getItems().add(copiedPart);
+            associatedPartsModify.add(selectedPart);
+            AssociatedPartsTableMPR.setItems(associatedPartsModify);
         }
-    }
-
-    @FXML
-    void PressModifyPRCancelButton(ActionEvent event)  throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-
     }
 
 
     //TODO ASK CI ABOUT HOW TO DEAL WITH PARTS AND ASSOCIATED PARTS FOR THE PRODUCT MENUS
-    //TODO INCLUDING REMOVE BUTTON VALIDATION FOR THE PRODUCT MENUS
+    //TODO INCLUDING REMOVE BUTTON VALIDATION FOR THE PRODUCT
+    //TODO REMOVE ASSOC PART BUTTON
     @FXML
     void PressModifyPRRemAsPartButton(ActionEvent event) throws IOException {
-        /*
-        Part selectedPart = (Part) tempAssociatedParts.getSelectionModel().getSelectedItem();
-
-//if its a string you use .equals
+        System.out.println("pressed add part to assoc parts");
+        Part selectedPart = PartsTableMM.getSelectionModel().getSelectedItem();
 
         if (selectedPart == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Product not selected");
-            alert.setContentText("Product not selected, please select a product");
-            alert.showAndWait();
+            alert.setTitle("Part not Found");
+            alert.setContentText("Please select a part to remove.");
+            Optional<ButtonType> OK = alert.showAndWait();
+            System.out.println("Part not found");
         } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Delete Product");
-            alert.setContentText("Are you sure you want to delete Product?");
-            Optional<ButtonType> result = alert.showAndWait();
-
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                Inventory.deletePart(selectedPart);
-            }
+            associatedPartsModify.remove(selectedPart);
+//            AssociatedPartsTableAPR.setItems(associatedParts);
         }
-        */
+    }
+
+    @FXML
+    void PressModifyPRCancelButton(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
     }
 
     @FXML
@@ -153,7 +147,7 @@ public class ModifyProductController implements Initializable {
         int inv = 0;
         double price = 0;
         int max = 0;
-        int min = 0 ;
+        int min = 0;
         int productId = 0;
         String mistakeModPr = "";
 
@@ -178,8 +172,7 @@ public class ModifyProductController implements Initializable {
                 alert.showAndWait();
                 return;
             }
-        }
-        catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             System.out.println("entry must be a number");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -189,7 +182,7 @@ public class ModifyProductController implements Initializable {
             return;
         }
 
-        if(name.isBlank()) {
+        if (name.isBlank()) {
             System.out.println("product name is blank");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Product not named");
@@ -198,12 +191,14 @@ public class ModifyProductController implements Initializable {
             return;
         }
 
-        Inventory.addProduct(new Product(productId, name,price,inv,min,max));
+        Inventory.addProduct(new Product(productId, name, price, inv, min, max));
+
+        AssociatedPartsTableMPR.setItems(associatedPartsModify);
 
         System.out.println("Product had been added, returning to main menu.");
 
         Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -211,7 +206,7 @@ public class ModifyProductController implements Initializable {
     }
 
     @FXML
-    void MPRMPressSearchPartIDName(ActionEvent event)  {
+    void MPRMPressSearchPartIDName(ActionEvent event) {
         String SPart = ModifyPRSearchByPartIDorNameTxtField.getText();
         try {
             System.out.println("SPart =" + SPart);
@@ -219,10 +214,9 @@ public class ModifyProductController implements Initializable {
             Part part = Inventory.lookupPart(partId);
             if (part != null) {
                 System.out.println("S2Part =" + SPart);
-                PartsTableMPRM.getSelectionModel().select(part);
+                PartsTableMM.getSelectionModel().select(part);
                 return;
-            }
-            else {
+            } else {
                 //POP UP AN ALERT, PRODUCT NOT FOUND
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Part not Found");
@@ -232,10 +226,10 @@ public class ModifyProductController implements Initializable {
             }
         } catch (NumberFormatException e) {
             ObservableList<Part> PartSearched = Inventory.lookupPart(SPart);
-            if(PartSearched.size() != 0)
-                PartsTableMPRM.setItems(PartSearched);
+            if (PartSearched.size() != 0)
+                PartsTableMM.setItems(PartSearched);
             else {
-                PartsTableMPRM.setItems(Inventory.getAllParts());
+                PartsTableMM.setItems(Inventory.getAllParts());
                 //ALERT PRODUCT NOT FOUND
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Part not Found");
@@ -246,9 +240,9 @@ public class ModifyProductController implements Initializable {
         }
     }
 
-    public void receiveProductsSetData (Product product) {
+    public void receiveProductsSetData(Product product) {
         //String.valueOf retrieved the id of the p1 and converted that int into string to assign to the label
-
+        index = Inventory.getAllProducts().indexOf(product);
         ModifyPRIdTxtField.setText(String.valueOf(product.getId()));
         ModifyPRNameTxtField.setText(product.getName());
         ModifyPRInvTxtField.setText(String.valueOf(product.getStock()));
@@ -258,28 +252,38 @@ public class ModifyProductController implements Initializable {
 
     }
 
+    public void receiveProductSetData(Product product) {
+        index = Inventory.getAllProducts().indexOf(product);
+        ModifyPRIdTxtField.setText(String.valueOf(product.getId()));
+        ModifyPRNameTxtField.setText(product.getName());
+        ModifyPRInvTxtField.setText(String.valueOf(product.getStock()));
+        ModifyPRPriceTxtField.setText(String.valueOf(product.getPrice()));
+        ModifyPRMaxTxtField.setText(String.valueOf(product.getMax()));
+        ModifyPRMinTxtField.setText(String.valueOf(product.getMin()));
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        try {
-            PartsTableMPRM.setItems(Inventory.getAllParts());
-            MPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-            MPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-            MPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-            MPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-            //initiaizing Associated part table
-            //making a temporary list and then when ready you copy it over to the permanent
-            //
-//            AssociatedPartsTableMPR.setItems(Product.getAllAssociatedParts);
-//            APMPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-//            APMPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-//            APMPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-//            APMPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-//            System.out.println("associated part table has been intialized");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
+
+        @Override
+        public void initialize (URL url, ResourceBundle resourceBundle){
+
+            try {
+                PartsTableMM.setItems(Inventory.getAllParts());
+                MPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+                MPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+                MPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+                MPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+                //initiaizing Associated part table
+                //making a temporary list and then when ready you copy it over to the permanent
+                //
+            AssociatedPartsTableMPR.setItems(Product.getAllAssociatedParts);
+            APMPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+            APMPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+            APMPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+            APMPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+            System.out.println("associated part table has been intialized");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }

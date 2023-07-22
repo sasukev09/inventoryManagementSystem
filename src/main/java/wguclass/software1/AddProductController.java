@@ -100,6 +100,7 @@ public class AddProductController implements Initializable {
 
     //TODO ASK CI ABOUT HOW TO DEAL WITH PARTS AND ASSOCIATED PARTS FOR THE PRODUCT MENUS
     //TODO INCLUDING REMOVE BUTTON VALIDATION FOR THE PRODUCT MENUS
+
     //TODO ADD PART TO ASSOCP
     @FXML
     void PressAddPRMAddButton(ActionEvent event) throws IOException {
@@ -114,7 +115,7 @@ public class AddProductController implements Initializable {
             System.out.println("Part not found");
         } else {
             associatedParts.add(selectedPart);
-            AssociatedPartsTableAPR.setItems(associatedParts);
+           AssociatedPartsTableAPR.setItems(associatedParts);
         }
 
 
@@ -123,7 +124,33 @@ public class AddProductController implements Initializable {
     //todo figure out a way to set items only when saved, so do not set anything unless you save
     @FXML
     void PressAddPRMRemoveAPartButton(ActionEvent event) throws IOException {
-        System.out.println("pressed add part to assoc parts");
+        {
+
+            Part selectedPart = AssociatedPartsTableAPR.getSelectionModel().getSelectedItem();
+
+            if (selectedPart == null) {
+               //todo alert please select a part
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Part not Found");
+                alert.setContentText("Please select a part to remove.");
+                Optional<ButtonType> OK = alert.showAndWait();
+                System.out.println("Part not found");
+            } else {
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Alert");
+                alert.setContentText("Do you want to remove the selected part?");
+                Optional<ButtonType> result = alert.showAndWait();
+
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    associatedParts.remove(selectedPart);
+                    AssociatedPartsTableAPR.setItems(associatedParts);
+                }
+            }
+        }
+
+
+       /* System.out.println("pressed add part to assoc parts");
         Part selectedPart = AssociatedPartsTableAPR.getSelectionModel().getSelectedItem();
 
         if (selectedPart == null) {
@@ -135,18 +162,25 @@ public class AddProductController implements Initializable {
         } else {
             associatedParts.remove(selectedPart);
 //            AssociatedPartsTableAPR.setItems(associatedParts);
-        }
+        } */
 
 
     }
 
     @FXML
     void PressAddPRMCancelButton(ActionEvent event)  throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Alert");
+            alert.setContentText("Do you want cancel changes and return to the main screen?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            }
     }
     @FXML
     void APRMPressSearchPartIDName(ActionEvent event) {
@@ -156,7 +190,6 @@ public class AddProductController implements Initializable {
             int partId = Integer.parseInt(SPart);
             Part part = Inventory.lookupPart(partId);
             if (part != null) {
-                System.out.println("S2Part =" + SPart);
                 PartsTableMM.getSelectionModel().select(part);
                 return;
             }
@@ -193,7 +226,7 @@ public class AddProductController implements Initializable {
         double price = 0;
         int max = 0;
         int min = 0;
-       int productId = 0 ;
+        int productId = 0 ;
         String mistakeAddPr = "";
        try {
            mistakeAddPr = "inv";
@@ -238,6 +271,8 @@ public class AddProductController implements Initializable {
 
         Inventory.addProduct(new Product(productId, name,price,inv,min,max));
 
+        AssociatedPartsTableAPR.setItems(associatedParts);
+
         System.out.println("Product has been added, returning to main menu.");
 
         Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
@@ -251,12 +286,11 @@ public class AddProductController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         IDTextField.setText(String.valueOf(Inventory.productId));
         //initializing part table
-        PartsTableMM.setItems(Inventory.getAllParts());
         APRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         APRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         APRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         APRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-
+        PartsTableMM.setItems(Inventory.getAllParts());
 
         //initiaizing Associated part table
         APAPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));

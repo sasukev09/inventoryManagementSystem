@@ -46,13 +46,19 @@ public class Inventory {
 
 
     public static void updatePart(int index, Part selectedPart) {
+
         allParts.set(index, selectedPart);
     }
 
     //ask CI about where to implement if statement and how to implement it to the txt alert
     public static boolean deletePart (Part selectedPart) {
-        return allParts.remove(selectedPart);
-
+        if (allParts.contains(selectedPart)) {
+            allParts.remove(selectedPart);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public static ObservableList<Part> getAllParts() {
@@ -100,8 +106,12 @@ public class Inventory {
 
 //ask CI about where to implement if statement and how to implement it to the txt alert
     public static boolean deleteProduct(Product selectedProduct) {
-        return allProducts.remove(selectedProduct);
-
+        if (allProducts.contains(selectedProduct)) {
+            allProducts.remove(selectedProduct);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

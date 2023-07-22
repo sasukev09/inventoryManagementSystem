@@ -190,7 +190,7 @@ public class MainMenuController implements Initializable {
         Product selectedProduct = ProductsTableMM.getSelectionModel().getSelectedItem();
 
 //if its a string you use .equals
-
+//todo add alert that says that ALL PARTS MUST BE REMOVED BEFORE PRODUCT DELETION
         if (selectedProduct == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Product not selected");
