@@ -23,6 +23,8 @@ public class MainMenuController implements Initializable {
     private Scene scene;
     private Parent root;
 
+
+
     //PARTS TABLE AND BUTTONS
     @FXML
     private TableView <Part> PartsTableMM;
@@ -269,15 +271,18 @@ public class MainMenuController implements Initializable {
             }
     }
 
-
-
+    private static Product productToModify;
+    public static Product getProductToModify() {
+        return productToModify;
+    }
     @FXML
     void PressModifyPRMM(ActionEvent event) throws IOException {
         //todo change everything to product related
         //todo create the static method in the modify product controller
         System.out.println("Modify Product button was pressed");
-        Product product = ProductsTableMM.getSelectionModel().getSelectedItem();
-        if (product == null) {
+        productToModify = ProductsTableMM.getSelectionModel().getSelectedItem();
+
+        if (productToModify == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Product not selected");
             alert.setContentText("Product not selected, please select a product");

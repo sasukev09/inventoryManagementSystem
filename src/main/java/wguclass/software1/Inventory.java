@@ -100,8 +100,8 @@ public class Inventory {
     }
 
 
-    public static void updateProduct(int index, Product newProduct) {
-        allProducts.set(index, newProduct);
+    public static void updateProduct(int index, Product selectedProduct) {
+        allProducts.set(index, selectedProduct);
     }
 
 //ask CI about where to implement if statement and how to implement it to the txt alert
@@ -127,20 +127,26 @@ public class Inventory {
         }
         firstTimeAdded = false;
         //PART GETS ADDED
-        Part p1 = new InHouse(Inventory.generatePartId(), "Wheel",29.99,1,1,10, 1);
-        Inventory.getAllParts().add(p1);
+        Part Wheel = new InHouse(Inventory.generatePartId(), "Wheel",29.99,1,1,10, 1);
+        Inventory.getAllParts().add(Wheel);
 
-        Inventory.getAllParts().add(new Outsourced(Inventory.generatePartId(), "Cart",29.99,1,0,10, "Ford"));
-
+        Part Cart = new Outsourced(Inventory.generatePartId(), "Cart",29.99,1,0,10, "Ford");
+        Inventory.getAllParts().add(Cart);
         //PRODUCT GETS ADDED
-        Inventory.getAllProducts().add(new Product(Inventory.generateProductId(), "Bicycle",150.99,1,1,10));
 
-        Inventory.getAllProducts().add(new Product(Inventory.generateProductId(), "Train",125.99,1,0,10));
-        //needed a reference variable "p" for plane
-        Product p = new Product(Inventory.generateProductId(), "Plane",99.99,1,0,5);
-        Inventory.getAllProducts().add(p);
-        //added part "p1"
-        p.addAssociatedPart(p1);
+        Product television = new Product(Inventory.generateProductId(), "Smart TV", 499.99, 20, 20, 100);
+        Inventory.getAllProducts().add(television);
+
+        Product Bicycle = new Product(Inventory.generateProductId(), "Bicycle",150.99,1,1,10);
+        Inventory.getAllProducts().add(Bicycle);
+
+        Product Train = new Product(Inventory.generateProductId(), "Train",125.99,1,0,10);
+        Inventory.getAllProducts().add(Train);
+//needed a reference variable "p" for plane
+        Product Plane = new Product(Inventory.generateProductId(), "Plane",99.99,1,0,5);
+        Inventory.getAllProducts().add(Plane);
+        //added associated part "Wheel"
+        Plane.addAssociatedPart(Wheel);
         }
 
     }

@@ -124,6 +124,6 @@ public class Product {
     /**
      * @return DeleteAssociatedPart deletes associated part
      */
-    public static ObservableList<Part> getAllAssociatedParts = FXCollections.observableArrayList();
-
+    public ObservableList<Part> getAllAssociatedParts() {
+        return associatedParts;}
 }

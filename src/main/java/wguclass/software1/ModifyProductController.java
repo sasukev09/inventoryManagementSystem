@@ -23,6 +23,7 @@ public class ModifyProductController implements Initializable {
     private Scene scene;
     private Parent root;
     int index = 0;
+    Product selectedProduct;
 
     public ObservableList<Part> tempAssociatedParts = FXCollections.observableArrayList();
 
@@ -90,6 +91,7 @@ public class ModifyProductController implements Initializable {
     @FXML
     private TableColumn<Part, String> APMPRPartNameCol;
     private ObservableList<Part> associatedPartsModify = FXCollections.observableArrayList();
+
     //TODO ADD ASSOC PART BUTTON
 
     @FXML
@@ -137,33 +139,28 @@ public class ModifyProductController implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
     }
 
     @FXML
     void PressModifyPRSaveButton(ActionEvent event) throws IOException {
 //save changes from the input on the textfields
-        String name = ModifyPRNameTxtField.getText();
-        int inv = 0;
-        double price = 0;
-        int max = 0;
-        int min = 0;
-        int productId = 0;
         String mistakeModPr = "";
 
         try {
             mistakeModPr = "inv";
-            inv = Integer.parseInt(ModifyPRInvTxtField.getText());
+            int id = Integer.parseInt(ModifyPRIdTxtField.getText());
+            mistakeModPr = "name";
+            String name = ModifyPRNameTxtField.getText();
+            mistakeModPr = "stock";
+            int stock = Integer.parseInt(ModifyPRInvTxtField.getText());
             mistakeModPr = "price";
-            price = Double.parseDouble(ModifyPRPriceTxtField.getText());
+            double price = Double.parseDouble(ModifyPRPriceTxtField.getText());
             mistakeModPr = "max";
-            max = Integer.parseInt(ModifyPRMaxTxtField.getText());
+            int max = Integer.parseInt(ModifyPRMaxTxtField.getText());
             mistakeModPr = "min";
-            min = Integer.parseInt(ModifyPRMinTxtField.getText());
-            mistakeModPr = "id";
-            productId = Inventory.generateProductId();
+            int min = Integer.parseInt(ModifyPRMinTxtField.getText());
 
-            if (min > inv || inv > max) {
+            if (min > stock || stock > max) {
                 System.out.println("Make sure that min <= inv and inv <= max ");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -181,7 +178,7 @@ public class ModifyProductController implements Initializable {
             alert.showAndWait();
             return;
         }
-
+        String name = ModifyPRNameTxtField.getText();
         if (name.isBlank()) {
             System.out.println("product name is blank");
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -190,12 +187,15 @@ public class ModifyProductController implements Initializable {
             alert.showAndWait();
             return;
         }
-
-        Inventory.addProduct(new Product(productId, name, price, inv, min, max));
-
-        AssociatedPartsTableMPR.setItems(associatedPartsModify);
-
-        System.out.println("Product had been added, returning to main menu.");
+        int id = Integer.parseInt(ModifyPRIdTxtField.getText());
+        int stock = Integer.parseInt(ModifyPRInvTxtField.getText());
+        double price = Double.parseDouble(ModifyPRPriceTxtField.getText());
+        int max = Integer.parseInt(ModifyPRMaxTxtField.getText());
+        int min = Integer.parseInt(ModifyPRMinTxtField.getText());
+        Product updatedProduct = new Product(id, name, price, stock, min, max);
+        if (updatedProduct != associatedPartsModify) {
+            Inventory.updateProduct(index, updatedProduct);
+        }
 
         Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -248,42 +248,32 @@ public class ModifyProductController implements Initializable {
         ModifyPRInvTxtField.setText(String.valueOf(product.getStock()));
         ModifyPRPriceTxtField.setText(String.valueOf(product.getPrice()));
         ModifyPRMaxTxtField.setText(String.valueOf(product.getMax()));
-        ModifyPRMinTxtField.setText((String.valueOf(product.getMin())));
-
-    }
-
-    public void receiveProductSetData(Product product) {
-        index = Inventory.getAllProducts().indexOf(product);
-        ModifyPRIdTxtField.setText(String.valueOf(product.getId()));
-        ModifyPRNameTxtField.setText(product.getName());
-        ModifyPRInvTxtField.setText(String.valueOf(product.getStock()));
-        ModifyPRPriceTxtField.setText(String.valueOf(product.getPrice()));
-        ModifyPRMaxTxtField.setText(String.valueOf(product.getMax()));
         ModifyPRMinTxtField.setText(String.valueOf(product.getMin()));
 
     }
 
-        @Override
-        public void initialize (URL url, ResourceBundle resourceBundle){
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
-            try {
-                PartsTableMM.setItems(Inventory.getAllParts());
-                MPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-                MPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-                MPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-                MPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        ModifyPRIdTxtField.setText(String.valueOf(Inventory.productId));
 
-                //initiaizing Associated part table
-                //making a temporary list and then when ready you copy it over to the permanent
-                //
-            AssociatedPartsTableMPR.setItems(Product.getAllAssociatedParts);
-            APMPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-            APMPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-            APMPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-            APMPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-            System.out.println("associated part table has been intialized");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
+        PartsTableMM.setItems(Inventory.getAllParts());
+        MPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        MPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        MPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        MPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        //initiaizing Associated part table
+        //making a temporary list and then when ready you copy it over to the permanent
+        AssociatedPartsTableMPR.setItems(tempAssociatedParts);
+        APMPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        APMPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        APMPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        APMPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+
+        System.out.println("associated part table has been intialized");
+
     }
+}
+
