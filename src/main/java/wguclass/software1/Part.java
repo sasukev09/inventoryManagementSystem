@@ -4,8 +4,8 @@ package wguclass.software1;
  */
 
 /**
- *
- * @author Place Your Name Here
+ * Class provided by WGU
+ * @author Kevin Salazar
  */
 public abstract class Part {
     private int id;

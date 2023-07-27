@@ -25,8 +25,6 @@ public class ModifyProductController implements Initializable {
     int index = 0;
     Product selectedProduct;
 
-    public ObservableList<Part> tempAssociatedParts = FXCollections.observableArrayList();
-
     @FXML
     private Button ModifyPRAddButton;
 
@@ -90,7 +88,10 @@ public class ModifyProductController implements Initializable {
 
     @FXML
     private TableColumn<Part, String> APMPRPartNameCol;
+
+    //TEMPORARY LIST
     private ObservableList<Part> associatedPartsModify = FXCollections.observableArrayList();
+    Product Mouse = new Product(5,"Mouse",10,1,2,3);
 
     //TODO ADD ASSOC PART BUTTON
 
@@ -108,6 +109,12 @@ public class ModifyProductController implements Initializable {
         } else {
             associatedPartsModify.add(selectedPart);
             AssociatedPartsTableMPR.setItems(associatedPartsModify);
+
+            APMPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+            APMPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+            APMPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+            APMPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
         }
     }
 
@@ -118,7 +125,7 @@ public class ModifyProductController implements Initializable {
     @FXML
     void PressModifyPRRemAsPartButton(ActionEvent event) throws IOException {
         System.out.println("pressed add part to assoc parts");
-        Part selectedPart = PartsTableMM.getSelectionModel().getSelectedItem();
+        Part selectedPart = AssociatedPartsTableMPR.getSelectionModel().getSelectedItem();
 
         if (selectedPart == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -127,11 +134,19 @@ public class ModifyProductController implements Initializable {
             Optional<ButtonType> OK = alert.showAndWait();
             System.out.println("Part not found");
         } else {
-            associatedPartsModify.remove(selectedPart);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Alert");
+            alert.setContentText("Do you want to remove the selected part?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+//remove method
+                associatedPartsModify.remove(selectedPart);
+                AssociatedPartsTableMPR.setItems(associatedPartsModify);
 //            AssociatedPartsTableAPR.setItems(associatedParts);
-        }
+                  }
+                }
     }
-
+//todo
     @FXML
     void PressModifyPRCancelButton(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
@@ -145,7 +160,6 @@ public class ModifyProductController implements Initializable {
     void PressModifyPRSaveButton(ActionEvent event) throws IOException {
 //save changes from the input on the textfields
         String mistakeModPr = "";
-
         try {
             mistakeModPr = "inv";
             int id = Integer.parseInt(ModifyPRIdTxtField.getText());
@@ -193,9 +207,14 @@ public class ModifyProductController implements Initializable {
         int max = Integer.parseInt(ModifyPRMaxTxtField.getText());
         int min = Integer.parseInt(ModifyPRMinTxtField.getText());
         Product updatedProduct = new Product(id, name, price, stock, min, max);
-        if (updatedProduct != associatedPartsModify) {
             Inventory.updateProduct(index, updatedProduct);
+            //grabbing parts from temp list and assign to permanent one
+        //temp is associatedPartsModify and perm is getAll
+        for(Part p: associatedPartsModify){
+            updatedProduct.addAssociatedPart(p);
         }
+
+        System.out.println(updatedProduct.getAllAssociatedParts().size());
 
         Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -241,21 +260,38 @@ public class ModifyProductController implements Initializable {
     }
 
     public void receiveProductsSetData(Product product) {
-        //String.valueOf retrieved the id of the p1 and converted that int into string to assign to the label
+        selectedProduct = product;
+
         index = Inventory.getAllProducts().indexOf(product);
-        ModifyPRIdTxtField.setText(String.valueOf(product.getId()));
-        ModifyPRNameTxtField.setText(product.getName());
-        ModifyPRInvTxtField.setText(String.valueOf(product.getStock()));
-        ModifyPRPriceTxtField.setText(String.valueOf(product.getPrice()));
-        ModifyPRMaxTxtField.setText(String.valueOf(product.getMax()));
-        ModifyPRMinTxtField.setText(String.valueOf(product.getMin()));
+
+        System.out.println(product.getAllAssociatedParts().size()+ "*");
+
+        //places old parts in the new list and will allow to add more
+        for(Part p: product.getAllAssociatedParts()) {
+            associatedPartsModify.add(p);
+        }
+        //String.valueOf retrieved the id of the p1 and converted that int into string to assign to the label
+//        index = Inventory.getAllProducts().indexOf(product);
+        ModifyPRIdTxtField.setText(String.valueOf(selectedProduct.getId()));
+        ModifyPRNameTxtField.setText(selectedProduct.getName());
+        ModifyPRInvTxtField.setText(String.valueOf(selectedProduct.getStock()));
+        ModifyPRPriceTxtField.setText(String.valueOf(selectedProduct.getPrice()));
+        ModifyPRMaxTxtField.setText(String.valueOf(selectedProduct.getMax()));
+        ModifyPRMinTxtField.setText(String.valueOf(selectedProduct.getMin()));
+
+        AssociatedPartsTableMPR.setItems(associatedPartsModify);
+        //added cols to populate table
+        APMPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        APMPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        APMPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        APMPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        ModifyPRIdTxtField.setText(String.valueOf(Inventory.productId));
+//        ModifyPRIdTxtField.setText(String.valueOf(Inventory.productId));
 
         PartsTableMM.setItems(Inventory.getAllParts());
         MPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -265,15 +301,14 @@ public class ModifyProductController implements Initializable {
 
         //initiaizing Associated part table
         //making a temporary list and then when ready you copy it over to the permanent
-        AssociatedPartsTableMPR.setItems(tempAssociatedParts);
-        APMPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        APMPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        APMPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        APMPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-
-        System.out.println("associated part table has been intialized");
-
-    }
+//        APMPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+//        APMPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+//        APMPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+//        APMPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+//
+//
+//        System.out.println("associated part table has been intialized");
+//
+       }
 }
 

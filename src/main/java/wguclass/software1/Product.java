@@ -1,16 +1,62 @@
 package wguclass.software1;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * This class models a product that can contain associated parts.
+ *
+ */
+
+ /** @author Kevin Salazar
+ *
+ */
 public class Product {
-    public ObservableList<Part> associatedParts = FXCollections.observableArrayList();
+     /**
+      * An observable list for associated parts
+      */
+    private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
+
+     /**
+      * The ID for the product
+      */
     private int id;
+
+     /**
+      * The name for the product
+      */
     private String name;
+
+     /**
+      * The price for the product
+      */
     private double price;
+
+     /**
+      * The stock for the product
+      */
     private int stock;
+
+     /**
+      * The min for the product
+      */
     private int min;
+
+     /**
+      * The max for the product
+      */
     private int max;
+
+
+     /**
+      * A constructor for a new instance of a product
+      *
+      * @param id the ID for the product
+      * @param name the name of the product
+      * @param price the price of the product
+      * @param stock the inventory level of the product
+      * @param min the minimum level for the product
+      * @param max the maximum level for the product
+      */
     public Product (int id, String name, double price, int stock, int min, int max) {
         this.id = id;
         this.name = name;
@@ -21,7 +67,7 @@ public class Product {
     }
 
     /**
-     * @return the id
+     * @return getter that returns the id of the product
      */
     public int getId() {
         return id;
@@ -108,10 +154,14 @@ public class Product {
      * @return addAssociatedPart deletes associated part
      */
     public void addAssociatedPart(Part part) {
+
         associatedParts.add(part);
     }
+
     /**
-     * @return DeleteAssociatedPart deletes associated part
+     * This method deletes associated parts
+     * @param selectedAssociatedPart
+     * @return DeleteAssociatedPart deletes associated part from the list
      */
      public boolean deleteAssociatedPart(Part selectedAssociatedPart)  {
          if (associatedParts.contains(selectedAssociatedPart)) {
@@ -121,8 +171,10 @@ public class Product {
          else
              return false;
      }
+
     /**
-     * @return DeleteAssociatedPart deletes associated part
+     * List that gets all associated parts
+     * @return the associatedParts list
      */
     public ObservableList<Part> getAllAssociatedParts() {
         return associatedParts;}

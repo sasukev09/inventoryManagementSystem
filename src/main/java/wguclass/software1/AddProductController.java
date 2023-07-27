@@ -18,90 +18,175 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+/**
+ * Controller class that provides control logic for the add product screen of the application.
+ */
 
+/**
+ * @author Kevin Salazar
+ */
 public class AddProductController implements Initializable {
 
+    /**
+     * The stage that brings you back to the Main Menu
+     */
     private Stage stage;
-    private Scene scene;
-    private Parent root;
 
+    /**
+     * The stage that brings you back to the Main Menu
+     */
+    private Scene scene;
+
+    /**
+     * The button to finish adding the product
+     */
     @FXML
     private Button AddPRMAddButton;
 
+
+    /**
+     * The button to cancel the add product action
+     */
     @FXML
     private Button AddPRMCancelButton;
 
+
+    /**
+     * The button to remove a part
+     */
     @FXML
     private Button AddPRMRemoveAPartButton;
 
+
+    /**
+     * The button to save the created product
+     */
     @FXML
     private Button AddPRMSaveButton;
 
-    //PARTS TABLE APR
 
+
+
+
+    /**
+     * The table view that contains all Parts
+     */
     @FXML
     private TableView<Part> PartsTableMM;
 
+    /**
+     * The table column for the part inventory
+     */
     @FXML
     private TableColumn APRInvCol;
 
+    /**
+     * The table column for the part price
+     */
     @FXML
     private TableColumn APRPCCol;
 
+    /**
+     * The table column for the part ID
+     */
     @FXML
     private TableColumn APRPartIDCol;
 
+    /**
+     * The table column for the part name
+     */
     @FXML
     private TableColumn APRPartNameCol;
 
-
-    //ASSOCIATED PARTS TABLE APR
+    /**
+     * The table view for the parts table
+     */
     @FXML
     private TableView <Part> AssociatedPartsTableAPR;
 
+    /**
+     * The table column for the part inventory
+     */
     @FXML
     private TableColumn <Part, Integer> APAPRInvCol;
 
+    /**
+     * The table column for the part price
+     */
     @FXML
     private TableColumn <Part, Double> APAPRPCCol;
 
+    /**
+     * The table column for the part id
+     */
     @FXML
     private TableColumn <Part, Integer> APAPRPartIDCol;
 
+    /**
+     * The table column for the part name
+     */
     @FXML
     private TableColumn<Part, String> APAPRPartNameCol;
 
 
 
-
+    /**
+     * The text field for the id
+     */
     @FXML
     private TextField IDTextField;
 
+    /**
+     * The text field for the inventory
+     */
     @FXML
     private TextField InvTextField;
 
+    /**
+     * The text field for the max
+     */
     @FXML
     private TextField MaxTextField;
 
+    /**
+     * The text field for the min
+     */
     @FXML
     private TextField MinTextField;
 
+    /**
+     * The text field for the name
+     */
     @FXML
     private TextField NameTextField;
 
-
-
+    /**
+     * The text field for the price
+     */
     @FXML
     private TextField PriceTextField;
 
+    /**
+     * The text field to search a part
+     */
     @FXML
     private TextField SearchbyPartOrIDAPRM;
+
+    /**
+     * The list of associated Parts
+     */
     private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
+    //to overwrite test data
+    Product Mouse = new Product(5,"Mouse",10,1,2,3);
 
     //TODO ASK CI ABOUT HOW TO DEAL WITH PARTS AND ASSOCIATED PARTS FOR THE PRODUCT MENUS
     //TODO INCLUDING REMOVE BUTTON VALIDATION FOR THE PRODUCT MENUS
 
-    //TODO ADD PART TO ASSOCP
+    /**
+     * Adds a new associated part to the product
+     * @param event By pressing the button a new associated part is added
+     * @throws IOException
+     */
     @FXML
     void PressAddPRMAddButton(ActionEvent event) throws IOException {
         System.out.println("pressed add part to assoc parts");
@@ -114,14 +199,20 @@ public class AddProductController implements Initializable {
             Optional<ButtonType> OK = alert.showAndWait();
             System.out.println("Part not found");
         } else {
-            associatedParts.add(selectedPart);
-           AssociatedPartsTableAPR.setItems(associatedParts);
+            Mouse.addAssociatedPart(selectedPart);
+           AssociatedPartsTableAPR.setItems(Mouse.getAllAssociatedParts());
         }
 
 
     }
     //TODO REMOVE PART FROM ASSOCP
     //todo figure out a way to set items only when saved, so do not set anything unless you save
+
+    /**
+     * Removes an associated part from the product
+     * @param event After pressing the button, an associated part is removed
+     * @throws IOException
+     */
     @FXML
     void PressAddPRMRemoveAPartButton(ActionEvent event) throws IOException {
         {
@@ -141,32 +232,20 @@ public class AddProductController implements Initializable {
                 alert.setTitle("Alert");
                 alert.setContentText("Do you want to remove the selected part?");
                 Optional<ButtonType> result = alert.showAndWait();
-
+                //todo ???? With mouse selected part???
                 if (result.isPresent() && result.get() == ButtonType.OK) {
                     associatedParts.remove(selectedPart);
                     AssociatedPartsTableAPR.setItems(associatedParts);
                 }
             }
         }
-
-
-       /* System.out.println("pressed add part to assoc parts");
-        Part selectedPart = AssociatedPartsTableAPR.getSelectionModel().getSelectedItem();
-
-        if (selectedPart == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Part not Found");
-            alert.setContentText("Please select a part to remove.");
-            Optional<ButtonType> OK = alert.showAndWait();
-            System.out.println("Part not found");
-        } else {
-            associatedParts.remove(selectedPart);
-//            AssociatedPartsTableAPR.setItems(associatedParts);
-        } */
-
-
     }
 
+    /**
+     * Cancels the action of adding a product and returns to main menu
+     * @param event Pressing button cancels action
+     * @throws IOException
+     */
     @FXML
     void PressAddPRMCancelButton(ActionEvent event)  throws IOException {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -182,6 +261,11 @@ public class AddProductController implements Initializable {
                 stage.show();
             }
     }
+
+    /**
+     * Searching a part inside the product menu
+     * @param event Search text field to input a name or id of the part of choice
+     */
     @FXML
     void APRMPressSearchPartIDName(ActionEvent event) {
         String SPart = SearchbyPartOrIDAPRM.getText();
@@ -217,10 +301,22 @@ public class AddProductController implements Initializable {
         }
     }
 
+    /**
+     * Saves the product and associated part
+     * @param event Pressing the save button saves adding a product and its associated parts
+     * @throws IOException
+     */
     @FXML
     void PressAddPRMSaveButton(ActionEvent event) throws IOException {
         //save changes from the input on the textfields
         String name = NameTextField.getText();
+
+        Mouse.setName(NameTextField.getText());
+        Mouse.setId(Integer.parseInt(IDTextField.getText()));
+        Mouse.setMax(Integer.parseInt(MaxTextField.getText()));
+        Mouse.setMin(Integer.parseInt(MinTextField.getText()));
+        Mouse.setStock(Integer.parseInt(InvTextField.getText()));
+        Mouse.setPrice(Double.parseDouble(PriceTextField.getText()));
 
         int inv = 0 ;
         double price = 0;
@@ -268,20 +364,23 @@ public class AddProductController implements Initializable {
             alert.showAndWait();
             return;
         }
-
-        Inventory.addProduct(new Product(productId, name,price,inv,min,max));
-
-        AssociatedPartsTableAPR.setItems(associatedParts);
+        Inventory.addProduct(Mouse);
+//        AssociatedPartsTableAPR.setItems(associatedParts);
 
         System.out.println("Product has been added, returning to main menu.");
-
         Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        //fix delete button, Mouse.deleteAssociated
     }
 
+    /**
+     * Initializing and populating the table views inside the add product menu
+     * @param url  Locates the relative paths for the root object, or null if not found
+     * @param resourceBundle Resources used to localize the root object, or null if not found
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         IDTextField.setText(String.valueOf(Inventory.productId));

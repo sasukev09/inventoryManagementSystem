@@ -14,57 +14,130 @@ import java.io.IOException;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+/**
+ * Controller class that provides control logic for the add part screen of the application.
+ */
 
+/**
+ * @author Kevin Salazar
+ */
 public class AddPartController implements Initializable {
+
+    /**
+     * The machine ID/Company name text label for the part in creation.
+     */
     public Text APMLabelTxtMachID;
+
+    /**
+     * The stage that brings you back to the Main Menu
+     */
     private Stage stage;
+
+    /**
+     * The scene that brings you back to the Main Menu
+     */
     private Scene scene;
+
+    /**
+     * The parent of the scene graph
+     */
     private Parent root;
 
-
+    /**
+     * The button to cancel the add part action
+     */
     @FXML
     private Button APMCancelButton;
 
+    /**
+     * The button to create an In-House type of part
+     */
     @FXML
     private RadioButton APMInHouseRadioButton;
     //if button is selected, then an inhouse part is created
+
+    /**
+     * The button to create an Outsourced type of part
+     */
     @FXML
     private RadioButton APMOutSourcedRadioButton;
     //if button is selected, then an inhouse part is created
+
+    /**
+     * The button to create the part and save changes
+     */
     @FXML
     private Button APMSaveButton;
-    //after button is selected all changes get saved
+
+    /**
+     * The toggle group for the radio buttons
+     */
     @FXML
     private ToggleGroup APMToggleGroup;
 
+    /**
+     * The ID text field for the part in creation, auto generated.
+     */
     @FXML
     private TextField IDTextField;
-    //auto generated
+
+
+    /**
+     * The Inventory text field for the part in creation.
+     */
     @FXML
     private TextField InventoryTextFIeld;
-    //
+
+    /**
+     * The MachineId label for the In-house part in creation.
+     */
     @FXML
     private TextField MachIDTxtField;
 
+    /**
+     * The Max text field for the part in creation.
+     */
     @FXML
     private TextField MaxTxtField;
 
+    /**
+     * The Min text field for the part in creation.
+     */
     @FXML
     private TextField MinTxtField;
 
+
+    /**
+     * The Name text field for the part in creation.
+     */
     @FXML
     private TextField NameTextField;
 
 
+    /**
+     * The Price text field for the part in creation.
+     */
     @FXML
     private TextField PriceCostTxtField;
 
+
+    /**
+     * Sets machine ID/company name label to "Company Name"
+     *
+     * @param event Outsourced radio button action.
+     */
     @FXML
     void APMOutSourcedRadioButton(ActionEvent event) {
         System.out.println("[AddPartMenu::APMOutSourcedRadioButton] Outsourced part radio button selected, updating label");
         APMLabelTxtMachID.setText("Company Name");
     }
 
+    /**
+     * Cancels the creation of the part.
+     *
+     * @param event Cancel button that returns to main menu.
+     * @throws IOException From FXMLLoader.
+     */
     @FXML
     void PressAPMCancelButton(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
@@ -74,18 +147,29 @@ public class AddPartController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Sets machine ID/company name label to "Machine ID".
+     *
+     * @param event In-house radio button action.
+     */
     @FXML
     void PressAPMInHouseRadioButton(ActionEvent event) {
         System.out.println("[AddModifyPartMenu::APMInHouseRadioButton] In-House part radio button selected, updating label");
         APMLabelTxtMachID.setText("Machine ID");
     }
 
+    /**
+     * Adds new part to inventory and loads the Main Menu.
+     *
+     * All text fields are validated with error messages displayed to prevent empty and
+     * invalid values.
+     *
+     * @param event Save button action.
+     * @throws IOException From the FXMLLoader.
+     */
     @FXML
     void PressAPMSaveButton(ActionEvent event) throws IOException {
-        //save changes from the input on the textfields
         String name = NameTextField.getText();
-
-        //parseint/parsedouble converts data type from string, string goes inside parenthesis
 
         double price = 0;
         int max = 0; //          min <= inv , inv <= max
@@ -116,10 +200,8 @@ public class AddPartController implements Initializable {
                 return;
             }
 
-
         }
         catch(NumberFormatException e) {
-          //todo set inv must be a number
             System.out.println("entry must be a number");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -129,8 +211,6 @@ public class AddPartController implements Initializable {
             return;
         }
 
-        //todo insert validations, basically queries CHECK TASK FOR PROJECT
-        //todo TEST IT THROUGHLY
         if (name.isBlank()) {
             System.out.println("part name is blank");
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -140,7 +220,6 @@ public class AddPartController implements Initializable {
             alert.showAndWait();
             return;
         }
-
 
         if (APMInHouseRadioButton.isSelected()) {
             System.out.println("INHOUSE SELECTED");
@@ -169,20 +248,19 @@ public class AddPartController implements Initializable {
                 alert.showAndWait();
                 return;
             }
-            //no need to convert because machid is already a String
             Inventory.addPart(new Outsourced(id, name, price, inv, min, max, companyName));
         }
-
-//to comment multiple lines ctrl and "/"
         Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
     }
 
-    //REMEMBER TO PUT TEXT ALERTS AND VALIDATIONS BEFORE THE IF STATEMENTS, PRIOR CREATING OBJECT
-
-
+    /**
+     * Initializes the controller and sets the automatic generation of the ID
+     * @param url  Locates the relative paths for the root object, or null if not found
+     * @param resourceBundle Resources used to localize the root object, or null if not found
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

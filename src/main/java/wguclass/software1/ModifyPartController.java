@@ -14,14 +14,37 @@ package wguclass.software1;
         import java.io.IOException;
         import java.net.URL;
         import java.util.ResourceBundle;
-
+/**
+ * This class is the Main Menu of the application.
+ *
+ * Displaying parts and products, and the buttons to interact with the application and manage the inventory.
+ *
+ * @author Kevin Salazar
+ */
 public class ModifyPartController implements Initializable {
-
+    /**
+     * Text label for the machine id
+     */
     public Text ModPMLabelTxtMachID;
+
+    /**
+     * The stage used to return to the main menu
+     */
     private Stage stage;
+
+    /**
+     * The scene used to return to the main menu
+     */
     private Scene scene;
-    private Parent root;
+
+    /**
+     * Assigning an initial value for the index
+     */
     int index = 0;
+
+    /**
+     * Text field for modify
+     */
     @FXML
     private TextField ModPIDTxtField;
 
