@@ -19,10 +19,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
- * This class is the modify product menu of the application.
- *
+ * This class is the modify product menu of the application.*
  * You are able to change values of a product, add/remove associated parts and save the changes.
- *
  * @author Kevin Salazar
  */
 public class ModifyProductController implements Initializable {
@@ -178,13 +176,9 @@ public class ModifyProductController implements Initializable {
     private ObservableList<Part> associatedPartsModify = FXCollections.observableArrayList();
     Product Mouse = new Product(5,"Mouse",10,1,2,3);
 
-    //TODO ADD ASSOC PART BUTTON
-
     /**
      * Add a part from the parts list into the associated part list
-     *
      * Alerts user if button was pressed with no selection
-     *
      * @param event Adding a part to the product in modification
      * @throws IOException an exception that is thrown when an I/O error occurs
      */
@@ -211,16 +205,9 @@ public class ModifyProductController implements Initializable {
         }
     }
 
-
-    //TODO ASK CI ABOUT HOW TO DEAL WITH PARTS AND ASSOCIATED PARTS FOR THE PRODUCT MENUS
-    //TODO INCLUDING REMOVE BUTTON VALIDATION FOR THE PRODUCT
-    //TODO REMOVE ASSOC PART BUTTON
-
     /**
      * Removes an associated part from the product
-     *
      * Alerts user if button was pressed with no selection
-     *
      * Confirmation message to remove the associated part
      *
      * @param event Removing an associated part from the temporary list
@@ -243,11 +230,9 @@ public class ModifyProductController implements Initializable {
             alert.setContentText("Do you want to remove the selected part?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-//remove method
                 associatedPartsModify.remove(selectedPart);
                 AssociatedPartsTableMPR.setItems(associatedPartsModify);
-//            AssociatedPartsTableAPR.setItems(associatedParts);
-                  }
+                      }
                 }
     }
 
@@ -275,11 +260,8 @@ public class ModifyProductController implements Initializable {
 
     /**
      * Saves changes to the product modification
-     *
      * Includes validations for product values
-     *
      * Stores part into the permanent associated parts list
-     *
      * A future enhancement would be to save changes in a database after the program closes
      *
      * @param event Saves modify product
@@ -287,7 +269,6 @@ public class ModifyProductController implements Initializable {
      */
     @FXML
     void PressModifyPRSaveButton(ActionEvent event) throws IOException {
-//save changes from the input on the textfields
         int stock = 0;
         double price = 0;
         int max = 0;
@@ -340,10 +321,10 @@ public class ModifyProductController implements Initializable {
          price = Double.parseDouble(ModifyPRPriceTxtField.getText());
          max = Integer.parseInt(ModifyPRMaxTxtField.getText());
          min = Integer.parseInt(ModifyPRMinTxtField.getText());
+
         Product updatedProduct = new Product(id, name, price, stock, min, max);
             Inventory.updateProduct(index, updatedProduct);
-            //grabbing parts from temp list and assign to permanent one
-        //temp is associatedPartsModify and perm is getAll
+
         for(Part p: associatedPartsModify){
             updatedProduct.addAssociatedPart(p);
         }
@@ -355,14 +336,11 @@ public class ModifyProductController implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
     }
 
     /**
      * Searches a part by id or name
-     *
      * Alerts user if a part was not found
-     *
      * @param event Searches part by giving input in text field
      */
     @FXML
@@ -377,7 +355,6 @@ public class ModifyProductController implements Initializable {
                 PartsTableMM.getSelectionModel().select(part);
                 return;
             } else {
-                //POP UP AN ALERT, PRODUCT NOT FOUND
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Part not Found");
                 alert.setContentText("Part not found.");
@@ -390,7 +367,6 @@ public class ModifyProductController implements Initializable {
                 PartsTableMM.setItems(PartSearched);
             else {
                 PartsTableMM.setItems(Inventory.getAllParts());
-                //ALERT PRODUCT NOT FOUND
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Part not Found");
                 alert.setContentText("Part not found.");
@@ -409,17 +385,13 @@ public class ModifyProductController implements Initializable {
      */
     public void receiveProductsSetData(Product product) {
         selectedProduct = product;
-
         index = Inventory.getAllProducts().indexOf(product);
 
         System.out.println(product.getAllAssociatedParts().size()+ "*");
 
-        //places old parts in the new list and will allow to add more
         for(Part p: product.getAllAssociatedParts()) {
             associatedPartsModify.add(p);
         }
-        //String.valueOf retrieved the id of the p1 and converted that int into string to assign to the label
-//        index = Inventory.getAllProducts().indexOf(product);
         ModifyPRIdTxtField.setText(String.valueOf(selectedProduct.getId()));
         ModifyPRNameTxtField.setText(selectedProduct.getName());
         ModifyPRInvTxtField.setText(String.valueOf(selectedProduct.getStock()));
@@ -428,7 +400,6 @@ public class ModifyProductController implements Initializable {
         ModifyPRMinTxtField.setText(String.valueOf(selectedProduct.getMin()));
 
         AssociatedPartsTableMPR.setItems(associatedPartsModify);
-        //added cols to populate table
         APMPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         APMPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         APMPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
@@ -450,7 +421,6 @@ public class ModifyProductController implements Initializable {
         MPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         MPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         MPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-
        }
 }
 

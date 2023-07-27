@@ -9,13 +9,11 @@ import java.io.IOException;
 
 /**
  * This Main class creates an application for the program.
- *
  * The main menu is initialized here.
- *
  * @author Kevin Salazar
  */
-
 public class Main extends  Application {
+
     /**
      * The start method creates the FXML stage and loads the initial scene.
      *
@@ -29,17 +27,13 @@ public class Main extends  Application {
         primarystage.show();
     }
 
-
     /**
      * The main method is the initial access of the application.
-     *
      * The main method launches the application.
-     *
      * @param args
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-
         launch();
     }
 }

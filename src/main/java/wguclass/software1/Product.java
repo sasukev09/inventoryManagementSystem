@@ -4,7 +4,6 @@ import javafx.collections.ObservableList;
 
 /**
  * This class models a product and associated parts.
- *
  * Contains the constructors for the product along with its setters and getters, and also setters, getters for the associated parts.
  * @author Kevin Salazar
  *

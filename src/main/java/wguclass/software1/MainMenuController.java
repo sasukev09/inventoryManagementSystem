@@ -20,12 +20,9 @@ import javafx.scene.control.TableColumn;
 
 /**
  * This class is the Main Menu of the application, parts and products are displayed here.
- *
  * You can interact with parts and products in this menu.
- *
  * @author Kevin Salazar
  */
-
 public class MainMenuController implements Initializable {
 
     /**
@@ -37,7 +34,6 @@ public class MainMenuController implements Initializable {
      *The scene for the Main Menu
      */
     private Scene scene;
-
 
     /**
      * Table view for the parts.
@@ -192,7 +188,6 @@ public class MainMenuController implements Initializable {
         }
     }
 
-
     /**
      * Looks up a product by ID or name, not case-sensitive
      * @param event Search event action
@@ -210,7 +205,6 @@ public class MainMenuController implements Initializable {
                         return;
                     }
                     else {
-                        //POP UP AN ALERT, PRODUCT NOT FOUND
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Product not Found");
                         alert.setContentText("Product not found.");
@@ -223,7 +217,6 @@ public class MainMenuController implements Initializable {
                         ProductsTableMM.setItems(ProductSearched);
                     else {
                         ProductsTableMM.setItems(Inventory.getAllProducts());
-                        //ALERT PRODUCT NOT FOUND
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Product not Found");
                         alert.setContentText("Product not found.");
@@ -289,7 +282,6 @@ public class MainMenuController implements Initializable {
         }
     }
 
-
     /**
      * Deletes a product from the product table view
      *
@@ -301,8 +293,7 @@ public class MainMenuController implements Initializable {
     @FXML
     void PressDeletePRMM(ActionEvent event) throws IOException {
         Product selectedProduct = ProductsTableMM.getSelectionModel().getSelectedItem();
-        //todo make validation for associated parts linked to product
-//todo add alert that says that ALL PARTS MUST BE REMOVED BEFORE PRODUCT DELETION
+
         if (selectedProduct == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Product not selected");
@@ -317,7 +308,6 @@ public class MainMenuController implements Initializable {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 Product selectedProductDelete = ProductsTableMM.getSelectionModel().getSelectedItem();
                 if(selectedProductDelete.getAllAssociatedParts().size() > 0) {
-                    //todo alert for delete all parts before deleting product
                     Alert alertDeleteAP = new Alert(Alert.AlertType.ERROR);
                     alertDeleteAP.setTitle("Unable to delete Product");
                     alertDeleteAP.setContentText("Please delete all parts from the product");
@@ -391,8 +381,6 @@ public class MainMenuController implements Initializable {
      */
     @FXML
     void PressModifyPRMM(ActionEvent event) throws IOException {
-        //todo change everything to product related
-        //todo create the static method in the modify product controller
         System.out.println("Modify Product button was pressed");
         Product productToModify = ProductsTableMM.getSelectionModel().getSelectedItem();
 
@@ -429,7 +417,6 @@ public class MainMenuController implements Initializable {
      */
     public static boolean firstTimeAdded = true;
 
-
     /**
      * This initializes the initial data that the application will begin with
      *
@@ -440,8 +427,6 @@ public class MainMenuController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //calling myInitialData method from Inventory class, where the first parts and products
-        //where created
         Inventory.myInitialData();
         System.out.println("main menu has been initialized");
 

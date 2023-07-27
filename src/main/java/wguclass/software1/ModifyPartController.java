@@ -16,12 +16,11 @@ package wguclass.software1;
         import java.util.ResourceBundle;
 /**
  * This class is the modify part menu of the application.
- *
  * You are able to change values of a part, and save the changes.
- *
  * @author Kevin Salazar
  */
 public class ModifyPartController implements Initializable {
+
     /**
      * Text label for the machine id
      */
@@ -115,7 +114,6 @@ public class ModifyPartController implements Initializable {
     @FXML
     private ToggleGroup ModifyPartMenu;
 
-
     /**
      * When the In-house radio button is selected, the text label changes to Machine ID
      * @param event Text label text changes to Machine ID
@@ -155,11 +153,8 @@ public class ModifyPartController implements Initializable {
 
     /**
      * Validates all values and saves changes for the modified part
-     *
      * Redirects to main menu once everything is saved
-     *
      * A future enhancement would be saving changes in a database after exiting the program to maintain all changes
-     *
      * @param event Pressing the button saves the changes made to the part
      * @throws IOException an exception that is thrown when an I/O error occurs
      */
@@ -173,7 +168,6 @@ public class ModifyPartController implements Initializable {
         int min = 0;
         int id = 0;
         String mistakeModPart = "";
-        //todo VALIDATIONS FROM TASK, ONCE VALIDATED
         try {
             mistakeModPart = "inv";
             inv = Integer.parseInt(ModPartInvTextField.getText());
@@ -213,11 +207,8 @@ public class ModifyPartController implements Initializable {
             alert.showAndWait();
             return;
         }
-
         System.out.println("index =" + index);
-
             if (ModPInHouseRadio.isSelected()) {
-
                 System.out.println("INHOUSE SELECTED");
                 int machId = 0;
                 try {
@@ -273,7 +264,6 @@ public class ModifyPartController implements Initializable {
             ModPartMaxTxtField.setText(String.valueOf(part.getMax()));
             ModPartMinTxtField.setText((String.valueOf(part.getMin())));
             ModPartMachineIDTxtField.setText(String.valueOf(((InHouse)part).getMachineId()));
-
         }
 
         if (part instanceof Outsourced) {
@@ -298,9 +288,5 @@ public class ModifyPartController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
     }
-
-
 }

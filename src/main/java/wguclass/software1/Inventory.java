@@ -53,8 +53,6 @@ public class Inventory {
         return null;
     }
 
-
-
     /**
      * Looks up a part by name.
      *
@@ -81,7 +79,7 @@ public class Inventory {
         allParts.set(index, selectedPart);
     }
 
-    //ask CI about where to implement if statement and how to implement it to the txt alert
+
     /**
      * Deletes a part in the parts list.
      *
@@ -157,7 +155,6 @@ public class Inventory {
      */
     public static ObservableList<Product> lookupProduct(String productName) {
         ObservableList<Product> namedProduct = FXCollections.observableArrayList();
-//toLowercase method, toUppercase, either or, they take the name and change it to upper/lower
         for (Product product : allProducts) {
             if (product.getName().toLowerCase().contains(productName.toLowerCase())) {
                 namedProduct.add(product);
@@ -176,7 +173,7 @@ public class Inventory {
         allProducts.set(index, selectedProduct);
     }
 
-//ask CI about where to implement if statement and how to implement it to the txt alert
+
     /**
      * Deletes a product from the product list.
      *
@@ -202,10 +199,8 @@ public class Inventory {
             return allProducts;
         }
 
-
     /**
      * The creation of initial data for parts and products.
-     * Made static so it could be called inside the main menu controller.
      * @return If the object is added for the first time, no return will occur.
      */
     public static void myInitialData(){
@@ -214,13 +209,12 @@ public class Inventory {
             return;
         }
         firstTimeAdded = false;
-        //PART GETS ADDED
+
         Part Wheel = new InHouse(Inventory.generatePartId(), "Wheel",29.99,1,1,10, 1);
         Inventory.getAllParts().add(Wheel);
 
         Part Cart = new Outsourced(Inventory.generatePartId(), "Cart",29.99,1,0,10, "Ford");
         Inventory.getAllParts().add(Cart);
-        //PRODUCT GETS ADDED
 
         Product television = new Product(Inventory.generateProductId(), "Smart TV", 499.99, 20, 20, 100);
         Inventory.getAllProducts().add(television);
@@ -230,13 +224,10 @@ public class Inventory {
 
         Product Train = new Product(Inventory.generateProductId(), "Train",125.99,1,0,10);
         Inventory.getAllProducts().add(Train);
-//needed a reference variable "p" for plane
+
         Product Plane = new Product(Inventory.generateProductId(), "Plane",99.99,1,0,5);
         Inventory.getAllProducts().add(Plane);
-        //added associated part "Wheel"
         Plane.addAssociatedPart(Wheel);
         }
 
     }
-//GET MODIFY, ADD, VERIFICATIONS OF TXT FIELDS, DELETE, ADD AND FINALLY MOVE OVER TO PRODUCT
-//ALL VARIABLES ARE LOWER CASE

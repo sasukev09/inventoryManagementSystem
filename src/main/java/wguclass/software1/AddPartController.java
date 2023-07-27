@@ -1,5 +1,4 @@
 package wguclass.software1;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.IOException;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 /**
@@ -57,14 +55,12 @@ public class AddPartController implements Initializable {
      */
     @FXML
     private RadioButton APMInHouseRadioButton;
-    //if button is selected, then an inhouse part is created
 
-    /**
+      /**
      * The button to create an Outsourced type of part
      */
     @FXML
     private RadioButton APMOutSourcedRadioButton;
-    //if button is selected, then an inhouse part is created
 
     /**
      * The button to create the part and save changes
@@ -83,7 +79,6 @@ public class AddPartController implements Initializable {
      */
     @FXML
     private TextField IDTextField;
-
 
     /**
      * The Inventory text field for the part in creation.
@@ -109,20 +104,17 @@ public class AddPartController implements Initializable {
     @FXML
     private TextField MinTxtField;
 
-
     /**
      * The Name text field for the part in creation.
      */
     @FXML
     private TextField NameTextField;
 
-
     /**
      * The Price text field for the part in creation.
      */
     @FXML
     private TextField PriceCostTxtField;
-
 
     /**
      * Sets machine ID/company name label to "Company Name"
@@ -139,7 +131,7 @@ public class AddPartController implements Initializable {
      * Cancels the creation of the part.
      *
      * @param event Cancel button that returns to main menu.
-     * @throws IOException From FXMLLoader.
+     * @throws IOException  an exception that is thrown when an I/O error occurs
      */
     @FXML
     void PressAPMCancelButton(ActionEvent event) throws IOException {
@@ -177,9 +169,9 @@ public class AddPartController implements Initializable {
         String name = NameTextField.getText();
 
         double price = 0;
-        int max = 0; //          min <= inv , inv <= max
-        int inv = 0; // LESS OR EQUAL TO max
-        int min = 0; // LESS OR EQUAL TO inv
+        int max = 0;
+        int inv = 0;
+        int min = 0;
         int id = 0;
         String mistake = "";
 
@@ -204,7 +196,6 @@ public class AddPartController implements Initializable {
                 alert.showAndWait();
                 return;
             }
-
         }
         catch(NumberFormatException e) {
             System.out.println("entry must be a number");
@@ -215,7 +206,6 @@ public class AddPartController implements Initializable {
             alert.showAndWait();
             return;
         }
-
         if (name.isBlank()) {
             System.out.println("part name is blank");
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -225,7 +215,6 @@ public class AddPartController implements Initializable {
             alert.showAndWait();
             return;
         }
-
         if (APMInHouseRadioButton.isSelected()) {
             System.out.println("INHOUSE SELECTED");
             int machId = 0;
@@ -268,10 +257,8 @@ public class AddPartController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         IDTextField.setText(String.valueOf(Inventory.partId));
-    }
-
+     }
     }
 
 

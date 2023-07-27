@@ -13,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -44,13 +43,11 @@ public class AddProductController implements Initializable {
     @FXML
     private Button AddPRMAddButton;
 
-
     /**
      * The button to cancel the add product action
      */
     @FXML
     private Button AddPRMCancelButton;
-
 
     /**
      * The button to remove a part
@@ -58,16 +55,11 @@ public class AddProductController implements Initializable {
     @FXML
     private Button AddPRMRemoveAPartButton;
 
-
     /**
      * The button to save the created product
      */
     @FXML
     private Button AddPRMSaveButton;
-
-
-
-
 
     /**
      * The table view that contains all Parts
@@ -129,8 +121,6 @@ public class AddProductController implements Initializable {
     @FXML
     private TableColumn<Part, String> APAPRPartNameCol;
 
-
-
     /**
      * The text field for the id
      */
@@ -177,11 +167,8 @@ public class AddProductController implements Initializable {
      * The list of associated Parts
      */
     private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
-    //to overwrite test data
     Product Mouse = new Product(5,"Mouse",10,1,2,3);
 
-    //TODO ASK CI ABOUT HOW TO DEAL WITH PARTS AND ASSOCIATED PARTS FOR THE PRODUCT MENUS
-    //TODO INCLUDING REMOVE BUTTON VALIDATION FOR THE PRODUCT MENUS
 
     /**
      * Adds a new associated part to the product
@@ -203,11 +190,7 @@ public class AddProductController implements Initializable {
             Mouse.addAssociatedPart(selectedPart);
            AssociatedPartsTableAPR.setItems(Mouse.getAllAssociatedParts());
         }
-
-
     }
-    //TODO REMOVE PART FROM ASSOCP
-    //todo figure out a way to set items only when saved, so do not set anything unless you save
 
     /**
      * Removes an associated part from the product
@@ -217,7 +200,6 @@ public class AddProductController implements Initializable {
     @FXML
     void PressAddPRMRemoveAPartButton(ActionEvent event) throws IOException {
         {
-
             Part selectedPart = AssociatedPartsTableAPR.getSelectionModel().getSelectedItem();
 
             if (selectedPart == null) {
@@ -274,12 +256,12 @@ public class AddProductController implements Initializable {
             System.out.println("SPart =" + SPart);
             int partId = Integer.parseInt(SPart);
             Part part = Inventory.lookupPart(partId);
+
             if (part != null) {
                 PartsTableMM.getSelectionModel().select(part);
                 return;
             }
             else {
-                //POP UP AN ALERT, PRODUCT NOT FOUND
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Part not Found");
                 alert.setContentText("Part not found.");
@@ -292,7 +274,6 @@ public class AddProductController implements Initializable {
                 PartsTableMM.setItems(PartSearched);
             else {
                 PartsTableMM.setItems(Inventory.getAllParts());
-                //ALERT PRODUCT NOT FOUND
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Part not Found");
                 alert.setContentText("Part not found.");
@@ -305,7 +286,7 @@ public class AddProductController implements Initializable {
     /**
      * Saves the product and associated part
      * @param event Pressing the save button saves adding a product and its associated parts
-     * @throws IOException
+     * @throws IOException  an exception that is thrown when an I/O error occurs
      */
     @FXML
     void PressAddPRMSaveButton(ActionEvent event) throws IOException {
@@ -357,7 +338,6 @@ public class AddProductController implements Initializable {
             return;
         }
         Inventory.addProduct(Mouse);
-//        AssociatedPartsTableAPR.setItems(associatedParts);
 
         System.out.println("Product has been added, returning to main menu.");
         Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
@@ -365,7 +345,6 @@ public class AddProductController implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        //fix delete button, Mouse.deleteAssociated
     }
 
     /**
@@ -376,14 +355,12 @@ public class AddProductController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         IDTextField.setText(String.valueOf(Inventory.productId));
-        //initializing part table
         APRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         APRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         APRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         APRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
         PartsTableMM.setItems(Inventory.getAllParts());
 
-        //initiaizing Associated part table
         APAPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         APAPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         APAPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
