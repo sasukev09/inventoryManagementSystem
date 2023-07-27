@@ -310,6 +310,15 @@ public class MainMenuController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
+                Product selectedProductDelete = ProductsTableMM.getSelectionModel().getSelectedItem();
+                if(selectedProductDelete.getAllAssociatedParts().size() > 0) {
+                    //todo alert for delete all parts before deleting product
+                    Alert alertDeleteAP = new Alert(Alert.AlertType.ERROR);
+                    alertDeleteAP.setTitle("Unable to delete Product");
+                    alertDeleteAP.setContentText("Please delete all parts from the product");
+                    alertDeleteAP.showAndWait();
+                    return;
+                }
                 Inventory.deleteProduct(selectedProduct);
             }
         }
