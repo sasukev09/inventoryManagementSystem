@@ -3,19 +3,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import static wguclass.software1.MainMenuController.firstTimeAdded;
+/**
+ * This class models the Inventory of the program and adds test data.
+ *
+ * Includes lists, setters, getters, lookup methods for all parts and products
+ *
+ * @author Kevin Salazar
+ */
 public class Inventory {
-    /**
-     *
-     It also contains the data of the initial set of parts and products.
-     */
 
     /**
-     @author Kevin Salazar
-     */
-
-
-    /**
-     * An observable list of all parts in inventory.
+     * Observable list for all parts
      */
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
 
@@ -169,7 +167,7 @@ public class Inventory {
     }
 
     /**
-     * Replaces a part in the inventory. To update the selected product.
+     * Replaces a product in the inventory. To update the selected product.
      *
      * @param index The index of the product that will be replaced.
      * @param selectedProduct The product used in the replacement action.
@@ -180,7 +178,7 @@ public class Inventory {
 
 //ask CI about where to implement if statement and how to implement it to the txt alert
     /**
-     * Deletes a product from the products list.
+     * Deletes a product from the product list.
      *
      * @param selectedProduct The product used in the replacement action.
      * @return A boolean to indicate if the product can or cannot be removed.
@@ -196,7 +194,7 @@ public class Inventory {
     }
 
     /**
-     * Retrieves all products from the products list.
+     * Retrieves all products from the product list.
      *
      * @return The list allProducts is returned.
      */

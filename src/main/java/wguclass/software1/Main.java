@@ -8,11 +8,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * This Inventory Management program uses an application to manage
- * an inventory of parts and products consisting of parts.
- */
-
-/**
+ * This Main class creates an application for the program.
+ *
+ * The main menu is initialized here.
+ *
  * @author Kevin Salazar
  */
 
@@ -20,8 +19,8 @@ public class Main extends  Application {
     /**
      * The start method creates the FXML stage and loads the initial scene.
      *
-     * @param  primarystage The primary stage
-     * @throws Exception
+     * @param  primarystage The primary stage of the program
+     * @throws IOException an exception that is thrown when an I/O error occurs
      */
     @Override
     public void start(Stage primarystage) throws IOException {

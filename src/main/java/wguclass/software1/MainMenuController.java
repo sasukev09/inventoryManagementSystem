@@ -19,9 +19,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 
 /**
- * This class is the Main Menu of the application.
+ * This class is the Main Menu of the application, parts and products are displayed here.
  *
- * Displaying parts and products, and the buttons to interact with the application and manage the inventory.
+ * You can interact with parts and products in this menu.
  *
  * @author Kevin Salazar
  */
@@ -170,7 +170,6 @@ public class MainMenuController implements Initializable {
                 return;
             }
             else {
-                //POP UP AN ALERT, PRODUCT NOT FOUND
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Part not Found");
                 alert.setContentText("Part not found.");
@@ -237,7 +236,7 @@ public class MainMenuController implements Initializable {
     /**
      * Opens the add part menu
      * @param event Opening add part menu action
-     * @throws IOException
+     * @throws IOException an exception that is thrown when an I/O error occurs
      */
     @FXML
     void PressAddPMM(ActionEvent event) throws IOException {
@@ -251,7 +250,7 @@ public class MainMenuController implements Initializable {
     /**
      * Opens the add product menu
      * @param event Opening add product menu
-     * @throws IOException
+     * @throws IOException an exception that is thrown when an I/O error occurs
      */
     @FXML
     void PressAddPRMM(ActionEvent event) throws IOException{
@@ -297,7 +296,7 @@ public class MainMenuController implements Initializable {
      * Error pop up if the product still contains any parts
      *
      * @param event Event of deleting a product
-     * @throws IOException
+     * @throws IOException an exception that is thrown when an I/O error occurs
      */
     @FXML
     void PressDeletePRMM(ActionEvent event) throws IOException {
@@ -333,7 +332,7 @@ public class MainMenuController implements Initializable {
     /**
      * Exiting the application, with a confirmation alert
      * @param event Event of exiting the application if confirmation is given
-     * @throws IOException
+     * @throws IOException an exception that is thrown when an I/O error occurs
      */
     @FXML
     void PressExitMM(ActionEvent event) throws IOException {
@@ -385,25 +384,10 @@ public class MainMenuController implements Initializable {
             }
     }
 
-
-    /**
-     * The product object selected from the table view by the user
-     */
-//    private static Product productToModify;
-
-    /**
-     * Gets the product object from the table, selected by the user
-     *
-     * @return A product object, null if no product selected.
-     */
-//    public static Product getProductToModify() {
-//        return productToModify;
-//    }
-
     /**
      * Opens the modify product menu, by pressing the modify button
      * @param event If a product is selected correctly, it loads the modify product menu
-     * @throws IOException
+     * @throws IOException an exception that is thrown when an I/O error occurs
      */
     @FXML
     void PressModifyPRMM(ActionEvent event) throws IOException {
@@ -440,10 +424,6 @@ public class MainMenuController implements Initializable {
         }
     }
 
-
-
-    //created a boolean variable called firstTimeAdded, and used it in an "if" statement inside the
-    //myInitialData method in Inventory, this way, to avoid duplicates every time initialized
     /**
      * Boolean variable that will help avoid any duplication after repeated initializing
      */

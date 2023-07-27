@@ -19,10 +19,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
- * This class is the Modify product menu of the application.
+ * This class is the modify product menu of the application.
  *
- * The user is able to modify the product
- * Also able to add/remove associated parts to the  product
+ * You are able to change values of a product, add/remove associated parts and save the changes.
  *
  * @author Kevin Salazar
  */
@@ -187,7 +186,7 @@ public class ModifyProductController implements Initializable {
      * Alerts user if button was pressed with no selection
      *
      * @param event Adding a part to the product in modification
-     * @throws IOException
+     * @throws IOException an exception that is thrown when an I/O error occurs
      */
     @FXML
     void PressModifyPRAddButton(ActionEvent event) throws IOException {
@@ -225,7 +224,7 @@ public class ModifyProductController implements Initializable {
      * Confirmation message to remove the associated part
      *
      * @param event Removing an associated part from the temporary list
-     * @throws IOException
+     * @throws IOException an exception that is thrown when an I/O error occurs
      */
     @FXML
     void PressModifyPRRemAsPartButton(ActionEvent event) throws IOException {
@@ -256,7 +255,7 @@ public class ModifyProductController implements Initializable {
      * Cancels the modification process and redirects to main menu
      *
      * @param event Cancels without any changes
-     * @throws IOException
+     * @throws IOException an exception that is thrown when an I/O error occurs
      */
     @FXML
     void PressModifyPRCancelButton(ActionEvent event) throws IOException {
@@ -284,7 +283,7 @@ public class ModifyProductController implements Initializable {
      * A future enhancement would be to save changes in a database after the program closes
      *
      * @param event Saves modify product
-     * @throws IOException
+     * @throws IOException an exception that is thrown when an I/O error occurs
      */
     @FXML
     void PressModifyPRSaveButton(ActionEvent event) throws IOException {
@@ -402,11 +401,11 @@ public class ModifyProductController implements Initializable {
     }
 
     /**
-     * Receive data method for the product
+     * Receive product data from the main screen.
      *
-     * It receives and populates all values from the selected product
+     * Populating all values of the selected product from the main menu.
      *
-     * @param product Brings selected product data from the modify product menu
+     * @param product The selected product.
      */
     public void receiveProductsSetData(Product product) {
         selectedProduct = product;
@@ -438,33 +437,20 @@ public class ModifyProductController implements Initializable {
     }
 
     /**
-     * Intializes the Modify product menu
+     * Intializes the modify product menu.
      *
-     * Populates the data in the parts and associated parts tables
-     * @param url  Locates the relative paths for the root object, or null if not found
-     * @param resourceBundle Resources used to localize the root object, or null if not found
+     * Populates the data in the parts and associated parts tables.
+     * @param url  Locates the relative paths for the root object, or null if not found.
+     * @param resourceBundle Resources used to localize the root object, or null if not found.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-//        ModifyPRIdTxtField.setText(String.valueOf(Inventory.productId));
-
         PartsTableMM.setItems(Inventory.getAllParts());
         MPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         MPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         MPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         MPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        //initiaizing Associated part table
-        //making a temporary list and then when ready you copy it over to the permanent
-//        APMPRPartIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-//        APMPRPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-//        APMPRInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-//        APMPRPCCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-//
-//
-//        System.out.println("associated part table has been intialized");
-//
        }
 }
 

@@ -18,11 +18,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-/**
- * Controller class that provides control logic for the add product screen of the application.
- */
 
 /**
+ * This class is the add product menu of the application.
+ *
+ * You are able to add a product, add/remove associated parts and save the changes.
+ *
  * @author Kevin Salazar
  */
 public class AddProductController implements Initializable {

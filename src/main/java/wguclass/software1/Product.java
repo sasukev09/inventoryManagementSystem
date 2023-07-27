@@ -3,11 +3,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * This class models a product that can contain associated parts.
+ * This class models a product and associated parts.
  *
- */
-
- /** @author Kevin Salazar
+ * Contains the constructors for the product along with its setters and getters, and also setters, getters for the associated parts.
+ * @author Kevin Salazar
  *
  */
 public class Product {
@@ -67,6 +66,7 @@ public class Product {
     }
 
     /**
+     * Gets product id
      * @return getter that returns the id of the product
      */
     public int getId() {
@@ -74,6 +74,7 @@ public class Product {
     }
 
     /**
+     * Sets product id
      * @param id the id to set
      */
     public void setId(int id) {
@@ -81,6 +82,7 @@ public class Product {
     }
 
     /**
+     * Gets product name
      * @return the name
      */
     public String getName() {
@@ -88,6 +90,7 @@ public class Product {
     }
 
     /**
+     * Sets product name
      * @param name the name to set
      */
     public void setName(String name) {
@@ -95,6 +98,7 @@ public class Product {
     }
 
     /**
+     * Gets product price
      * @return the price
      */
     public double getPrice() {
@@ -102,6 +106,7 @@ public class Product {
     }
 
     /**
+     * Sets product price
      * @param price the price to set
      */
     public void setPrice(double price) {
@@ -109,6 +114,7 @@ public class Product {
     }
 
     /**
+     * Gets product inventory
      * @return the stock
      */
     public int getStock() {
@@ -116,6 +122,7 @@ public class Product {
     }
 
     /**
+     * Sets product inventory
      * @param stock the stock to set
      */
     public void setStock(int stock) {
@@ -123,6 +130,7 @@ public class Product {
     }
 
     /**
+     * Gets product min
      * @return the min
      */
     public int getMin() {
@@ -130,6 +138,7 @@ public class Product {
     }
 
     /**
+     * Sets product min
      * @param min the min to set
      */
     public void setMin(int min) {
@@ -137,6 +146,7 @@ public class Product {
     }
 
     /**
+     * Gets product max
      * @return the max
      */
     public int getMax() {
@@ -144,6 +154,7 @@ public class Product {
     }
 
     /**
+     * Sets product max
      * @param max the max to set
      */
     public void setMax(int max) {
@@ -151,17 +162,17 @@ public class Product {
     }
 
     /**
+     * Adds a part to the associated parts list.
      * @return addAssociatedPart deletes associated part
      */
     public void addAssociatedPart(Part part) {
-
         associatedParts.add(part);
     }
 
     /**
-     * This method deletes associated parts
-     * @param selectedAssociatedPart
-     * @return DeleteAssociatedPart deletes associated part from the list
+     * Deletes an associated part from the assocaited part list.
+     * @param selectedAssociatedPart The part selected for deletion.
+     * @return If a part is correctly selected, it will be deleted.
      */
      public boolean deleteAssociatedPart(Part selectedAssociatedPart)  {
          if (associatedParts.contains(selectedAssociatedPart)) {

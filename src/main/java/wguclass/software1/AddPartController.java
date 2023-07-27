@@ -15,12 +15,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 /**
- * Controller class that provides control logic for the add part screen of the application.
- */
-
-/**
+ * This class is the add part menu controller of the application.
+ *
+ *
+ * Allows the user to add a part and save the changes in the program.
+ *
  * @author Kevin Salazar
  */
+
+
 public class AddPartController implements Initializable {
 
     /**

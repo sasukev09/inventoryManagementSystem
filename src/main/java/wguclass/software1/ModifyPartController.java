@@ -15,9 +15,9 @@ package wguclass.software1;
         import java.net.URL;
         import java.util.ResourceBundle;
 /**
- * This class is the Main Menu of the application.
+ * This class is the modify part menu of the application.
  *
- * Displaying parts and products, and the buttons to interact with the application and manage the inventory.
+ * You are able to change values of a part, and save the changes.
  *
  * @author Kevin Salazar
  */
@@ -140,7 +140,7 @@ public class ModifyPartController implements Initializable {
     /**
      * Cancel button action redirects to main menu
      * @param event The change of menu after cancelling
-     * @throws IOException
+     * @throws IOException an exception that is thrown when an I/O error occurs
      */
     @FXML
     void PressModPartCancelButton(ActionEvent event)  throws IOException {
@@ -152,10 +152,6 @@ public class ModifyPartController implements Initializable {
 
 
     }
-//standard name convention for java is lower case at the beginning, google.
-    //packages lowercase
-    //variables and methods lower case
-    //constants (for example "PI") would all be CAPITAL and "_" to separate words
 
     /**
      * Validates all values and saves changes for the modified part
@@ -165,7 +161,7 @@ public class ModifyPartController implements Initializable {
      * A future enhancement would be saving changes in a database after exiting the program to maintain all changes
      *
      * @param event Pressing the button saves the changes made to the part
-     * @throws IOException
+     * @throws IOException an exception that is thrown when an I/O error occurs
      */
     @FXML
     void PressModPartSaveButton(ActionEvent event) throws IOException {
