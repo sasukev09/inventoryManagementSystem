@@ -260,11 +260,18 @@ public class ModifyProductController implements Initializable {
      */
     @FXML
     void PressModifyPRCancelButton(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Alert");
+        alert.setContentText("Do you want cancel changes and return to the main screen?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     /**
@@ -274,26 +281,33 @@ public class ModifyProductController implements Initializable {
      *
      * Stores part into the permanent associated parts list
      *
+     * A future enhancement would be to save changes in a database after the program closes
+     *
      * @param event Saves modify product
      * @throws IOException
      */
     @FXML
     void PressModifyPRSaveButton(ActionEvent event) throws IOException {
 //save changes from the input on the textfields
+        int stock = 0;
+        double price = 0;
+        int max = 0;
+        int min = 0;
+        int id = 0;
         String mistakeModPr = "";
         try {
             mistakeModPr = "inv";
-            int id = Integer.parseInt(ModifyPRIdTxtField.getText());
+             id = Integer.parseInt(ModifyPRIdTxtField.getText());
             mistakeModPr = "name";
             String name = ModifyPRNameTxtField.getText();
             mistakeModPr = "stock";
-            int stock = Integer.parseInt(ModifyPRInvTxtField.getText());
+             stock = Integer.parseInt(ModifyPRInvTxtField.getText());
             mistakeModPr = "price";
-            double price = Double.parseDouble(ModifyPRPriceTxtField.getText());
+             price = Double.parseDouble(ModifyPRPriceTxtField.getText());
             mistakeModPr = "max";
-            int max = Integer.parseInt(ModifyPRMaxTxtField.getText());
+             max = Integer.parseInt(ModifyPRMaxTxtField.getText());
             mistakeModPr = "min";
-            int min = Integer.parseInt(ModifyPRMinTxtField.getText());
+             min = Integer.parseInt(ModifyPRMinTxtField.getText());
 
             if (min > stock || stock > max) {
                 System.out.println("Make sure that min <= inv and inv <= max ");
@@ -322,11 +336,11 @@ public class ModifyProductController implements Initializable {
             alert.showAndWait();
             return;
         }
-        int id = Integer.parseInt(ModifyPRIdTxtField.getText());
-        int stock = Integer.parseInt(ModifyPRInvTxtField.getText());
-        double price = Double.parseDouble(ModifyPRPriceTxtField.getText());
-        int max = Integer.parseInt(ModifyPRMaxTxtField.getText());
-        int min = Integer.parseInt(ModifyPRMinTxtField.getText());
+         id = Integer.parseInt(ModifyPRIdTxtField.getText());
+         stock = Integer.parseInt(ModifyPRInvTxtField.getText());
+         price = Double.parseDouble(ModifyPRPriceTxtField.getText());
+         max = Integer.parseInt(ModifyPRMaxTxtField.getText());
+         min = Integer.parseInt(ModifyPRMinTxtField.getText());
         Product updatedProduct = new Product(id, name, price, stock, min, max);
             Inventory.updateProduct(index, updatedProduct);
             //grabbing parts from temp list and assign to permanent one

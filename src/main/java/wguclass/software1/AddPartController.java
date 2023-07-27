@@ -164,6 +164,8 @@ public class AddPartController implements Initializable {
      * All text fields are validated with error messages displayed to prevent empty and
      * invalid values.
      *
+     * A future enhancement would be to save changes into a database after the program is terminated
+     *
      * @param event Save button action.
      * @throws IOException From the FXMLLoader.
      */

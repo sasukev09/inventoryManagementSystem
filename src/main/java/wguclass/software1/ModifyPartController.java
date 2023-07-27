@@ -159,7 +159,11 @@ public class ModifyPartController implements Initializable {
 
     /**
      * Validates all values and saves changes for the modified part
+     *
      * Redirects to main menu once everything is saved
+     *
+     * A future enhancement would be saving changes in a database after exiting the program to maintain all changes
+     *
      * @param event Pressing the button saves the changes made to the part
      * @throws IOException
      */

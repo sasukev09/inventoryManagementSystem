@@ -308,16 +308,7 @@ public class AddProductController implements Initializable {
      */
     @FXML
     void PressAddPRMSaveButton(ActionEvent event) throws IOException {
-        //save changes from the input on the textfields
         String name = NameTextField.getText();
-
-        Mouse.setName(NameTextField.getText());
-        Mouse.setId(Integer.parseInt(IDTextField.getText()));
-        Mouse.setMax(Integer.parseInt(MaxTextField.getText()));
-        Mouse.setMin(Integer.parseInt(MinTextField.getText()));
-        Mouse.setStock(Integer.parseInt(InvTextField.getText()));
-        Mouse.setPrice(Double.parseDouble(PriceTextField.getText()));
-
         int inv = 0 ;
         double price = 0;
         int max = 0;
