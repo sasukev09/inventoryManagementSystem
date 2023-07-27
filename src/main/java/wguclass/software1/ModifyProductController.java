@@ -18,83 +18,177 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * This class is the Modify product menu of the application.
+ *
+ * The user is able to modify the product
+ * Also able to add/remove associated parts to the  product
+ *
+ * @author Kevin Salazar
+ */
 public class ModifyProductController implements Initializable {
+    /**
+     * The stage used to go back to the main menu
+     */
     private Stage stage;
+
+    /**
+     * The scene used to go back to the main menu
+     */
     private Scene scene;
-    private Parent root;
+
+    /**
+     * Initializing the index variable for the update and selection of product
+     */
     int index = 0;
+
+    /**
+     * The selected product from the main menu
+     */
     Product selectedProduct;
 
+    /**
+     * The button that adds associated parts to a product
+     */
     @FXML
     private Button ModifyPRAddButton;
 
+    /**
+     * The button that cancels any modifications performed
+     */
     @FXML
     private Button ModifyPRCancelButton;
 
+    /**
+     * The text field for the ID
+     */
     @FXML
     private TextField ModifyPRIdTxtField;
 
+    /**
+     * The text field for the inventory
+     */
     @FXML
     private TextField ModifyPRInvTxtField;
 
+    /**
+     * The text field for the max
+     */
     @FXML
     private TextField ModifyPRMaxTxtField;
 
+    /**
+     * The text field for the min
+     */
     @FXML
     private TextField ModifyPRMinTxtField;
 
+    /**
+     * The text field for the name
+     */
     @FXML
     private TextField ModifyPRNameTxtField;
 
+    /**
+     * The text field for the price
+     */
     @FXML
     private TextField ModifyPRPriceTxtField;
 
+    /**
+     * The button to remove an associated part
+     */
     @FXML
     private Button ModifyPRRemAsPartButton;
 
+    /**
+     * The button to save changes
+     */
     @FXML
     private Button ModifyPRSaveButton;
 
+    /**
+     * The text field used to search for a part
+     */
     @FXML
     private TextField ModifyPRSearchByPartIDorNameTxtField;
 
-    //PARTS TABLE MPRM
+    /**
+     * Table view for the parts table
+     */
     @FXML
     private TableView<Part> PartsTableMM;
+
+    /**
+     * Table column for the part inventory
+     */
     @FXML
     private TableColumn<Part, Integer> MPRInvCol;
 
+    /**
+     * Table column for the part price
+     */
     @FXML
     private TableColumn<Part, Double> MPRPCCol;
 
+    /**
+     * Table column for the part ID
+     */
     @FXML
     private TableColumn<Part, Integer> MPRPartIDCol;
 
+    /**
+     * Table column for the part name
+     */
     @FXML
     private TableColumn<Part, String> MPRPartNameCol;
 
-    //ASSOCIATED PART TABLE MPR
+    /**
+     * Table for the associated parts
+     */
     @FXML
     private TableView<Part> AssociatedPartsTableMPR;
 
+    /**
+     * Table column for the associated parts inventory
+     */
     @FXML
     private TableColumn<Part, Integer> APMPRInvCol;
 
+    /**
+     * Table column for the associated parts price
+     */
     @FXML
     private TableColumn<Part, Double> APMPRPCCol;
 
+    /**
+     * Table column for the associated parts ID
+     */
     @FXML
     private TableColumn<Part, Integer> APMPRPartIDCol;
 
+    /**
+     * Table column for the associated parts name
+     */
     @FXML
     private TableColumn<Part, String> APMPRPartNameCol;
 
-    //TEMPORARY LIST
+    /**
+     * Temporary list that will store associated parts
+     */
     private ObservableList<Part> associatedPartsModify = FXCollections.observableArrayList();
     Product Mouse = new Product(5,"Mouse",10,1,2,3);
 
     //TODO ADD ASSOC PART BUTTON
 
+    /**
+     * Add a part from the parts list into the associated part list
+     *
+     * Alerts user if button was pressed with no selection
+     *
+     * @param event Adding a part to the product in modification
+     * @throws IOException
+     */
     @FXML
     void PressModifyPRAddButton(ActionEvent event) throws IOException {
         System.out.println("pressed add part to assoc parts");
@@ -122,6 +216,17 @@ public class ModifyProductController implements Initializable {
     //TODO ASK CI ABOUT HOW TO DEAL WITH PARTS AND ASSOCIATED PARTS FOR THE PRODUCT MENUS
     //TODO INCLUDING REMOVE BUTTON VALIDATION FOR THE PRODUCT
     //TODO REMOVE ASSOC PART BUTTON
+
+    /**
+     * Removes an associated part from the product
+     *
+     * Alerts user if button was pressed with no selection
+     *
+     * Confirmation message to remove the associated part
+     *
+     * @param event Removing an associated part from the temporary list
+     * @throws IOException
+     */
     @FXML
     void PressModifyPRRemAsPartButton(ActionEvent event) throws IOException {
         System.out.println("pressed add part to assoc parts");
@@ -146,7 +251,13 @@ public class ModifyProductController implements Initializable {
                   }
                 }
     }
-//todo
+
+    /**
+     * Cancels the modification process and redirects to main menu
+     *
+     * @param event Cancels without any changes
+     * @throws IOException
+     */
     @FXML
     void PressModifyPRCancelButton(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
@@ -156,6 +267,16 @@ public class ModifyProductController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Saves changes to the product modification
+     *
+     * Includes validations for product values
+     *
+     * Stores part into the permanent associated parts list
+     *
+     * @param event Saves modify product
+     * @throws IOException
+     */
     @FXML
     void PressModifyPRSaveButton(ActionEvent event) throws IOException {
 //save changes from the input on the textfields
@@ -224,6 +345,13 @@ public class ModifyProductController implements Initializable {
 
     }
 
+    /**
+     * Searches a part by id or name
+     *
+     * Alerts user if a part was not found
+     *
+     * @param event Searches part by giving input in text field
+     */
     @FXML
     void MPRMPressSearchPartIDName(ActionEvent event) {
         String SPart = ModifyPRSearchByPartIDorNameTxtField.getText();
@@ -259,6 +387,13 @@ public class ModifyProductController implements Initializable {
         }
     }
 
+    /**
+     * Receive data method for the product
+     *
+     * It receives and populates all values from the selected product
+     *
+     * @param product Brings selected product data from the modify product menu
+     */
     public void receiveProductsSetData(Product product) {
         selectedProduct = product;
 
@@ -288,6 +423,13 @@ public class ModifyProductController implements Initializable {
 
     }
 
+    /**
+     * Intializes the Modify product menu
+     *
+     * Populates the data in the parts and associated parts tables
+     * @param url  Locates the relative paths for the root object, or null if not found
+     * @param resourceBundle Resources used to localize the root object, or null if not found
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

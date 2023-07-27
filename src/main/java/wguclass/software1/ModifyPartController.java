@@ -48,48 +48,88 @@ public class ModifyPartController implements Initializable {
     @FXML
     private TextField ModPIDTxtField;
 
+    /**
+     * Radio button for the In-House part selection
+     */
     @FXML
     private RadioButton ModPInHouseRadio;
 
+    /**
+     * Text field for the name
+     */
     @FXML
     private TextField ModPNameTxtField;
+
+    /**
+     * Radio button for the Outsourced part selection
+     */
 
     @FXML
     private RadioButton ModPOutRadio;
 
-
+    /**
+     * Cancel button to cancel the modify action
+     */
     @FXML
     private Button ModPartCancelButton;
 
-//PASS THE FOOTBALL WEBINAR BY MARK TO SET UP PRESET
+    /**
+     * Text field for the inventory
+     */
     @FXML
     private TextField ModPartInvTextField;
 
+    /**
+     * Text field for the machine ID
+     */
     @FXML
     private TextField ModPartMachineIDTxtField;
 
+    /**
+     * Text field for the max
+     */
     @FXML
     private TextField ModPartMaxTxtField;
 
+    /**
+     * Text field for the min
+     */
     @FXML
     private TextField ModPartMinTxtField;
 
+    /**
+     * Text field for the price
+     */
     @FXML
     private TextField ModPartPCTxtField;
 
+    /**
+     * Button for the save action
+     */
     @FXML
     private Button ModPartSaveButton;
 
+    /**
+     * Toggle group for the radio buttons
+     */
     @FXML
     private ToggleGroup ModifyPartMenu;
 
+
+    /**
+     * When the In-house radio button is selected, the text label changes to Machine ID
+     * @param event Text label text changes to Machine ID
+     */
     @FXML
     void PressModPInHouseRadio(ActionEvent event)  {
         System.out.println("[ModifyPartMenu::ModPMLabelTxtMachID] In-house part radio button selected, updating label");
         ModPMLabelTxtMachID.setText("Machine ID");
-
     }
 
+    /**
+     * When the Outsourced radio button is selected, the text label changes to Company Name
+     * @param event Text label text changes to Company Name
+     */
     @FXML
     void PressModPOutRadio(ActionEvent event) {
         System.out.println("[ModifyPartMenu::ModPMLabelTxtMachID] Outsourced part radio button selected, updating label");
@@ -97,6 +137,11 @@ public class ModifyPartController implements Initializable {
 
     }
 
+    /**
+     * Cancel button action redirects to main menu
+     * @param event The change of menu after cancelling
+     * @throws IOException
+     */
     @FXML
     void PressModPartCancelButton(ActionEvent event)  throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
@@ -112,6 +157,12 @@ public class ModifyPartController implements Initializable {
     //variables and methods lower case
     //constants (for example "PI") would all be CAPITAL and "_" to separate words
 
+    /**
+     * Validates all values and saves changes for the modified part
+     * Redirects to main menu once everything is saved
+     * @param event Pressing the button saves the changes made to the part
+     * @throws IOException
+     */
     @FXML
     void PressModPartSaveButton(ActionEvent event) throws IOException {
         String name = ModPNameTxtField.getText();
@@ -197,10 +248,7 @@ public class ModifyPartController implements Initializable {
                 }
                 Part pOutsource = new Outsourced(id, name, price, inv, min, max, companyName);
                 Inventory.updatePart(index, pOutsource);
-
             }
-
-
             Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
@@ -208,7 +256,10 @@ public class ModifyPartController implements Initializable {
             stage.show();
         }
 
-
+    /**
+     * The send method that brings the part data that originates from the main menu
+     * @param part The part that is selected in the main menu for modification
+     */
     public void receivePartsSetData (Part part) {
         index = Inventory.getAllParts().indexOf(part);
         //String.valueOf retrieved the id of the p1 and converted that int into string to assign to the label
@@ -240,6 +291,11 @@ public class ModifyPartController implements Initializable {
         }
     }
 
+    /**
+     * Initializing the modify part menu
+     * @param url  Locates the relative paths for the root object, or null if not found
+     * @param resourceBundle Resources used to localize the root object, or null if not found
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

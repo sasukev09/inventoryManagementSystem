@@ -30,14 +30,17 @@ public class Main extends  Application {
         primarystage.show();
     }
 
+
+    /**
+     * The main method is the initial access of the application.
+     *
+     * The main method launches the application.
+     *
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
-        /**
-         * The main method is the initial access of the application.
-         *
-         * The main method launches the application.
-         *
-         * @param args
-         */
+
         launch();
     }
 }

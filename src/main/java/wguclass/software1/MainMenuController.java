@@ -264,6 +264,9 @@ public class MainMenuController implements Initializable {
 
     /**
      * Deletes a part from the table view
+     *
+     * Deletion confirmation pop up for the user
+     *
      * @param event Event of deleting a part
      */
     @FXML
@@ -290,6 +293,9 @@ public class MainMenuController implements Initializable {
 
     /**
      * Deletes a product from the product table view
+     *
+     * Error pop up if the product still contains any parts
+     *
      * @param event Event of deleting a product
      * @throws IOException
      */
