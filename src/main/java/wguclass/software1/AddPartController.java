@@ -130,6 +130,9 @@ public class AddPartController implements Initializable {
     /**
      * Cancels the creation of the part.
      *
+     * Had a runtime error from not selecting the right path file to the Main Menu fxml.
+     * Solved by correcting the path file in "getResource()".
+     *
      * @param event Cancel button that returns to main menu.
      * @throws IOException  an exception that is thrown when an I/O error occurs
      */

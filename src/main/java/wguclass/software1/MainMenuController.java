@@ -151,6 +151,7 @@ public class MainMenuController implements Initializable {
 
     /**
      * Looks up a part by ID or name, not case-sensitive
+     *
      * @param event Search event action
      */
     @FXML
@@ -178,7 +179,6 @@ public class MainMenuController implements Initializable {
                 PartsTableMM.setItems(PartSearched);
             else {
                 PartsTableMM.setItems(Inventory.getAllParts());
-                //ALERT PRODUCT NOT FOUND
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Part not Found");
                 alert.setContentText("Part not found.");
@@ -343,6 +343,10 @@ public class MainMenuController implements Initializable {
 
     /**
      * Opening the modify part menu, by pressing the modify button
+     *
+     * Fixed a "Cannot invoke because object is null" runtime error from loading the modify part menu before sending the data from the main menu.
+     * This was fixed by creating an instance of the controller and correctly using the send data method for parts.
+     *
      * @param event Event that leads to the modify part menu
      */
     @FXML
@@ -414,6 +418,8 @@ public class MainMenuController implements Initializable {
 
     /**
      * Boolean variable that will help avoid any duplication after repeated initializing
+     * Committed an issue where I would initialize this boolean inside initialize of the main menu, this was resolved by creating the boolean here, and calling it in the inventory class.
+     * This way, all data duplicates were resolved.
      */
     public static boolean firstTimeAdded = true;
 
@@ -421,8 +427,11 @@ public class MainMenuController implements Initializable {
      * This initializes the initial data that the application will begin with
      *
      * It also populates the part and product tables
+     * Fixed a previous issue where initial data was placed in this initialize, fixed by placing the initial data in the Inventory and calling it here, before initializing the tables.
+     * This solved any possible issues from constantly initializing that initial data.
+     * Fixed another previous runtime error from using "setCellFactory" instead of "setCellValueFactory".
      *
-     * @param url  Locates the relative paths for the root object, or null if not found
+     *  @param url  Locates the relative paths for the root object, or null if not found
      * @param resourceBundle Resources used to localize the root object, or null if not found
      */
     @Override

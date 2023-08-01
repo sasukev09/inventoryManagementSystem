@@ -41,7 +41,8 @@ public class Inventory {
 
     /**
      * Looks up a part by id.
-     *
+     * Had a runtime error from not defining the method correctly, whenever the method was used, it would error because the method was incomplete.
+     * This was fixed by using the enhanced for loop to look through the parts list.
      * @param partId The id of the part that will be looked for.
      * @return The part object if found, null if not found.
      */
@@ -55,6 +56,8 @@ public class Inventory {
 
     /**
      * Looks up a part by name.
+     * Had a previous issue where parts would retrieve but would be case-sensitive, this was solved by adding the "toLowerCase" method.
+     * Had another previous issue where I had made this method private, when all inventory methods are public and static.
      *
      * @param partName Name of the part that will be looked for.
      * @return The part object if found, null if not found.

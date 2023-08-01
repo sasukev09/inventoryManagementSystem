@@ -169,7 +169,7 @@ public class Product {
     }
 
     /**
-     * Deletes an associated part from the assocaited part list.
+     * Deletes an associated part from the associated part list.
      * @param selectedAssociatedPart The part selected for deletion.
      * @return If a part is correctly selected, it will be deleted.
      */

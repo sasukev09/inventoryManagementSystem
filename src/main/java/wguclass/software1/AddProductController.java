@@ -167,7 +167,7 @@ public class AddProductController implements Initializable {
      * The list of associated Parts
      */
     private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
-    Product Mouse = new Product(5,"Mouse",10,1,2,3);
+    Product productSaved = new Product(5,"Product saved",10,1,2,3);
 
 
     /**
@@ -187,13 +187,16 @@ public class AddProductController implements Initializable {
             Optional<ButtonType> OK = alert.showAndWait();
             System.out.println("Part not found");
         } else {
-            Mouse.addAssociatedPart(selectedPart);
-           AssociatedPartsTableAPR.setItems(Mouse.getAllAssociatedParts());
+            productSaved.addAssociatedPart(selectedPart);
+           AssociatedPartsTableAPR.setItems(productSaved.getAllAssociatedParts());
         }
     }
 
     /**
      * Removes an associated part from the product
+     * Previous incompatible type runtime error from swapping the parts table with the associated parts table for the "selectedPart" object.
+     * Fixed by using the correct tables for selection and addition, and removing from the observable list and not the table view.
+     *
      * @param event After pressing the button, an associated part is removed
      * @throws IOException
      */
@@ -203,7 +206,6 @@ public class AddProductController implements Initializable {
             Part selectedPart = AssociatedPartsTableAPR.getSelectionModel().getSelectedItem();
 
             if (selectedPart == null) {
-               //todo alert please select a part
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Part not Found");
                 alert.setContentText("Please select a part to remove.");
@@ -215,7 +217,6 @@ public class AddProductController implements Initializable {
                 alert.setTitle("Alert");
                 alert.setContentText("Do you want to remove the selected part?");
                 Optional<ButtonType> result = alert.showAndWait();
-                //todo ???? With mouse selected part???
                 if (result.isPresent() && result.get() == ButtonType.OK) {
                     associatedParts.remove(selectedPart);
                     AssociatedPartsTableAPR.setItems(associatedParts);
@@ -285,12 +286,26 @@ public class AddProductController implements Initializable {
 
     /**
      * Saves the product and associated part
+     *
+     * A now solved error occurred, where I did not include the Product object that would be used to save all input fields, including the name.
+     * This has been solved by implementing the lines 297-304. Getting all values from the input and able to display them once the product is modified.
+     *
+     * A NumberFormatException occurred, and it was solved by using a try and catch block, to take care of the emptiness of those fields.
+     *
      * @param event Pressing the save button saves adding a product and its associated parts
      * @throws IOException  an exception that is thrown when an I/O error occurs
      */
     @FXML
     void PressAddPRMSaveButton(ActionEvent event) throws IOException {
         String name = NameTextField.getText();
+
+        productSaved.setName(NameTextField.getText());
+        productSaved.setId(Integer.parseInt(IDTextField.getText()));
+        productSaved.setMax(Integer.parseInt(MaxTextField.getText()));
+        productSaved.setMin(Integer.parseInt(MinTextField.getText()));
+        productSaved.setStock(Integer.parseInt(InvTextField.getText()));
+        productSaved.setPrice(Double.parseDouble(PriceTextField.getText()));
+
         int inv = 0 ;
         double price = 0;
         int max = 0;
@@ -337,7 +352,7 @@ public class AddProductController implements Initializable {
             alert.showAndWait();
             return;
         }
-        Inventory.addProduct(Mouse);
+        Inventory.addProduct(productSaved);
 
         System.out.println("Product has been added, returning to main menu.");
         Parent root = FXMLLoader.load(getClass().getResource("/wguclass/Screens/Main Menu.fxml"));

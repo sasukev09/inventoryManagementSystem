@@ -17,6 +17,9 @@ public class Main extends  Application {
     /**
      * The start method creates the FXML stage and loads the initial scene.
      *
+     * Previously had a runtime error where the file-path location of the fxml file was not appropriately set.
+     * It was resolved by placing the right path "/wguclass/Screens/Main Menu.fxml" .
+     *
      * @param  primarystage The primary stage of the program
      * @throws IOException an exception that is thrown when an I/O error occurs
      */

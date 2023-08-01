@@ -16,6 +16,9 @@ public class InHouse extends Part {
     /**
      * The constructor for a new instance of an InHouse part.
      *
+     * Fixed a previous runtime error, this was caused from creating an "In-House" type of part in this class, Intellij mentioned that one of my methods was being recursive.
+     * The fix to this was creating the initial data solely in the Inventory class, by creating the In-house object in such class.
+     *
      * @param id the ID for the part
      * @param name the name of the part
      * @param price the price of the part

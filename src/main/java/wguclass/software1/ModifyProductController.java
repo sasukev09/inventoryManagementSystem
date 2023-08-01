@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
- * This class is the modify product menu of the application.*
+ * This class is the modify product menu of the application.
  * You are able to change values of a product, add/remove associated parts and save the changes.
  * @author Kevin Salazar
  */
@@ -238,7 +238,8 @@ public class ModifyProductController implements Initializable {
 
     /**
      * Cancels the modification process and redirects to main menu
-     *
+     * Fixed a previous issue where whenever cancelled, the changes would still save.
+     * This was solved by creating the if statement for the result in the confirmation alert, after this, changes are not saved after confirmation is declined.
      * @param event Cancels without any changes
      * @throws IOException an exception that is thrown when an I/O error occurs
      */
@@ -263,8 +264,8 @@ public class ModifyProductController implements Initializable {
      * Includes validations for product values
      * Stores part into the permanent associated parts list
      * A future enhancement would be to save changes in a database after the program closes
-     *
-     * @param event Saves modify product
+     * Had a runtime error from not initializing the values at the beginning of the action event, making it unable to validate correctly.
+     *  @param event Saves modify product
      * @throws IOException an exception that is thrown when an I/O error occurs
      */
     @FXML
@@ -380,7 +381,8 @@ public class ModifyProductController implements Initializable {
      * Receive product data from the main screen.
      *
      * Populating all values of the selected product from the main menu.
-     *
+     * Fixed a NullPointerException error from not adding the correct fx ids from the associated parts table, this was solved by correcting the fxml document, and importing the correct table view objects.
+     * Another fix was setting the items prior setting the CellValueFactory.
      * @param product The selected product.
      */
     public void receiveProductsSetData(Product product) {
@@ -411,6 +413,9 @@ public class ModifyProductController implements Initializable {
      * Intializes the modify product menu.
      *
      * Populates the data in the parts and associated parts tables.
+     * Fixed a previous runtime error from initializing a null associated parts table view and its attributes in here.
+     * Solved by initializing it in the send data method for the products above, and populating the required fx ids.
+     *
      * @param url  Locates the relative paths for the root object, or null if not found.
      * @param resourceBundle Resources used to localize the root object, or null if not found.
      */
